@@ -1,0 +1,84 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.antipov.mvp_template"
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            postprocessing {
+                removeUnusedCode false
+                removeUnusedResources false
+                obfuscate false
+                optimizeCode false
+                proguardFile 'proguard-rules.pro'
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.android.support:appcompat-v7:$rootProject.appcompat"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "com.google.dagger:dagger:$rootProject.dagger"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger"
+
+    // material dialog
+    implementation("com.afollestad.material-dialogs:$rootProject.materialDialogCore") {
+        // excluding to resolve transitive dependencies conflicts
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    }
+    implementation("com.afollestad.material-dialogs:$rootProject.materialDialogCommon") {
+        // excluding to resolve transitive dependencies conflicts
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    }
+
+    // butterknife
+    implementation "com.jakewharton:butterknife:$rootProject.butterKnife"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnife"
+    compile "com.android.support:design:$rootProject.appcompat"
+    implementation "com.android.support:recyclerview-v7:$rootProject.appcompat"
+
+    // gson
+    implementation "com.google.code.gson:gson:$rootProject.gson"
+
+    // cardview
+    implementation "com.android.support:cardview-v7:$rootProject.appcompat"
+
+    // gson
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.gson"
+
+    // glide
+    compile "com.github.bumptech.glide:glide:$rootProject.glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glide"
+
+    // retrofit
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
+
+    // reactive
+    implementation "com.squareup.retrofit2:adapter-rxjava:$rootProject.rxjava"
+    implementation "io.reactivex:rxandroid:$rootProject.rxandroid"
+
+    // logs
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.logsInterceptor"
+
+    // glide
+    compile "com.github.bumptech.glide:glide:$rootProject.glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glide"
+    testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+}

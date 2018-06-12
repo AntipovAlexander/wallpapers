@@ -1,0 +1,50 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.0-alpha05'
+        classpath 'me.tatarka:gradle-retrolambda:3.7.0'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+apply plugin: 'me.tatarka.retrolambda'
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    materialDialogCore = 'core:0.9.6.0'
+    materialDialogCommon = 'commons:0.9.6.0'
+    appcompat = '27.1.1'
+    dagger = '2.14.1'
+    butterKnife = '8.8.1'
+    bottomNav = '1.2.4'
+    rxjava = '2.0.2'
+    rxandroid = '1.1.0'
+    retrofit = '2.1.0'
+    rxjava = '2.0.2'
+    rxandroid = '1.1.0'
+    logsInterceptor = '3.8.0'
+    civ = '2.2.0'
+    glide = '4.4.0'
+    joda = '2.9.9.1'
+    playservices = '11.8.0'
+    gson = '2.3.0'
+    junitVersion = '4.12'
+    espressoVersion = '2.2.2'
+    mockitoVersion = '2.7.1'
+}

@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Wallpapers</string>
+    <string name="progress_dialog_title">Loading</string>
+    <string name="please_wait">Please wait</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="author_placeholder">By %s</string>
+</resources>
