@@ -50,7 +50,7 @@ dependencies {
     // butterknife
     implementation "com.jakewharton:butterknife:$rootProject.butterKnife"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnife"
-    compile "com.android.support:design:$rootProject.appcompat"
+    implementation "com.android.support:design:$rootProject.appcompat"
     implementation "com.android.support:recyclerview-v7:$rootProject.appcompat"
 
     // gson
@@ -63,7 +63,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.gson"
 
     // glide
-    compile "com.github.bumptech.glide:glide:$rootProject.glide"
+    implementation "com.github.bumptech.glide:glide:$rootProject.glide"
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glide"
 
     // retrofit
@@ -77,8 +77,10 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.logsInterceptor"
 
     // glide
-    compile "com.github.bumptech.glide:glide:$rootProject.glide"
+    implementation "com.github.bumptech.glide:glide:$rootProject.glide"
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glide"
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+
+    implementation "io.reactivex.rxjava2:rxjava:2.1.14"
 }
