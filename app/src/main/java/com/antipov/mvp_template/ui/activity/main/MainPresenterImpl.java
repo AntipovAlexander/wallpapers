@@ -23,8 +23,15 @@ public class MainPresenterImpl<V extends MainView, I extends MainInteractor> ext
 
     @Override
     public void getPictures() {
+        if (isViewAttached()) getView().showLoading();
         getInteractor().getPictures().subscribe(
-                pictures -> { if (isViewAttached()) getView().setPictures(pictures);},
-                throwable -> { if (isViewAttached()) getView().showFullScreenError(throwable.getMessage());});
+                pictures -> { if (isViewAttached()){
+                    getView().hideLoading();
+                    getView().setPictures(pictures);
+                }},
+                throwable -> { if (isViewAttached()){
+                    getView().hideLoading();
+                    getView().showFullScreenError(throwable.getMessage());
+                }});
     }
 }

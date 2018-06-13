@@ -1,4 +1,4 @@
-package com.antipov.mvp_template.main_test.rx;
+package com.antipov.mvp_template.rx;
 
 import com.antipov.mvp_template.utils.rx.SchedulerProvider;
 

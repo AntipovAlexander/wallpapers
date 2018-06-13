@@ -1,4 +1,4 @@
-package com.antipov.mvp_template.ui.activity.main;
+package com.antipov.mvp_template.ui.activity.photo_detail;
 
 import com.antipov.mvp_template.Const;
 import com.antipov.mvp_template.api.Api;
@@ -6,25 +6,24 @@ import com.antipov.mvp_template.api.RetrofitUtils;
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.ui.activity.base.BaseInteractor;
 import com.antipov.mvp_template.utils.rx.SchedulerProvider;
+
 import java.util.List;
+
 import javax.inject.Inject;
+
 import rx.Observable;
 
-/**
- * Created by AlexanderAntipov on 04.06.2018.
- */
-
-public class MainInteractorImpl extends BaseInteractor implements MainInteractor {
+public class PhotoDetailInteractorImpl extends BaseInteractor implements PhotoDetailInteractor {
 
     @Inject
-    public MainInteractorImpl(SchedulerProvider provider) {
-        super(provider);
+    public PhotoDetailInteractorImpl(SchedulerProvider scheduler) {
+        super(scheduler);
     }
 
     @Override
-    public Observable<List<Picture>> getPictures() {
-        Observable<List<Picture>> call = RetrofitUtils.getApi().
-                create(Api.class).getFeed();
+    public Observable<Picture> getPicture(String id) {
+        Observable<Picture> call = RetrofitUtils.getApi().
+                create(Api.class).getPicture(id);
         return call.subscribeOn(newThread())
                 .observeOn(ui())
                 .retry(Const.RETRY_COUNT);
