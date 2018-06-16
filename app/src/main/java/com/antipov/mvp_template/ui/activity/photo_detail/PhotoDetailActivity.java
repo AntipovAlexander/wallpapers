@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.antipov.mvp_template.Const;
 import com.antipov.mvp_template.R;
@@ -33,6 +35,10 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
     @Inject PhotoDetailPresenter<PhotoDetailView, PhotoDetailInteractor> mPresenter;
     @BindView(R.id.iv_image) ImageView mImage;
     @BindView(R.id.fl_progress) FrameLayout mProgress;
+    @BindView(R.id.tv_name) TextView mName;
+    @BindView(R.id.tv_location) TextView mLocation;
+    @BindView(R.id.tv_description) TextView mDescription;
+    @BindView(R.id.bottom_sheet) LinearLayout mBottomSheet;
     private String id;
 
     @Override
@@ -115,6 +121,16 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
                     }
                 })
                 .into(mImage);
+
+        mName.setText(model.getUser().getName());
+
+        if (model.getUser().getLocation() == null || model.getUser().getLocation().isEmpty()) mLocation.setVisibility(View.GONE);
+            else mLocation.setText(model.getUser().getLocation());
+
+        if (model.getUser().getBio() == null || model.getUser().getBio().isEmpty()) mDescription.setVisibility(View.GONE); else
+            mDescription.setText(model.getUser().getBio());
+
+        mBottomSheet.setVisibility(View.VISIBLE);
     }
 
 
