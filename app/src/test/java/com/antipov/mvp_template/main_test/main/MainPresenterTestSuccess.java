@@ -44,9 +44,9 @@ public class MainPresenterTestSuccess {
     public void testGetPicturesSuccess() {
         mPresenter.getPictures();
         mTestScheduler.triggerActions();
-        verify(mMockedMainView).showLoading();
+        verify(mMockedMainView).showLoadingFullScreen();
         verify(mMockedMainView).setPictures(ArgumentMatchers.anyList());
-        verify(mMockedMainView).hideLoading();
+        verify(mMockedMainView).hideLoadingFullScreen();
         verifyNoMoreInteractions(mMockedMainView);
     }
 

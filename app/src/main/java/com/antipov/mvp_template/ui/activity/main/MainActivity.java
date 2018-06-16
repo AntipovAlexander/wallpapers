@@ -4,6 +4,8 @@ import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.ui.activity.base.BaseActivity;
@@ -23,6 +25,7 @@ public class MainActivity extends BaseActivity implements MainView {
     @Inject
     MainPresenter<MainView, MainInteractor> mPresenter;
     @BindView(R.id.rv_photos) RecyclerView mPhotos;
+    @BindView(R.id.fl_progress) FrameLayout mProgress;
     private PhotoListAdapter mAdapter;
 
     @Override
@@ -55,6 +58,16 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void initViews() {
         ButterKnife.bind(this);
+    }
+
+    @Override
+    public void showLoadingFullScreen() {
+        mProgress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadingFullScreen() {
+        mProgress.setVisibility(View.GONE);
     }
 
     @Override

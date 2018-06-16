@@ -11,6 +11,10 @@ public interface IBaseView {
 
     void hideLoading();
 
+    void showLoadingFullScreen();
+
+    void hideLoadingFullScreen();
+
     void openActivityOnTokenExpire();
 
     void onError(@StringRes int resId);

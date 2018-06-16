@@ -60,9 +60,14 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
     @Override
     public void renderLayout(Picture model) {
         GlideApp.with(this)
-                .load(model.getUrls().getFull())
+                .load(model.getUrls().getThumb())
                 .into(mImage);
+//        GlideApp.with(this)
+//                .load(model.getUrls().getFull())
+//                .into(mImage);
     }
+
+
 
     @Override
     public void showFullScreenError(String error) {

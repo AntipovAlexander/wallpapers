@@ -39,9 +39,9 @@ public class MainPresenterTestFailure {
     public void testGetPicturesFailure() {
         doReturn(Observable.just(new Exception())).when(mMainInteractor).getPictures();
         mPresenter.getPictures();
-        verify(mMockedMainView).showLoading();
+        verify(mMockedMainView).showLoadingFullScreen();
         verify(mMockedMainView).showFullScreenError(ArgumentMatchers.anyString());
-        verify(mMockedMainView).hideLoading();
+        verify(mMockedMainView).hideLoadingFullScreen();
         verifyNoMoreInteractions(mMockedMainView);
     }
 

@@ -91,6 +91,16 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     }
 
     @Override
+    public void showLoadingFullScreen() {
+
+    }
+
+    @Override
+    public void hideLoadingFullScreen() {
+
+    }
+
+    @Override
     public void hideKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
