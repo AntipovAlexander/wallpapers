@@ -5,4 +5,5 @@
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
     <string name="author_placeholder">By %s</string>
+    <string name="set_as_wallpaper">Set as wallpaper</string>
 </resources>
