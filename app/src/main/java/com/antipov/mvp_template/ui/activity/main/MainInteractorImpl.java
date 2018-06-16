@@ -16,6 +16,8 @@ import rx.Observable;
 
 public class MainInteractorImpl extends BaseInteractor implements MainInteractor {
 
+    private final String PORTRAIT = "portrait";
+
     @Inject
     public MainInteractorImpl(SchedulerProvider provider) {
         super(provider);
@@ -24,7 +26,7 @@ public class MainInteractorImpl extends BaseInteractor implements MainInteractor
     @Override
     public Observable<List<Picture>> getPictures() {
         Observable<List<Picture>> call = RetrofitUtils.getApi().
-                create(Api.class).getFeed();
+                create(Api.class).getPhotos(PORTRAIT, 20);
         return call.subscribeOn(newThread())
                 .observeOn(ui())
                 .retry(Const.RETRY_COUNT);

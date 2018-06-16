@@ -6,6 +6,7 @@ import java.util.List;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -13,8 +14,10 @@ import rx.Observable;
  */
 
 public interface Api {
-    @GET("photos")
-    Observable<List<Picture>> getFeed();
+    @GET("photos/random")
+    Observable<List<Picture>> getPhotos(@Query("orientation") String orientation,
+                                        @Query("count") int count);
+
 
     @GET("photos/{id}")
     Observable<Picture> getPicture(@Path("id") String id);

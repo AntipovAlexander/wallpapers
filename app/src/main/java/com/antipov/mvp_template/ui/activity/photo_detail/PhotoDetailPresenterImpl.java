@@ -14,16 +14,28 @@ public class PhotoDetailPresenterImpl <V extends PhotoDetailView, I extends Phot
 
     @Override
     public void getPicture(String id) {
-        if (isViewAttached()) getView().showLoading();
+        if (isViewAttached()) getView().showLoadingFullScreen();
         getInteractor().getPicture(id).subscribe(picture -> {
             if (isViewAttached()){
-                getView().hideLoading();
                 getView().renderLayout(picture);
             }},
                 throwable -> {
             if (isViewAttached()){
-                getView().hideLoading();
+                getView().hideLoadingFullScreen();
                 getView().showFullScreenError(throwable.getMessage());
             }});
+    }
+
+    @Override
+    public void onPictureNotLoaded(String message) {
+        if (!isViewAttached()) return;
+        getView().hideLoadingFullScreen();
+        getView().showFullScreenError(message);
+    }
+
+    @Override
+    public void onPictureLoaded() {
+        if (!isViewAttached()) return;
+        getView().hideLoadingFullScreen();
     }
 }

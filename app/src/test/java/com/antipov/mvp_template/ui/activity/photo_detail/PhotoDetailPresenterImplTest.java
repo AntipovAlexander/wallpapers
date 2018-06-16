@@ -8,13 +8,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
+import org.mockito.internal.matchers.Any;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 
 import rx.Observable;
 
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PhotoDetailPresenterImplTest {
@@ -42,10 +48,14 @@ public class PhotoDetailPresenterImplTest {
     public void getPictureSuccess() {
         Picture picture = new Picture();
         doReturn(Observable.just(picture)).when(mMockedInteractor).getPicture(ArgumentMatchers.anyString());
+        doAnswer(invocation -> {
+            mPresenter.onPictureLoaded();
+            return null;
+        }).when(mMockedView).renderLayout(picture);
         mPresenter.getPicture("");
-        verify(mMockedView).showLoading();
+        verify(mMockedView).showLoadingFullScreen();
         verify(mMockedView).renderLayout(picture);
-        verify(mMockedView).hideLoading();
+        verify(mMockedView).hideLoadingFullScreen();
         verifyNoMoreInteractions(mMockedView);
     }
 
@@ -53,9 +63,25 @@ public class PhotoDetailPresenterImplTest {
     public void getPictureError() {
         doReturn(Observable.just(new Exception())).when(mMockedInteractor).getPicture(ArgumentMatchers.anyString());
         mPresenter.getPicture("");
-        verify(mMockedView).showLoading();
+        verify(mMockedView).showLoadingFullScreen();
         verify(mMockedView).showFullScreenError(ArgumentMatchers.anyString());
-        verify(mMockedView).hideLoading();
+        verify(mMockedView).hideLoadingFullScreen();
+        verifyNoMoreInteractions(mMockedView);
+    }
+
+    @Test
+    public void pictureCantBeLoaded() {
+        Picture picture = new Picture();
+        doReturn(Observable.just(picture)).when(mMockedInteractor).getPicture(ArgumentMatchers.anyString());
+        doAnswer(invocation -> {
+            mPresenter.onPictureNotLoaded(ArgumentMatchers.anyString());
+            return null;
+        }).when(mMockedView).renderLayout(picture);
+        mPresenter.getPicture("");
+        verify(mMockedView).showLoadingFullScreen();
+        verify(mMockedView).renderLayout(picture);
+        verify(mMockedView).hideLoadingFullScreen();
+        verify(mMockedView).showFullScreenError(ArgumentMatchers.anyString());
         verifyNoMoreInteractions(mMockedView);
     }
 }

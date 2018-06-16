@@ -31,7 +31,7 @@ public class MainPresenterImpl<V extends MainView, I extends MainInteractor> ext
                 }},
                 throwable -> { if (isViewAttached()){
                     getView().hideLoadingFullScreen();
-                    getView().showFullScreenError(throwable.getMessage());
+                    getView().showFullScreenError(throwable.getLocalizedMessage());
                 }});
     }
 }

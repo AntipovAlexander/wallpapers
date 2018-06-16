@@ -18,7 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.photo_detail.PhotoDetailActivity"></activity>
+        <activity android:name=".ui.activity.photo_detail.PhotoDetailActivity"
+            android:theme="@style/AppTheme.NoTitle"
+            />
     </application>
 
 </manifest>

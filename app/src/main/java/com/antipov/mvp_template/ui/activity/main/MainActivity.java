@@ -6,6 +6,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.ui.activity.base.BaseActivity;
@@ -26,6 +28,7 @@ public class MainActivity extends BaseActivity implements MainView {
     MainPresenter<MainView, MainInteractor> mPresenter;
     @BindView(R.id.rv_photos) RecyclerView mPhotos;
     @BindView(R.id.fl_progress) FrameLayout mProgress;
+    @BindView(R.id.error_layout) RelativeLayout mError;
     private PhotoListAdapter mAdapter;
 
     @Override
@@ -87,6 +90,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void showFullScreenError(String error) {
-
+        mError.setVisibility(View.VISIBLE);
+        ((TextView)mError.findViewById(R.id.tv_error_text)).setText(error);
     }
 }
