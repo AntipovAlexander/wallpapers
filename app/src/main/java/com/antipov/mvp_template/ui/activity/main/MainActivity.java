@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.antipov.mvp_template.App;
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.ui.activity.base.BaseActivity;
 import com.antipov.mvp_template.pojo.Picture;
@@ -34,7 +35,7 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivityComponent().inject(this);
+        getComponent().inject(this);
         mPresenter.attachView(this);
         mPresenter.getPictures();
         setupAdapter();

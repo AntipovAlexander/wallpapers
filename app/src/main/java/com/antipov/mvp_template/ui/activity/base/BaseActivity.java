@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.antipov.mvp_template.Application;
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.di.component.ActivityComponent;
 import com.antipov.mvp_template.di.component.DaggerActivityComponent;
@@ -20,13 +21,12 @@ import com.antipov.mvp_template.utils.NetworkUtils;
  */
 
 public abstract class BaseActivity extends AppCompatActivity implements IBaseView {
-    private ActivityComponent mActivityComponent;
     private MaterialDialog materialDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivityComponent = DaggerActivityComponent.builder().activityModule(new ActivityModule()).build();
+
         // some activities may be without content, e.g splash screen.
         // get layout id may return -1 in that case
         if (getLayoutId() != -1){
@@ -38,8 +38,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         initListeners();
     }
 
-    public ActivityComponent getActivityComponent(){
-        return mActivityComponent;
+    public ActivityComponent getComponent(){
+        return ((Application)getApplication()).getComponent();
     }
 
     @Override

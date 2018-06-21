@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.antipov.mvp_template.App;
 import com.antipov.mvp_template.Const;
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.pojo.Picture;
@@ -44,7 +45,7 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivityComponent().inject(this);
+        getComponent().inject(this);
         mPresenter.attachView(this);
         mPresenter.getPicture(id);
     }
