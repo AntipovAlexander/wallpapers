@@ -1,17 +1,19 @@
 package com.antipov.mvp_template;
 
 import android.app.Application;
-import com.antipov.mvp_template.di.component.ActivityComponent;
-import com.antipov.mvp_template.di.component.DaggerTestActivityComponent;
+
+import com.antipov.mvp_template.di.component.DaggerTestComponent;
+import com.antipov.mvp_template.di.component.ProductionComponent;
 import com.antipov.mvp_template.di.module.TestActivityModule;
 
-public class MockApp extends Application implements com.antipov.mvp_template.Application {
-    private ActivityComponent component;
+
+public class MockApp extends Application implements com.antipov.mvp_template.application.Application {
+    private ProductionComponent component;
 
     @Override
-    public ActivityComponent getComponent() {
+    public ProductionComponent getComponent() {
         if (component == null){
-            component = DaggerTestActivityComponent.builder().testActivityModule(new TestActivityModule()).build();
+            component = DaggerTestComponent.builder().testActivityModule(new TestActivityModule()).build();
         }
         return component;
     }

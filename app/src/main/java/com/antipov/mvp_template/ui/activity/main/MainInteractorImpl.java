@@ -1,6 +1,6 @@
 package com.antipov.mvp_template.ui.activity.main;
 
-import com.antipov.mvp_template.Const;
+import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.api.Api;
 import com.antipov.mvp_template.api.RetrofitUtils;
 import com.antipov.mvp_template.pojo.Picture;

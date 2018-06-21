@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.antipov.mvp_template.App;
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.ui.activity.base.BaseActivity;
 import com.antipov.mvp_template.pojo.Picture;

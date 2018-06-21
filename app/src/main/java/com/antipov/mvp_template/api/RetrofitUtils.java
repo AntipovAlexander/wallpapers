@@ -14,7 +14,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.antipov.mvp_template.Const.BASE_URL;
+import static com.antipov.mvp_template.common.Const.BASE_URL;
 
 /**
  * Created by antipov on 3/27/17.

@@ -10,10 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.antipov.mvp_template.Const;
+import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.pojo.Picture;
-import com.antipov.mvp_template.ui.activity.main.MainActivity;
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailActivity;
 import com.antipov.mvp_template.utils.GlideRequests;
 

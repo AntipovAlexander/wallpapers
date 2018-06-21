@@ -12,7 +12,7 @@ import dagger.Component;
  */
 
 @Component(modules = {ActivityModule.class})
-public interface ActivityComponent {
+public interface ProductionComponent {
     void inject(MainActivity mainActivity);
 
     void inject(PhotoDetailActivity photoDetailActivity);

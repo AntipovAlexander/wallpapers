@@ -1,4 +1,4 @@
-package com.antipov.mvp_template;
+package com.antipov.mvp_template.common;
 
 /**
  * Created by AlexanderAntipov on 04.06.2018.
