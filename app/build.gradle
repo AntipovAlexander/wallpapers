@@ -8,7 +8,7 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "com.antipov.mvp_template.runners.MockApplicationRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -91,5 +91,6 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glide"
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
     debugImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+    androidTestImplementation "org.mockito:mockito-android:$rootProject.mockitoVersion"
     implementation 'io.reactivex.rxjava2:rxjava:2.1.14'
 }

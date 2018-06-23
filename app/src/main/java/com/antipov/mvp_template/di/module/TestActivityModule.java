@@ -43,7 +43,7 @@ public class TestActivityModule {
     }
 
     @Provides
-    MainInteractor provideMainInteractor(MainInteractorImpl interactor){
+    public MainInteractor provideMainInteractor(MainInteractorImpl interactor){
         return interactor;
     }
 

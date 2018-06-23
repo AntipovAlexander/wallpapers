@@ -12,9 +12,10 @@ public class MockApp extends Application implements com.antipov.mvp_template.app
 
     @Override
     public ProductionComponent getComponent() {
-        if (component == null){
-            component = DaggerTestComponent.builder().testActivityModule(new TestActivityModule()).build();
-        }
         return component;
+    }
+
+    public void setComponent(ProductionComponent component) {
+        this.component = component;
     }
 }

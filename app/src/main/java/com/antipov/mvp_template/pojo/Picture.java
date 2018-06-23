@@ -1,5 +1,8 @@
 package com.antipov.mvp_template.pojo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by AlexanderAntipov on 05.06.2018.
  */
@@ -30,6 +33,10 @@ public class Picture {
         private String portfolioUrl;
         private String bio;
         private String location;
+
+        public User(String name) {
+            this.name = name;
+        }
 
         public String getId() {
             return id;
@@ -262,5 +269,19 @@ public class Picture {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Picture> getListForTest(){
+        Picture picture = new Picture();
+        picture.setId("");
+        picture.setUrls(new Urls());
+        picture.setUser(new User("John doe"));
+
+        List<Picture> pictureArrayList = new ArrayList<>();
+        pictureArrayList.add(picture);
+        pictureArrayList.add(picture);
+        pictureArrayList.add(picture);
+
+        return pictureArrayList;
     }
 }

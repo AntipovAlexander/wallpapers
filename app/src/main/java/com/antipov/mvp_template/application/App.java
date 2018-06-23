@@ -11,10 +11,19 @@ public class App extends Application implements com.antipov.mvp_template.applica
     public ProductionComponent component;
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+
+    @Override
     public ProductionComponent getComponent() {
         if (component == null){
             component = DaggerProductionComponent.builder().activityModule(new ActivityModule()).build();
         }
         return component;
+    }
+
+    public void setComponent(ProductionComponent component) {
+        this.component = component;
     }
 }

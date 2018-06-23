@@ -35,9 +35,9 @@ public class MainActivity extends BaseActivity implements MainView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getComponent().inject(this);
+        setupAdapter();
         mPresenter.attachView(this);
         mPresenter.getPictures();
-        setupAdapter();
     }
 
     private void setupAdapter() {
