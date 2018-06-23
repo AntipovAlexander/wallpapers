@@ -21,32 +21,32 @@ import dagger.Provides;
  */
 
 @Module
-public class ActivityModule {
+public class AppModule {
 
     @Provides
-    SchedulerProvider provideSchedulerProvider() {
+    public SchedulerProvider provideSchedulerProvider() {
         return new AppSchedulerProvider();
     }
 
     @Provides
-    MainPresenter<MainView, MainInteractor> provideMainPresenter(MainPresenterImpl<MainView, MainInteractor> presenter){
+    public MainPresenter<MainView, MainInteractor> provideMainPresenter(MainPresenterImpl<MainView, MainInteractor> presenter){
         return presenter;
     }
 
     @Provides
-    PhotoDetailPresenter<PhotoDetailView, PhotoDetailInteractor> providerPhotoDetailPresenter(
+    public PhotoDetailPresenter<PhotoDetailView, PhotoDetailInteractor> providerPhotoDetailPresenter(
             PhotoDetailPresenterImpl<PhotoDetailView, PhotoDetailInteractor> presenter
     ){
         return presenter;
     }
 
     @Provides
-    MainInteractor provideMainInteractor(MainInteractorImpl interactor){
+    public MainInteractor provideMainInteractor(MainInteractorImpl interactor){
         return interactor;
     }
 
     @Provides
-    PhotoDetailInteractor providePhotoDetailInteractor(PhotoDetailInteractorImpl interactor){
+    public PhotoDetailInteractor providePhotoDetailInteractor(PhotoDetailInteractorImpl interactor){
         return interactor;
     }
 }

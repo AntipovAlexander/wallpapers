@@ -1,7 +1,7 @@
 package com.antipov.mvp_template.application;
 
-import com.antipov.mvp_template.di.component.ProductionComponent;
+import com.antipov.mvp_template.di.component.AppComponent;
 
 public interface Application {
-    ProductionComponent getComponent();
+    AppComponent getComponent();
 }
