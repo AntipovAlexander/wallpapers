@@ -13,6 +13,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,6 +21,7 @@ import rx.schedulers.TestScheduler;
 
 import static org.junit.Assert.*;
 
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -45,10 +47,19 @@ public class WallPaperSetterTest {
     }
 
     @Test
-    public void setWallPaper() {
+    public void setWallPaperSuccess() {
         mWallpaperSetter.setWallPaper(bitmap, mMockListener);
         mTestScheduler.triggerActions();
         verify(mMockListener).onWallPaperChangedSuccess();
+        verifyNoMoreInteractions(mMockListener);
+    }
+
+    @Test
+    public void setWallPaperError() throws IOException {
+        doThrow(new IOException()).when(mMockWallpaperManager).setBitmap(ArgumentMatchers.any(Bitmap.class));
+        mWallpaperSetter.setWallPaper(bitmap, mMockListener);
+        mTestScheduler.triggerActions();
+        verify(mMockListener).onWallPaperChangedFailure();
         verifyNoMoreInteractions(mMockListener);
     }
 }

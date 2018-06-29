@@ -1,6 +1,9 @@
 package com.antipov.mvp_template.ui.activity.photo_detail;
 
+import android.graphics.Bitmap;
+
 import com.antipov.mvp_template.pojo.Picture;
+import com.antipov.mvp_template.utils.WallPapperSetter.IOnWallPaperChanged;
 import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
 
 import org.junit.After;
@@ -29,6 +32,9 @@ public class PhotoDetailPresenterImplTest {
 
     @Mock
     WallPaperSetter mMockedWallpaperSetter;
+
+    @Mock
+    Bitmap bitmap;
 
     PhotoDetailPresenter<PhotoDetailView, PhotoDetailInteractor> mPresenter;
 
@@ -113,12 +119,28 @@ public class PhotoDetailPresenterImplTest {
 
     @Test
     public void testSetupWallPaperSuccess() {
-//        IOnWallPaperChanged listener = (IOnWallPaperChanged) mPresenter;
-//        doAnswer(invocation -> {
-//            listener.onWallPaperChangedSuccess();
-//            return null;
-//        }).when(mMockedWallpaperSetter).setWallPaper(ArgumentMatchers.any(Bitmap.class), listener);
-//        mPresenter.setWallPaper(ArgumentMatchers.any(Bitmap.class));
-//        verify(listener).onWallPaperChangedSuccess();
+        IOnWallPaperChanged listener = (IOnWallPaperChanged) mPresenter;
+        doAnswer(invocation -> {
+            listener.onWallPaperChangedSuccess();
+            return null;
+        }).when(mMockedWallpaperSetter).setWallPaper(bitmap, listener);
+        mPresenter.setWallPaper(bitmap);
+        verify(mMockedView).showLoading();
+        verify(mMockedView).hideLoading();
+        verify(mMockedView).showMessage(ArgumentMatchers.anyInt());
+        verifyNoMoreInteractions(mMockedView);
+    }
+
+    @Test
+    public void testSetupWallPaperError() {
+        IOnWallPaperChanged listener = (IOnWallPaperChanged) mPresenter;
+        doAnswer(invocation -> {
+            listener.onWallPaperChangedFailure();
+            return null;
+        }).when(mMockedWallpaperSetter).setWallPaper(bitmap, listener);
+        mPresenter.setWallPaper(bitmap);
+        verify(mMockedView).showLoading();
+        verify(mMockedView).hideLoading();
+        verifyNoMoreInteractions(mMockedView);
     }
 }
