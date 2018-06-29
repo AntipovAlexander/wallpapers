@@ -1,27 +1,33 @@
 package com.antipov.mvp_template.ui.activity.photo_detail;
 
+import android.app.WallpaperManager;
+import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.R;
+import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.ui.activity.base.BaseActivity;
 import com.antipov.mvp_template.utils.GlideApp;
+import com.antipov.mvp_template.utils.WallPapperSetter.IOnWallPaperChanged;
+import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+
+import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -31,6 +37,8 @@ import butterknife.ButterKnife;
 public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView {
 
     @Inject PhotoDetailPresenter<PhotoDetailView, PhotoDetailInteractor> mPresenter;
+    // TODO: 29.06.18 refactor to di
+    WallPaperSetter wallPaperSetter = new WallPaperSetter();
     @BindView(R.id.iv_image) ImageView mImage;
     @BindView(R.id.fl_progress) FrameLayout mProgress;
     @BindView(R.id.tv_name) TextView mName;
@@ -38,6 +46,7 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
     @BindView(R.id.tv_description) TextView mDescription;
     @BindView(R.id.bottom_sheet) LinearLayout mBottomSheet;
     private String id;
+    private Bitmap mBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +97,27 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.set_wallpaper:
+                showLoading();
+                wallPaperSetter.setWallPaper(this, mBitmap, new IOnWallPaperChanged() {
+                    @Override
+                    public void onWallPaperChangedSuccess() {
+                        hideLoading();
+                    }
+
+                    @Override
+                    public void onWallPaperChangedFailure() {
+                        hideLoading();
+                    }
+                });
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void initToolbar() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -104,16 +134,18 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
     @Override
     public void renderLayout(Picture model) {
         GlideApp.with(this)
+                .asBitmap()
                 .load(model.getUrls().getFull())
-                .listener(new RequestListener<Drawable>() {
+                .listener(new RequestListener<Bitmap>() {
                     @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
                         mPresenter.onPictureNotLoaded(e.getMessage());
                         return false;
                     }
 
                     @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                        mBitmap = resource;
                         mPresenter.onPictureLoaded();
                         return false;
                     }

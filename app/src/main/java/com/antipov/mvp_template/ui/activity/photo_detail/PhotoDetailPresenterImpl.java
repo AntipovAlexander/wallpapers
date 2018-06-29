@@ -1,5 +1,7 @@
 package com.antipov.mvp_template.ui.activity.photo_detail;
 
+import android.graphics.Bitmap;
+
 import com.antipov.mvp_template.ui.activity.base.BasePresenter;
 
 import javax.inject.Inject;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/add"
+    <item android:id="@+id/set_wallpaper"
         android:visible="true"
         android:title="@string/set_as_wallpaper"
         app:showAsAction="always">

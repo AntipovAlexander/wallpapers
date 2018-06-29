@@ -50,7 +50,6 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void getExtras() {
-        ButterKnife.bind(this);
     }
 
     @Override

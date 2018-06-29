@@ -16,6 +16,7 @@ import rx.Observable;
 public interface Api {
     @GET("photos/random")
     Observable<List<Picture>> getPhotos(@Query("orientation") String orientation,
+                                        @Query("query") String query,
                                         @Query("count") int count);
 
 
