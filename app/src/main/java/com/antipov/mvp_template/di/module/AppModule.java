@@ -1,5 +1,8 @@
 package com.antipov.mvp_template.di.module;
 
+import android.app.WallpaperManager;
+import android.content.Context;
+
 import com.antipov.mvp_template.ui.activity.main.MainInteractor;
 import com.antipov.mvp_template.ui.activity.main.MainInteractorImpl;
 import com.antipov.mvp_template.ui.activity.main.MainPresenter;
@@ -10,6 +13,7 @@ import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailInteractorIm
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailPresenter;
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailPresenterImpl;
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailView;
+import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
 import com.antipov.mvp_template.utils.rx.AppSchedulerProvider;
 import com.antipov.mvp_template.utils.rx.SchedulerProvider;
 
@@ -23,9 +27,22 @@ import dagger.Provides;
 @Module
 public class AppModule {
 
+    private final Context mContext;
+    private final AppSchedulerProvider mScheduleProvider;
+
+    public AppModule(Context context, AppSchedulerProvider appSchedulerProvider) {
+        this.mContext = context;
+        this.mScheduleProvider = appSchedulerProvider;
+    }
+
+    @Provides
+    public WallPaperSetter provideWallPaperSetter(){
+        return new WallPaperSetter(provideSchedulerProvider(), WallpaperManager.getInstance(mContext));
+    }
+
     @Provides
     public SchedulerProvider provideSchedulerProvider() {
-        return new AppSchedulerProvider();
+        return this.mScheduleProvider;
     }
 
     @Provides

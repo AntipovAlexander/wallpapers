@@ -10,4 +10,6 @@ public interface PhotoDetailPresenter <V extends PhotoDetailView, I extends Phot
     void onPictureNotLoaded(String message);
 
     void onPictureLoaded();
+
+    void setWallPaper(Bitmap mBitmap);
 }

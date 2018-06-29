@@ -1,6 +1,5 @@
 package com.antipov.mvp_template.ui.activity.photo_detail;
 
-import android.app.WallpaperManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -14,31 +13,22 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.ui.activity.base.BaseActivity;
 import com.antipov.mvp_template.utils.GlideApp;
-import com.antipov.mvp_template.utils.WallPapperSetter.IOnWallPaperChanged;
-import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-
-import java.io.IOException;
-
 import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView {
 
     @Inject PhotoDetailPresenter<PhotoDetailView, PhotoDetailInteractor> mPresenter;
-    // TODO: 29.06.18 refactor to di
-    WallPaperSetter wallPaperSetter = new WallPaperSetter();
     @BindView(R.id.iv_image) ImageView mImage;
     @BindView(R.id.fl_progress) FrameLayout mProgress;
     @BindView(R.id.tv_name) TextView mName;
@@ -101,17 +91,7 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
         switch (item.getItemId()){
             case R.id.set_wallpaper:
                 showLoading();
-                wallPaperSetter.setWallPaper(this, mBitmap, new IOnWallPaperChanged() {
-                    @Override
-                    public void onWallPaperChangedSuccess() {
-                        hideLoading();
-                    }
-
-                    @Override
-                    public void onWallPaperChangedFailure() {
-                        hideLoading();
-                    }
-                });
+                mPresenter.setWallPaper(mBitmap);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -162,8 +142,6 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
 
         mBottomSheet.setVisibility(View.VISIBLE);
     }
-
-
 
     @Override
     public void showFullScreenError(String error) {

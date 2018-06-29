@@ -1,6 +1,7 @@
 package com.antipov.mvp_template.ui.activity.photo_detail;
 
 import com.antipov.mvp_template.pojo.Picture;
+import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
 
 import org.junit.After;
 import org.junit.Before;
@@ -8,19 +9,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
-import org.mockito.internal.matchers.Any;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
 import rx.Observable;
 
 import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PhotoDetailPresenterImplTest {
@@ -31,11 +27,14 @@ public class PhotoDetailPresenterImplTest {
     @Mock
     PhotoDetailInteractor mMockedInteractor;
 
+    @Mock
+    WallPaperSetter mMockedWallpaperSetter;
+
     PhotoDetailPresenter<PhotoDetailView, PhotoDetailInteractor> mPresenter;
 
     @Before
     public void setUp() throws Exception {
-        mPresenter = new PhotoDetailPresenterImpl<>(mMockedInteractor);
+        mPresenter = new PhotoDetailPresenterImpl<>(mMockedInteractor, mMockedWallpaperSetter);
         mPresenter.attachView(mMockedView);
     }
 
@@ -110,5 +109,16 @@ public class PhotoDetailPresenterImplTest {
         verify(mMockedView).hideLoadingFullScreen();
         verify(mMockedView).showFullScreenError(ArgumentMatchers.anyString());
         verifyNoMoreInteractions(mMockedView);
+    }
+
+    @Test
+    public void testSetupWallPaperSuccess() {
+//        IOnWallPaperChanged listener = (IOnWallPaperChanged) mPresenter;
+//        doAnswer(invocation -> {
+//            listener.onWallPaperChangedSuccess();
+//            return null;
+//        }).when(mMockedWallpaperSetter).setWallPaper(ArgumentMatchers.any(Bitmap.class), listener);
+//        mPresenter.setWallPaper(ArgumentMatchers.any(Bitmap.class));
+//        verify(listener).onWallPaperChangedSuccess();
     }
 }
