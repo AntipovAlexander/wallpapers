@@ -44,8 +44,11 @@ public class PhotoDetailPresenterImplTest {
         mPresenter.detachView();
     }
 
+    /**
+     * test successful loading picture model from api
+     */
     @Test
-    public void getPictureSuccess() {
+    public void getPictureModelSuccess() {
         Picture picture = new Picture();
         doReturn(Observable.just(picture)).when(mMockedInteractor).getPicture(ArgumentMatchers.anyString());
         doAnswer(invocation -> {
@@ -59,8 +62,11 @@ public class PhotoDetailPresenterImplTest {
         verifyNoMoreInteractions(mMockedView);
     }
 
+    /**
+     * test failure loading picture model from api
+     */
     @Test
-    public void getPictureError() {
+    public void getPictureModelError() {
         doReturn(Observable.just(new Exception())).when(mMockedInteractor).getPicture(ArgumentMatchers.anyString());
         mPresenter.getPicture("");
         verify(mMockedView).showLoadingFullScreen();
@@ -69,8 +75,29 @@ public class PhotoDetailPresenterImplTest {
         verifyNoMoreInteractions(mMockedView);
     }
 
+    /**
+     * test error, while loading image from url via glide
+     */
     @Test
-    public void pictureCantBeLoaded() {
+    public void testLoadPictureFromUrlSuccess () {
+        Picture picture = new Picture();
+        doReturn(Observable.just(picture)).when(mMockedInteractor).getPicture(ArgumentMatchers.anyString());
+        doAnswer(invocation -> {
+            mPresenter.onPictureLoaded();
+            return null;
+        }).when(mMockedView).renderLayout(picture);
+        mPresenter.getPicture("");
+        verify(mMockedView).showLoadingFullScreen();
+        verify(mMockedView).renderLayout(picture);
+        verify(mMockedView).hideLoadingFullScreen();
+        verifyNoMoreInteractions(mMockedView);
+    }
+
+    /**
+     * test error, while loading image from url via glide
+     */
+    @Test
+    public void testLoadPictureFromUrlFailure() {
         Picture picture = new Picture();
         doReturn(Observable.just(picture)).when(mMockedInteractor).getPicture(ArgumentMatchers.anyString());
         doAnswer(invocation -> {
