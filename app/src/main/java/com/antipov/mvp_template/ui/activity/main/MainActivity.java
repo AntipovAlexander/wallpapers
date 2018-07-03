@@ -1,5 +1,7 @@
 package com.antipov.mvp_template.ui.activity.main;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.ui.activity.base.BaseActivity;
 import com.antipov.mvp_template.pojo.Picture;
+import com.antipov.mvp_template.ui.activity.scheduler.SchedulerActivity;
 import com.antipov.mvp_template.ui.adapter.PhotoListAdapter;
 import com.antipov.mvp_template.utils.GlideApp;
 
@@ -22,13 +25,14 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements MainView {
+public class MainActivity extends BaseActivity implements MainView, View.OnClickListener {
 
     @Inject
     MainPresenter<MainView, MainInteractor> mPresenter;
     @BindView(R.id.rv_photos) RecyclerView mPhotos;
     @BindView(R.id.fl_progress) FrameLayout mProgress;
     @BindView(R.id.error_layout) RelativeLayout mError;
+    @BindView(R.id.tv_schedule) TextView mSchedule;
     private PhotoListAdapter mAdapter;
 
     @Override
@@ -74,7 +78,17 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void initListeners() {
+        mSchedule.setOnClickListener(this);
+    }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_schedule:
+                Intent i = new Intent(this, SchedulerActivity.class);
+                startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                break;
+        }
     }
 
     @Override

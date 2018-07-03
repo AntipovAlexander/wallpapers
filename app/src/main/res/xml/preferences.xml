@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/image_content_settings">
+        <ListPreference
+            android:title="@string/wallpaper_tag"
+            android:summary="@string/wallpaper_topic_summary"
+            android:key="downloadType"
+            android:entries="@array/tags"
+            android:entryValues="@array/tags" />
+        <SwitchPreference
+            android:key="use_random"
+            android:title="@string/use_random"
+            android:summary="@string/use_random_summary"/>
+        <SwitchPreference
+            android:key="use_custom"
+            android:title="@string/use_custom_tag"
+            android:summary="@string/use_custom_summary"/>
+        <EditTextPreference
+            android:title="@string/your_keyword"
+            android:hint="@string/keyword_hint"
+            android:summary="@string/keyword_hint"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/change_frequency">
+        <ListPreference
+            android:title="@string/change_frequency"
+            android:summary="@string/change_frequency_summary"
+            android:entries="@array/frequencies"
+            android:entryValues="@array/frequency_values" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/other">
+        <CheckBoxPreference
+            android:key="only_wifi"
+            android:title="@string/only_when_wifi"
+            android:defaultValue="true"
+            android:summary="@string/only_when_wifi_summary" />
+    </PreferenceCategory>
+</PreferenceScreen>

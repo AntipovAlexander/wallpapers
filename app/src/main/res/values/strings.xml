@@ -8,4 +8,21 @@
     <string name="set_as_wallpaper">Set as wallpaper</string>
     <string name="setup_successfully">Set up successfully</string>
     <string name="schedule_your_wallpaper">Set wallpaper change period</string>
+    <string name="only_when_wifi">Only when Wi-Fi enabled</string>
+    <string name="only_when_wifi_summary">Download new wallpappers only when connected via Wi-Fi. Downloading via mobile network may be expensive.</string>
+    <string name="wallpaper_topic">Wallpapper topic</string>
+    <string name="wallpaper_tag">Wallpaper tag</string>
+    <string name="tag_hint">E.g. nature</string>
+    <string name="use_random">Use random pictures</string>
+    <string name="use_custom_tag">Use custom tag</string>
+    <string name="use_random_summary">If on, application will download random images for wallpaper</string>
+    <string name="image_content_settings">Image content</string>
+    <string name="use_custom_summary">Type your keyword for wallpaper search into field below</string>
+    <string name="your_keyword">Your keyword</string>
+    <string name="keyword_hint">E.g: winter wallpaper</string>
+    <string name="wallpaper_topic_summary">Select your wallpaper tag</string>
+    <string name="change_frequency">Change frequency</string>
+    <string name="change_frequency_summary">Select wallpaper changing frequency</string>
+    <string name="other">Other</string>
+    <string name="wallpaper_scheduler">Wallpaper scheduler</string>
 </resources>

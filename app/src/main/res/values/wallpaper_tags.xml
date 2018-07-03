@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tags">
+        <item>Architecture</item>
+        <item>Art</item>
+        <item>Blue</item>
+        <item>Cars</item>
+        <item>Cities</item>
+        <item>Colors</item>
+        <item>Forest</item>
+        <item>Green</item>
+        <item>Landscapes</item>
+        <item>Life</item>
+        <item>Lomography</item>
+        <item>Minimalism</item>
+        <item>Mountains</item>
+        <item>Music</item>
+        <item>Nature</item>
+        <item>Orange</item>
+        <item>People</item>
+        <item>Red</item>
+        <item>Sea</item>
+        <item>Space</item>
+        <item>Textures</item>
+        <item>Violet</item>
+        <item>Yellow</item>
+    </string-array>
+
+    <string-array name="tag_values">
+        <item>architecture</item>
+        <item>art</item>
+        <item>blue</item>
+        <item>cars</item>
+        <item>cities</item>
+        <item>colors</item>
+        <item>forest</item>
+        <item>green</item>
+        <item>landscapes</item>
+        <item>life</item>
+        <item>lomography</item>
+        <item>minimalism</item>
+        <item>mountains</item>
+        <item>music</item>
+        <item>nature</item>
+        <item>orange</item>
+        <item>people</item>
+        <item>red</item>
+        <item>sea</item>
+        <item>space</item>
+        <item>textures</item>
+        <item>violet</item>
+        <item>yellow</item>
+    </string-array>
+</resources>

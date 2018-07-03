@@ -15,6 +15,7 @@
             app:contentScrim="@color/colorPrimary">
 
             <TextView
+                android:id="@+id/tv_schedule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_update"
@@ -22,6 +23,8 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:padding="24dp"
+                android:clickable="true"
+                android:focusable="true"
                 android:drawablePadding="16dp"
                 android:text="@string/schedule_your_wallpaper"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
