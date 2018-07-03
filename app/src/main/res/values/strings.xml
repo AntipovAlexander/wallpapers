@@ -7,4 +7,5 @@
     <string name="author_placeholder">By %s</string>
     <string name="set_as_wallpaper">Set as wallpaper</string>
     <string name="setup_successfully">Set up successfully</string>
+    <string name="schedule_your_wallpaper">Set wallpaper change period</string>
 </resources>
