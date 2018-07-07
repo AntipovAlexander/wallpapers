@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.antipov.mvp_template.R;
-import com.antipov.mvp_template.ui.activity.base.BaseActivity;
+import com.antipov.mvp_template.ui.base.BaseActivity;
 import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragment;
 
 public class SchedulerActivity extends BaseActivity {

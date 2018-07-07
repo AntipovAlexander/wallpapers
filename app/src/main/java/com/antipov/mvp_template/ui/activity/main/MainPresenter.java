@@ -1,6 +1,6 @@
 package com.antipov.mvp_template.ui.activity.main;
 
-import com.antipov.mvp_template.ui.activity.base.IBasePresenter;
+import com.antipov.mvp_template.ui.base.IBasePresenter;
 
 /**
  * Created by AlexanderAntipov on 04.06.2018.

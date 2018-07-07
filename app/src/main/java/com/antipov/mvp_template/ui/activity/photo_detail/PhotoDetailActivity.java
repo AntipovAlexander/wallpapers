@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.pojo.Picture;
-import com.antipov.mvp_template.ui.activity.base.BaseActivity;
+import com.antipov.mvp_template.ui.base.BaseActivity;
 import com.antipov.mvp_template.utils.GlideApp;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;

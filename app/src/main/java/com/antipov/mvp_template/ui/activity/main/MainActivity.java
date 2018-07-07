@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.antipov.mvp_template.R;
-import com.antipov.mvp_template.ui.activity.base.BaseActivity;
+import com.antipov.mvp_template.ui.base.BaseActivity;
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.ui.activity.scheduler.SchedulerActivity;
 import com.antipov.mvp_template.ui.adapter.PhotoListAdapter;

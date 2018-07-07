@@ -1,4 +1,4 @@
-package com.antipov.mvp_template.ui.activity.base;
+package com.antipov.mvp_template.ui.base;
 
 import android.support.annotation.StringRes;
 

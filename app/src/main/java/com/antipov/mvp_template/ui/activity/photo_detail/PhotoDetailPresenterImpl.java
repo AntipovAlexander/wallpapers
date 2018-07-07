@@ -3,7 +3,7 @@ package com.antipov.mvp_template.ui.activity.photo_detail;
 import android.graphics.Bitmap;
 
 import com.antipov.mvp_template.R;
-import com.antipov.mvp_template.ui.activity.base.BasePresenter;
+import com.antipov.mvp_template.ui.base.BasePresenter;
 import com.antipov.mvp_template.utils.WallPapperSetter.IOnWallPaperChanged;
 import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
 

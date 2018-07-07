@@ -4,7 +4,7 @@ import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.api.Api;
 import com.antipov.mvp_template.api.RetrofitUtils;
 import com.antipov.mvp_template.pojo.Picture;
-import com.antipov.mvp_template.ui.activity.base.BaseInteractor;
+import com.antipov.mvp_template.ui.base.BaseInteractor;
 import com.antipov.mvp_template.utils.rx.SchedulerProvider;
 
 import javax.inject.Inject;
