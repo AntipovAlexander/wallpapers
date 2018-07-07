@@ -59,11 +59,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     }
 
     @Override
-    public void openActivityOnTokenExpire() {
-
-    }
-
-    @Override
     public void onError(int resId) {
         showMessage(resId);
     }
@@ -107,4 +102,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
+    public abstract int getLayoutId();
+
+    public abstract void getExtras();
+
+    public abstract void initViews();
+
+    public abstract void initListeners();
+
+    public abstract void initToolbar();
 }

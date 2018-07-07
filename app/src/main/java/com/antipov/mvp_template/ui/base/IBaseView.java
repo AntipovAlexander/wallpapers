@@ -15,8 +15,6 @@ public interface IBaseView {
 
     void hideLoadingFullScreen();
 
-    void openActivityOnTokenExpire();
-
     void onError(@StringRes int resId);
 
     void onError(String message);
@@ -28,14 +26,4 @@ public interface IBaseView {
     boolean isNetworkConnected();
 
     void hideKeyboard();
-
-    void getExtras();
-
-    int getLayoutId();
-
-    void initViews();
-
-    void initListeners();
-
-    void initToolbar();
 }

@@ -2,6 +2,7 @@ package com.antipov.mvp_template.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.di.component.AppComponent;
 
-public abstract class BaseFragment extends Fragment implements IBaseView {
+public abstract class BasePreferenceFragment extends PreferenceFragment implements IBaseView {
     private BaseActivity mActivity;
     private MaterialDialog materialDialog;
     private Context context;
@@ -31,19 +32,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (mView == null) {
-            mView = inflater.inflate(getLayoutId(), container, false);
-        }
-
-        getExtras();
-        initViews();
-        initListeners();
-        return mView;
+        addPreferencesFromResource(getPreferenceXml());
     }
 
     @Nullable
@@ -126,11 +115,5 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
         return null;
     }
 
-    public abstract int getLayoutId();
-
-    public abstract void getExtras();
-
-    public abstract void initViews();
-
-    public abstract void initListeners();
+    public abstract int getPreferenceXml();
 }
