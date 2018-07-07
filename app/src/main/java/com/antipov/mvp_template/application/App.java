@@ -1,7 +1,9 @@
 package com.antipov.mvp_template.application;
 
 import android.app.Application;
+import android.preference.PreferenceManager;
 
+import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.di.component.AppComponent;
 import com.antipov.mvp_template.di.component.DaggerAppComponent;
 import com.antipov.mvp_template.di.module.AppModule;
@@ -14,6 +16,8 @@ public class App extends Application implements com.antipov.mvp_template.applica
     @Override
     public void onCreate() {
         super.onCreate();
+        //set up default values for shared preferences
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
     }
 
     @Override

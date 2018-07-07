@@ -2,21 +2,22 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
         android:title="@string/image_content_settings">
-        <ListPreference
+        <MultiSelectListPreference
+            android:key="@string/prefs_key_tags"
             android:title="@string/wallpaper_tag"
             android:summary="@string/wallpaper_topic_summary"
-            android:key="downloadType"
             android:entries="@array/tags"
             android:entryValues="@array/tags" />
         <SwitchPreference
-            android:key="use_random"
+            android:key="@string/prefs_key_random_flag"
             android:title="@string/use_random"
             android:summary="@string/use_random_summary"/>
         <SwitchPreference
-            android:key="use_custom"
+            android:key="@string/prefs_key_custom_tag_flag"
             android:title="@string/use_custom_tag"
             android:summary="@string/use_custom_summary"/>
         <EditTextPreference
+            android:key="@string/prefs_key_keyword"
             android:title="@string/your_keyword"
             android:hint="@string/keyword_hint"
             android:summary="@string/keyword_hint"
@@ -26,6 +27,7 @@
     <PreferenceCategory
         android:title="@string/change_frequency">
         <ListPreference
+            android:key="@string/prefs_key_frequency"
             android:title="@string/change_frequency"
             android:summary="@string/change_frequency_summary"
             android:entries="@array/frequencies"
@@ -35,7 +37,7 @@
     <PreferenceCategory
         android:title="@string/other">
         <CheckBoxPreference
-            android:key="only_wifi"
+            android:key="@string/prefs_key_onlywifi"
             android:title="@string/only_when_wifi"
             android:defaultValue="true"
             android:summary="@string/only_when_wifi_summary" />

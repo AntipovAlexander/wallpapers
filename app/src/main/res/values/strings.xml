@@ -25,4 +25,10 @@
     <string name="change_frequency_summary">Select wallpaper changing frequency</string>
     <string name="other">Other</string>
     <string name="wallpaper_scheduler">Wallpaper scheduler</string>
+    <string name="prefs_key_tags">prefs_key_tags</string>
+    <string name="prefs_key_random_flag">prefs_key_random_flag</string>
+    <string name="prefs_key_custom_tag_flag">prefs_key_custom_tag_flag</string>
+    <string name="prefs_key_keyword">prefs_key_keyword</string>
+    <string name="prefs_key_frequency">prefs_key_frequency</string>
+    <string name="prefs_key_onlywifi">prefs_key_onlywifi</string>
 </resources>

@@ -13,6 +13,7 @@ import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailInteractorIm
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailPresenter;
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailPresenterImpl;
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailView;
+import com.antipov.mvp_template.utils.SharedPrefs;
 import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
 import com.antipov.mvp_template.utils.rx.AppSchedulerProvider;
 import com.antipov.mvp_template.utils.rx.SchedulerProvider;
@@ -33,6 +34,11 @@ public class AppModule {
     public AppModule(Context context, AppSchedulerProvider appSchedulerProvider) {
         this.mContext = context;
         this.mScheduleProvider = appSchedulerProvider;
+    }
+
+    @Provides
+    public SharedPrefs provideSharedPrefs(){
+        return new SharedPrefs(mContext);
     }
 
     @Provides

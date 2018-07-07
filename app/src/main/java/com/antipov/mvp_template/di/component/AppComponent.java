@@ -3,6 +3,7 @@ package com.antipov.mvp_template.di.component;
 import com.antipov.mvp_template.di.module.AppModule;
 import com.antipov.mvp_template.ui.activity.main.MainActivity;
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailActivity;
+import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragment;
 
 import dagger.Component;
 
@@ -15,5 +16,7 @@ public interface AppComponent {
     void inject(MainActivity mainActivity);
 
     void inject(PhotoDetailActivity photoDetailActivity);
+
+    void inject(SchedulerFragment schedulerFragment);
 }
 
