@@ -11,9 +11,10 @@ import com.antipov.mvp_template.utils.SharedPrefs;
 
 import javax.inject.Inject;
 
-public class SchedulerFragment extends BasePreferenceFragment {
+public class SchedulerFragment extends BasePreferenceFragment implements SchedulerFragmentView {
 
     @Inject SharedPrefs prefs;
+    @Inject SchedulerFragmentPresenter<SchedulerFragmentView, SchedulerFragmentInteractor> mPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -21,6 +22,7 @@ public class SchedulerFragment extends BasePreferenceFragment {
         ((Application)getActivity().getApplication())
                 .getComponent()
                 .inject(this);
+        "".toString();
     }
 
     @Override

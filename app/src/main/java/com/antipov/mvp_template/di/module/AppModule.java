@@ -13,6 +13,11 @@ import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailInteractorIm
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailPresenter;
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailPresenterImpl;
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailView;
+import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentInteractor;
+import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentInteractorImpl;
+import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentPresenter;
+import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentPresenterImpl;
+import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentView;
 import com.antipov.mvp_template.utils.SharedPrefs;
 import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
 import com.antipov.mvp_template.utils.rx.AppSchedulerProvider;
@@ -64,12 +69,24 @@ public class AppModule {
     }
 
     @Provides
+    public SchedulerFragmentPresenter<SchedulerFragmentView, SchedulerFragmentInteractor> providerSchedulerFragmentPresenter(
+            SchedulerFragmentPresenterImpl<SchedulerFragmentView, SchedulerFragmentInteractor> presenter
+    ){
+        return presenter;
+    }
+
+    @Provides
     public MainInteractor provideMainInteractor(MainInteractorImpl interactor){
         return interactor;
     }
 
     @Provides
     public PhotoDetailInteractor providePhotoDetailInteractor(PhotoDetailInteractorImpl interactor){
+        return interactor;
+    }
+
+    @Provides
+    public SchedulerFragmentInteractor provideSchedulerFragmentInteractor(SchedulerFragmentInteractorImpl interactor){
         return interactor;
     }
 }
