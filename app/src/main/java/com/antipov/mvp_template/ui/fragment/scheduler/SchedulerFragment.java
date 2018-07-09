@@ -38,6 +38,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     private EditTextPreference mTagText;
     private ListPreference mFrequency;
     private CheckBoxPreference mOnlyWifi;
+    private int JOBID = 112233;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -90,7 +91,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
             case R.id.schedule_wallpaper:
                 if (getBaseActivity() != null) {
                     ComponentName serviceName = new ComponentName(getBaseActivity(), ChangeWallpaperService.class);
-                    JobInfo jobInfo = new JobInfo.Builder(0, serviceName)
+                    JobInfo jobInfo = new JobInfo.Builder(JOBID, serviceName)
                                 .setPeriodic(TimeUnit.SECONDS.toMillis(10))
                                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                                 .build();
