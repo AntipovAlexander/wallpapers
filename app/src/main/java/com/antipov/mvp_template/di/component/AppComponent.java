@@ -1,7 +1,7 @@
 package com.antipov.mvp_template.di.component;
 
 import com.antipov.mvp_template.di.module.AppModule;
-import com.antipov.mvp_template.service.ChangeWallpaperService;
+import com.antipov.mvp_template.service.change_wallpaper.ChangeWallpaperService;
 import com.antipov.mvp_template.ui.activity.main.MainActivity;
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailActivity;
 import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragment;

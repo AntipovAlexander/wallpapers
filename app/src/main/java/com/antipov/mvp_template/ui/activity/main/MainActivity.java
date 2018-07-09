@@ -27,8 +27,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements MainView, View.OnClickListener {
 
-    @Inject
-    MainPresenter<MainView, MainInteractor> mPresenter;
+    @Inject MainPresenter<MainView, MainInteractor> mPresenter;
     @BindView(R.id.rv_photos) RecyclerView mPhotos;
     @BindView(R.id.fl_progress) FrameLayout mProgress;
     @BindView(R.id.error_layout) RelativeLayout mError;

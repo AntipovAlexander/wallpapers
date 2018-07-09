@@ -4,7 +4,6 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -13,17 +12,15 @@ import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.application.Application;
-import com.antipov.mvp_template.service.ChangeWallpaperService;
+import com.antipov.mvp_template.service.change_wallpaper.ChangeWallpaperService;
 import com.antipov.mvp_template.ui.base.BasePreferenceFragment;
 import com.antipov.mvp_template.utils.SharedPrefs;
 
-import java.sql.Time;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -92,7 +89,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
                 if (getBaseActivity() != null) {
                     ComponentName serviceName = new ComponentName(getBaseActivity(), ChangeWallpaperService.class);
                     JobInfo jobInfo = new JobInfo.Builder(JOBID, serviceName)
-                                .setPeriodic(TimeUnit.SECONDS.toMillis(10))
+                                .setPeriodic(TimeUnit.MINUTES.toMillis(30))
                                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                                 .build();
 

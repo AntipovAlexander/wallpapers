@@ -10,14 +10,14 @@ import java.util.List;
 import javax.inject.Inject;
 import rx.Observable;
 
+import static com.antipov.mvp_template.common.Const.PORTRAIT;
+import static com.antipov.mvp_template.common.Const.WALLPAPER;
+
 /**
  * Created by AlexanderAntipov on 04.06.2018.
  */
 
 public class MainInteractorImpl extends BaseInteractor implements MainInteractor {
-
-    private final String PORTRAIT = "portrait";
-    private final String WALLPAPER = "wallpaper";
 
     @Inject
     public MainInteractorImpl(SchedulerProvider provider) {

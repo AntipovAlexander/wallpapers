@@ -24,3 +24,4 @@ public interface Api {
     @GET("photos/{id}")
     Observable<Picture> getPicture(@Path("id") String id);
 }
+
