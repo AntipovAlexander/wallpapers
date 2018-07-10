@@ -132,18 +132,10 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
                         int wallpaperChangesFrequency) {
         // start scheduling wallpapers change
         if (getBaseActivity() != null) {
-            PersistableBundle args = new PersistableBundle();
-
-            // because args.putBoolean() requires API >= 22
-            args.putInt(Const.Args.RANDOM, boolToInt(useRandomTag));
-            args.putInt(Const.Args.CUSTOM, boolToInt(useCustomTag));
-
-            args.putString(Const.Args.KEYWORD, keywordForWallpapers);
-            args.putStringArray(Const.Args.TAGS, wallpaperTags.toArray(new String[wallpaperTags.size()]));
 
             ComponentName serviceName = new ComponentName(getBaseActivity(), ChangeWallpaperService.class);
             JobInfo.Builder jobInfo = new JobInfo.Builder(JOBID, serviceName)
-                    .setExtras(args)
+                    .setPersisted(true)
                     .setPeriodic(TimeUnit.MINUTES.toMillis(15));
 //                    .setPeriodic(TimeUnit.HOURS.toMillis(wallpaperChangesFrequency))
 

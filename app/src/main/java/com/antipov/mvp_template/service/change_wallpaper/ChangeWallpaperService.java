@@ -14,6 +14,7 @@ import com.antipov.mvp_template.application.Application;
 import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.utils.GlideApp;
+import com.antipov.mvp_template.utils.SharedPrefs;
 import com.antipov.mvp_template.utils.WallPapperSetter.IOnWallPaperChanged;
 import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
 import com.antipov.mvp_template.utils.rx.AppSchedulerProvider;
@@ -24,6 +25,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.inject.Inject;
@@ -37,8 +39,9 @@ import static com.antipov.mvp_template.common.Const.WALLPAPER;
 
 public class ChangeWallpaperService extends JobService implements  IOnWallPaperChanged {
 
-    @Inject
-    WallPaperSetter wallPaperSetter;
+    @Inject WallPaperSetter wallPaperSetter;
+    @Inject SharedPrefs sharedPrefs;
+
 
     @Override
     public boolean onStartJob(JobParameters params) {
@@ -46,14 +49,12 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
                 .getComponent()
                 .inject(this);
 
-        // get extras
-        PersistableBundle args = params.getExtras();
+        boolean isRandom = sharedPrefs.isUseRandomTag();
+        boolean isCustom = sharedPrefs.isUseCustomTag();
 
-        boolean isRandom = intToBool(args.getInt(Const.Args.RANDOM));
-        boolean isCustom = intToBool(args.getInt(Const.Args.CUSTOM));
-
-        String keyword = args.getString(Const.Args.KEYWORD, "");
-        String[] tags = args.getStringArray(Const.Args.TAGS);
+        String keyword = sharedPrefs.getKeywordForWallpapers();
+        Set<String> tagsSet = sharedPrefs.getWallpaperTags();
+        String[] tags = tagsSet.toArray(new String[tagsSet.size()]);
 
         SchedulerProvider schedulerProvider = new AppSchedulerProvider();
 
@@ -66,7 +67,7 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
             //if not custom tag or not random wallpaper selecting one tag from provided array
             int keywordIndex = ThreadLocalRandom.current().nextInt(
                     0,
-                    tags.length+1);
+                    tags.length);
             keyword = tags[keywordIndex];
         }
 
