@@ -40,11 +40,13 @@ public class WallPaperSetter {
      */
     public void setWallPaper(Bitmap bitmap, IOnWallPaperChanged onWallPaperChanged){
         Observable.fromCallable(() -> {
-            try {
-                manager.setBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
+            synchronized (WallPaperSetter.class){
+                try {
+                    manager.setBitmap(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return false;
+                }
             }
             return true;
         })
