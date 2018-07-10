@@ -5,6 +5,7 @@ import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -17,10 +18,12 @@ import android.view.View;
 
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.application.Application;
+import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.service.change_wallpaper.ChangeWallpaperService;
 import com.antipov.mvp_template.ui.base.BasePreferenceFragment;
 import com.antipov.mvp_template.utils.SharedPrefs;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -86,18 +89,14 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.schedule_wallpaper:
-                if (getBaseActivity() != null) {
-                    ComponentName serviceName = new ComponentName(getBaseActivity(), ChangeWallpaperService.class);
-                    JobInfo jobInfo = new JobInfo.Builder(JOBID, serviceName)
-                                .setPeriodic(TimeUnit.MINUTES.toMillis(30))
-                                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                                .build();
-
-                    JobScheduler scheduler = (JobScheduler) getBaseActivity().getSystemService(Context.JOB_SCHEDULER_SERVICE);
-                    if (scheduler != null){
-                        scheduler.schedule(jobInfo);
-                    }
-                }
+                mPresenter.onApplyClicked(
+                        prefs.isUseRandomTag(),
+                        prefs.isUseCustomTag(),
+                        prefs.isLoadOnlyWhenWifi(),
+                        prefs.getWallpaperTags(),
+                        prefs.getKeywordForWallpapers(),
+                        prefs.getWallpaperChangesFrequency()
+                );
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -128,6 +127,41 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     }
 
     @Override
+    public void starJob(boolean useRandomTag, boolean useCustomTag, boolean loadOnlyWhenWifi,
+                        Set<String> wallpaperTags, String keywordForWallpapers,
+                        int wallpaperChangesFrequency) {
+        // start scheduling wallpapers change
+        if (getBaseActivity() != null) {
+            PersistableBundle args = new PersistableBundle();
+
+            // because args.putBoolean() requires API >= 22
+            args.putInt(Const.Args.RANDOM, boolToInt(useRandomTag));
+            args.putInt(Const.Args.CUSTOM, boolToInt(useCustomTag));
+
+            args.putString(Const.Args.KEYWORD, keywordForWallpapers);
+            args.putStringArray(Const.Args.TAGS, wallpaperTags.toArray(new String[wallpaperTags.size()]));
+
+            ComponentName serviceName = new ComponentName(getBaseActivity(), ChangeWallpaperService.class);
+            JobInfo.Builder jobInfo = new JobInfo.Builder(JOBID, serviceName)
+                    .setExtras(args)
+                    .setPeriodic(TimeUnit.MINUTES.toMillis(15));
+//                    .setPeriodic(TimeUnit.HOURS.toMillis(wallpaperChangesFrequency))
+
+            // resolving network type
+            if (loadOnlyWhenWifi) {
+                jobInfo.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED);
+            } else {
+                jobInfo.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
+            }
+
+            JobScheduler scheduler = (JobScheduler) getBaseActivity().getSystemService(Context.JOB_SCHEDULER_SERVICE);
+            if (scheduler != null){
+                scheduler.schedule(jobInfo.build());
+            }
+        }
+    }
+
+    @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         mPresenter.onPreferenceChange(
                 preference,
@@ -136,5 +170,9 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
                 getString(R.string.prefs_key_custom_tag_flag)
         );
         return true;
+    }
+
+    public int boolToInt(boolean b) {
+        return b ? 1 : 0;
     }
 }

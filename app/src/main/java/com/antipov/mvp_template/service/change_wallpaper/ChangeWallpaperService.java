@@ -3,6 +3,7 @@ package com.antipov.mvp_template.service.change_wallpaper;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.graphics.Bitmap;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.util.Log;
 import com.antipov.mvp_template.api.Api;
 import com.antipov.mvp_template.api.RetrofitUtils;
 import com.antipov.mvp_template.application.Application;
+import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.utils.GlideApp;
 import com.antipov.mvp_template.utils.WallPapperSetter.IOnWallPaperChanged;
@@ -22,6 +24,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.inject.Inject;
 
@@ -39,22 +42,51 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
 
     @Override
     public boolean onStartJob(JobParameters params) {
-        ((Application) getApplication()).getComponent().inject(this);
+        ((Application) getApplication())
+                .getComponent()
+                .inject(this);
+
+        // get extras
+        PersistableBundle args = params.getExtras();
+
+        boolean isRandom = intToBool(args.getInt(Const.Args.RANDOM));
+        boolean isCustom = intToBool(args.getInt(Const.Args.CUSTOM));
+
+        String keyword = args.getString(Const.Args.KEYWORD, "");
+        String[] tags = args.getStringArray(Const.Args.TAGS);
 
         SchedulerProvider schedulerProvider = new AppSchedulerProvider();
+
+        if (isRandom) {
+            // if user wants random wallpapers doesn't providing keyword
+            keyword = null;
+        }
+
+        if (!isCustom && !isRandom){
+            //if not custom tag or not random wallpaper selecting one tag from provided array
+            int keywordIndex = ThreadLocalRandom.current().nextInt(
+                    0,
+                    tags.length+1);
+            keyword = tags[keywordIndex];
+        }
+
+        // in other cases using provided custom keyword
 
         RetrofitUtils
                 .getApi()
                 .create(Api.class)
-                .getPhotos(PORTRAIT, WALLPAPER, 1)
+                .getPhotos(PORTRAIT, keyword, 1)
                 .subscribeOn(schedulerProvider.newThread())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(
-                    pictures -> downloadBitmap(pictures.get(0)),
+                    pictures -> {
+                        if (pictures.size() >= 1){
+                            downloadBitmap(pictures.get(0));
+                        }
+                    },
                     throwable -> { }
                 );
 
-        Log.d("scheduler test", "onStartJob");
         return false;
     }
 
@@ -93,5 +125,9 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
     @Override
     public void onWallPaperChangedFailure() {
 
+    }
+
+    public boolean intToBool(int i) {
+        return i == 1;
     }
 }

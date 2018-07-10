@@ -31,4 +31,7 @@
     <string name="prefs_key_keyword">prefs_key_keyword</string>
     <string name="prefs_key_frequency">prefs_key_frequency</string>
     <string name="prefs_key_onlywifi">prefs_key_onlywifi</string>
+    <string name="select_frequency">Please, select frequency</string>
+    <string name="enter_keyword">When you are using custom tag, you are must provide keyword. Enter it above</string>
+    <string name="select_tags">Select tags from list above</string>
 </resources>

@@ -12,5 +12,9 @@ public class Const {
 
     public static class Args{
         public static final String ID = "id";
+        public static final String CUSTOM = "custom";
+        public static final String RANDOM = "random";
+        public static final String KEYWORD = "keyword";
+        public static final String TAGS = "tags";
     }
 }

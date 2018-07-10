@@ -29,6 +29,7 @@
         <ListPreference
             android:key="@string/prefs_key_frequency"
             android:title="@string/change_frequency"
+            android:defaultValue="0"
             android:summary="@string/change_frequency_summary"
             android:entries="@array/frequencies"
             android:entryValues="@array/frequency_values" />
