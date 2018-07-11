@@ -37,4 +37,5 @@
     <string name="selected">Selected: %s</string>
     <string name="selected_hours">Selected %d hours</string>
     <string name="frequency_daily">Selected daily frequency</string>
+    <string name="error_when_updating_prefs">Error when updating prefs</string>
 </resources>

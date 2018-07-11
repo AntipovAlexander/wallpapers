@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.antipov.mvp_template.R;
+import com.antipov.mvp_template.common.Const;
+import com.antipov.mvp_template.pojo.Preferences;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +22,18 @@ public class SharedPrefs {
 
     public SharedPrefs(Context context) {
         this.context = context;
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        sharedPref = context.getSharedPreferences(Const.APP_PREFERENCES, Context.MODE_PRIVATE);
+    }
+
+    public Preferences getPreferences(){
+        return new Preferences(
+                isUseRandomTag(),
+                isUseCustomTag(),
+                isLoadOnlyWhenWifi(),
+                getWallpaperTags(),
+                getKeywordForWallpapers(),
+                getWallpaperChangesFrequency()
+        );
     }
 
     public boolean isUseRandomTag(){
@@ -48,19 +61,18 @@ public class SharedPrefs {
     }
 
     public int getWallpaperChangesFrequency(){
-        return Integer.valueOf(
-                sharedPref
-                .getString(
+        return sharedPref
+                .getInt(
                         context.getString(R.string.prefs_key_frequency),
-                        "1"
-                ));
+                        0
+                );
     }
 
     public boolean isLoadOnlyWhenWifi(){
         return sharedPref
                 .getBoolean(
                         context.getString(R.string.prefs_key_onlywifi),
-                        false
+                        true
                 );
     }
 
@@ -70,5 +82,21 @@ public class SharedPrefs {
                         context.getString(R.string.prefs_key_tags),
                         new HashSet<>()
                 );
+    }
+
+    public boolean save(Preferences preferences) {
+        try {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean(context.getString(R.string.prefs_key_random_flag), preferences.isRandom());
+            editor.putBoolean(context.getString(R.string.prefs_key_custom_tag_flag), preferences.isCustom());
+            editor.putString(context.getString(R.string.prefs_key_keyword), preferences.getWallpaperKey());
+            editor.putInt(context.getString(R.string.prefs_key_frequency), preferences.getFrequency());
+            editor.putBoolean(context.getString(R.string.prefs_key_onlywifi), preferences.isOnlyWiFi());
+            editor.putStringSet(context.getString(R.string.prefs_key_tags), preferences.getWallpaperTags());
+            editor.apply();
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 }

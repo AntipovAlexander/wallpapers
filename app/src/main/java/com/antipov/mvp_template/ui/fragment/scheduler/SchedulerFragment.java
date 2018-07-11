@@ -19,6 +19,7 @@ import android.view.View;
 
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.application.Application;
+import com.antipov.mvp_template.pojo.Preferences;
 import com.antipov.mvp_template.service.change_wallpaper.ChangeWallpaperService;
 import com.antipov.mvp_template.ui.base.BasePreferenceFragment;
 import com.antipov.mvp_template.utils.DialogUtils;
@@ -31,7 +32,6 @@ import javax.inject.Inject;
 
 public class SchedulerFragment extends BasePreferenceFragment implements SchedulerFragmentView {
 
-    @Inject SharedPrefs prefs;
     @Inject SchedulerFragmentPresenter<SchedulerFragmentView, SchedulerFragmentInteractor> mPresenter;
     private MultiSelectListPreference mWallpaperTags;
     private SwitchPreference mRandomTag;
@@ -40,17 +40,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     private ListPreference mFrequency;
     private CheckBoxPreference mOnlyWifi;
     private int JOBID = 112233;
-
-    private Preference.OnPreferenceChangeListener onCheckablePreferenceChanged = (preference, newValue) -> {
-        mPresenter.onPreferenceChange(
-                preference,
-                newValue,
-                getString(R.string.prefs_key_random_flag),
-                getString(R.string.prefs_key_custom_tag_flag)
-        );
-        return true;
-    };
-
+    private Preferences preferences;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -59,14 +49,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
                 .getComponent()
                 .inject(this);
         mPresenter.attachView(this);
-        mPresenter.resolveEnabledPreferences(
-                prefs.isUseCustomTag(),
-                prefs.isUseRandomTag()
-        );
-        mPresenter.resolveWallpaperCustomTagSummary(prefs.getKeywordForWallpapers());
-        mPresenter.resolveWallpaperTagsSummary(prefs.getWallpaperTags());
-        mPresenter.resolveWallpaperChangeFrequencySummary(prefs.getWallpaperChangesFrequency());
-
+        mPresenter.loadPrefsData();
         setHasOptionsMenu(true);
     }
 
@@ -86,22 +69,72 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     }
 
     @Override
+    public void initPreferencesScreen(Preferences preferences) {
+        this.preferences = preferences;
+
+        mWallpaperTags.setValues(preferences.getWallpaperTags());
+        mRandomTag.setChecked(preferences.isRandom());
+        mCustomTag.setChecked(preferences.isCustom());
+        mTagText.setText(preferences.getWallpaperKey());
+        mFrequency.setValue(String.valueOf(preferences.getFrequency()));
+        mOnlyWifi.setChecked(preferences.isOnlyWiFi());
+
+        mPresenter.resolveEnabledPreferences(
+                preferences.isCustom(),
+                preferences.isRandom()
+        );
+
+        mPresenter.resolveWallpaperCustomTagSummary(preferences.getWallpaperKey());
+        mPresenter.resolveWallpaperTagsSummary(preferences.getWallpaperTags());
+        mPresenter.resolveWallpaperChangeFrequencySummary(preferences.getFrequency());
+    }
+
+    @Override
     public void initListeners() {
         mWallpaperTags.setOnPreferenceChangeListener(((preference, newValue) -> {
-            mPresenter.resolveWallpaperTagsSummary((Set<String>) newValue);
-            return true;
-        }));
-        mTagText.setOnPreferenceChangeListener(((preference, newValue) -> {
-            mPresenter.resolveWallpaperCustomTagSummary((String) newValue);
-            return true;
-        }));
-        mFrequency.setOnPreferenceChangeListener(((preference, newValue) -> {
-            mPresenter.resolveWallpaperChangeFrequencySummary(Integer.parseInt((String) newValue));
+            preferences.setWallpaperTags((Set<String>) newValue);
+            mPresenter.resolveWallpaperTagsSummary(preferences.getWallpaperTags());
             return true;
         }));
 
-        mCustomTag.setOnPreferenceChangeListener(onCheckablePreferenceChanged);
-        mRandomTag.setOnPreferenceChangeListener(onCheckablePreferenceChanged);
+        mTagText.setOnPreferenceChangeListener(((preference, newValue) -> {
+            preferences.setWallpaperKey((String) newValue);
+            mPresenter.resolveWallpaperCustomTagSummary(preferences.getWallpaperKey());
+            return true;
+        }));
+
+        mFrequency.setOnPreferenceChangeListener(((preference, newValue) -> {
+            preferences.setFrequency(Integer.parseInt((String) newValue));
+            mPresenter.resolveWallpaperChangeFrequencySummary(preferences.getFrequency());
+            return true;
+        }));
+
+        mCustomTag.setOnPreferenceChangeListener((preference, newValue) -> {
+            preferences.setCustom((boolean) newValue);
+            mPresenter.onPreferenceChange(
+                    preference,
+                    newValue,
+                    getString(R.string.prefs_key_random_flag),
+                    getString(R.string.prefs_key_custom_tag_flag)
+            );
+            return true;
+        });
+
+        mRandomTag.setOnPreferenceChangeListener((preference, newValue) -> {
+            preferences.setRandom((boolean) newValue);
+            mPresenter.onPreferenceChange(
+                    preference,
+                    newValue,
+                    getString(R.string.prefs_key_random_flag),
+                    getString(R.string.prefs_key_custom_tag_flag)
+            );
+            return true;
+        });
+
+        mOnlyWifi.setOnPreferenceChangeListener((preference, newValue) -> {
+            preferences.setOnlyWiFi((boolean) newValue);
+            return true;
+        });
     }
 
     @Override
@@ -118,14 +151,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.schedule_wallpaper:
-                mPresenter.onApplyClicked(
-                        prefs.isUseRandomTag(),
-                        prefs.isUseCustomTag(),
-                        prefs.isLoadOnlyWhenWifi(),
-                        prefs.getWallpaperTags(),
-                        prefs.getKeywordForWallpapers(),
-                        prefs.getWallpaperChangesFrequency()
-                );
+                mPresenter.onApplyClicked(preferences);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -191,9 +217,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     }
 
     @Override
-    public void starJob(boolean useRandomTag, boolean useCustomTag, boolean loadOnlyWhenWifi,
-                        Set<String> wallpaperTags, String keywordForWallpapers,
-                        int wallpaperChangesFrequency) {
+    public void starJob(Preferences preferences) {
         // start scheduling wallpapers change
         if (getBaseActivity() != null) {
 
@@ -204,7 +228,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
 //                    .setPeriodic(TimeUnit.HOURS.toMillis(wallpaperChangesFrequency))
 
             // resolving network type
-            if (loadOnlyWhenWifi) {
+            if (preferences.isOnlyWiFi()) {
                 jobInfo.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED);
             } else {
                 jobInfo.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);

@@ -6,6 +6,7 @@ package com.antipov.mvp_template.common;
 
 public class Const {
     public static final String BASE_URL = "https://api.unsplash.com/";
+    public static final String APP_PREFERENCES = "wallpapers-shared-prefs";
     public static final short RETRY_COUNT = 0;
     public static final String PORTRAIT = "portrait";
     public static final String WALLPAPER = "wallpaper";

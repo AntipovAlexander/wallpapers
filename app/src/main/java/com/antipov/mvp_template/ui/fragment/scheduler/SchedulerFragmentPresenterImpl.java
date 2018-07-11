@@ -4,6 +4,7 @@ import android.preference.Preference;
 import android.text.TextUtils;
 
 import com.antipov.mvp_template.R;
+import com.antipov.mvp_template.pojo.Preferences;
 import com.antipov.mvp_template.ui.base.BasePresenter;
 import java.util.Set;
 import javax.inject.Inject;
@@ -14,6 +15,25 @@ public class SchedulerFragmentPresenterImpl<V extends SchedulerFragmentView, I e
     @Inject
     public SchedulerFragmentPresenterImpl(I interactor) {
         super(interactor);
+    }
+
+    @Override
+    public void loadPrefsData() {
+        if (isViewAttached()) getView().showLoadingFullScreen();
+        getInteractor()
+                .loadPrefsData()
+                .subscribe(
+                        preferences -> {
+                            if (!isViewAttached()) return;
+                            getView().hideLoadingFullScreen();
+                            getView().initPreferencesScreen(preferences);
+                        },
+                        throwable -> {
+                            if (!isViewAttached()) return;
+                            getView().hideLoadingFullScreen();
+                            getView().onError(throwable.getMessage());
+                        }
+                );
     }
 
     @Override
@@ -55,37 +75,33 @@ public class SchedulerFragmentPresenterImpl<V extends SchedulerFragmentView, I e
     }
 
     @Override
-    public void onApplyClicked(boolean useRandomTag, boolean useCustomTag, boolean loadOnlyWhenWifi,
-                               Set<String> wallpaperTags, String keywordForWallpapers,
-                               int wallpaperChangesFrequency) {
+    public void onApplyClicked(Preferences preferences) {
         if (!isViewAttached()) return;
 
         // validating frequency
-        if (!validateFrequency(wallpaperChangesFrequency)) {
+        if (!validateFrequency(preferences.getFrequency())) {
             getView().onError(R.string.select_frequency);
             return;
         }
 
         // if user using custom tag we must validate that keyword was entered
-        if (useCustomTag && !validateKeyword(keywordForWallpapers)){
+        if (preferences.isCustom() && !validateKeyword(preferences.getWallpaperKey())){
             getView().onError(R.string.enter_keyword);
             return;
         }
 
         // if user wants getting images by provided tags, validate that array with tags isnt empty
-        if (!useCustomTag && !useRandomTag && wallpaperTags.size() == 0){
+        if (!preferences.isCustom() && !preferences.isRandom() && preferences.getWallpaperTags().size() == 0){
             getView().onError(R.string.select_tags);
             return;
         }
 
-        getView().starJob(
-                useRandomTag,
-                useCustomTag,
-                loadOnlyWhenWifi,
-                wallpaperTags,
-                keywordForWallpapers,
-                wallpaperChangesFrequency
-        );
+        // saving prefs and staring job if success
+        if (getInteractor().savePrefs(preferences)){
+            getView().starJob(preferences);
+        } else {
+            getView().onError(R.string.error_when_updating_prefs);
+        }
     }
 
     @Override
