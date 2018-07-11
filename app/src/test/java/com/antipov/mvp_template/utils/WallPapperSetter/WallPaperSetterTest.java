@@ -54,7 +54,7 @@ public class WallPaperSetterTest {
         doThrow(new IOException()).when(mMockWallpaperManager).setBitmap(ArgumentMatchers.any(Bitmap.class));
         mWallpaperSetter.setWallPaper(bitmap, mMockListener);
         mTestScheduler.triggerActions();
-        verify(mMockListener).onWallPaperChangedFailure(throwable.getMessage());
+        verify(mMockListener).onWallPaperChangedFailure("err");
         verifyNoMoreInteractions(mMockListener);
     }
 }

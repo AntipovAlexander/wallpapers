@@ -14,4 +14,10 @@ public interface SchedulerFragmentPresenter <V extends SchedulerFragmentView, I 
 
     void onApplyClicked(boolean useRandomTag, boolean useCustomTag, boolean loadOnlyWhenWifi,
                         Set<String> wallpaperTags, String keywordForWallpapers, int wallpaperChangesFrequency);
+
+    void resolveWallpaperCustomTagSummary(String keywordForWallpapers);
+
+    void resolveWallpaperTagsSummary(Set<String> wallpaperTags);
+
+    void resolveWallpaperChangeFrequencySummary(int keywordForWallpapers);
 }

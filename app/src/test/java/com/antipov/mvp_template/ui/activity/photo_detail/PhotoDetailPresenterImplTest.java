@@ -135,7 +135,7 @@ public class PhotoDetailPresenterImplTest {
     public void testSetupWallPaperError() {
         IOnWallPaperChanged listener = (IOnWallPaperChanged) mPresenter;
         doAnswer(invocation -> {
-            listener.onWallPaperChangedFailure(throwable.getMessage());
+            listener.onWallPaperChangedFailure("err");
             return null;
         }).when(mMockedWallpaperSetter).setWallPaper(bitmap, listener);
         mPresenter.setWallPaper(bitmap);

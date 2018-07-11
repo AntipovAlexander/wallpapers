@@ -12,4 +12,18 @@ public interface SchedulerFragmentView extends IBaseView {
     void setAllEnabled();
 
     void starJob(boolean useCustomTag, boolean useCustomTag1, boolean loadOnlyWhenWifi, Set<String> wallpaperTags, String keywordForWallpapers, int wallpaperChangesFrequency);
+
+    void setSummaryForKeyword(String keywordForWallpapers);
+
+    void setDefaultSummaryForKeyword();
+
+    void setSummaryForFrequency(int frequency);
+
+    void setDefaultSummaryForFrequency();
+
+    void setSummaryForFrequencyDaily();
+
+    void setDefaultSummaryForTags();
+
+    void setSummaryForTags(String wallpaperTags);
 }

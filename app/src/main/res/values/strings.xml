@@ -34,4 +34,7 @@
     <string name="select_frequency">Please, select frequency</string>
     <string name="enter_keyword">When you are using custom tag, you are must provide keyword. Enter it above</string>
     <string name="select_tags">Select tags from list above</string>
+    <string name="selected">Selected: %s</string>
+    <string name="selected_hours">Selected %d hours</string>
+    <string name="frequency_daily">Selected daily frequency</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.antipov.mvp_template.ui.fragment.scheduler;
 
 import android.preference.Preference;
+import android.text.TextUtils;
 
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.ui.base.BasePresenter;
@@ -83,6 +84,42 @@ public class SchedulerFragmentPresenterImpl<V extends SchedulerFragmentView, I e
                 keywordForWallpapers,
                 wallpaperChangesFrequency
         );
+    }
+
+    @Override
+    public void resolveWallpaperCustomTagSummary(String keywordForWallpapers) {
+        if (!isViewAttached()) return;
+
+        if (!keywordForWallpapers.isEmpty()){
+            getView().setSummaryForKeyword(keywordForWallpapers);
+        } else {
+            getView().setDefaultSummaryForKeyword();
+        }
+    }
+
+    @Override
+    public void resolveWallpaperTagsSummary(Set<String> wallpaperTags) {
+        if (!isViewAttached()) return;
+
+        if (wallpaperTags.size() == 0){
+            getView().setDefaultSummaryForTags();
+        } else {
+            getView().setSummaryForTags(TextUtils.join(", ", wallpaperTags));
+        }
+    }
+
+    @Override
+    public void resolveWallpaperChangeFrequencySummary(int frequency) {
+        if (!isViewAttached()) return;
+
+        if (frequency == 0){
+            getView().setDefaultSummaryForFrequency();
+        } else if (frequency == 12){
+            getView().setSummaryForFrequencyDaily();
+        } else {
+            getView().setSummaryForFrequency(frequency);
+        }
+
     }
 
     private boolean validateKeyword(String keywordForWallpapers) {

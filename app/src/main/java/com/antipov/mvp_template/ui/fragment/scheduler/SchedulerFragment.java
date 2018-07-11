@@ -6,7 +6,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -19,7 +18,6 @@ import android.view.View;
 
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.application.Application;
-import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.service.change_wallpaper.ChangeWallpaperService;
 import com.antipov.mvp_template.ui.base.BasePreferenceFragment;
 import com.antipov.mvp_template.utils.DialogUtils;
@@ -30,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-public class SchedulerFragment extends BasePreferenceFragment implements SchedulerFragmentView, Preference.OnPreferenceChangeListener {
+public class SchedulerFragment extends BasePreferenceFragment implements SchedulerFragmentView {
 
     @Inject SharedPrefs prefs;
     @Inject SchedulerFragmentPresenter<SchedulerFragmentView, SchedulerFragmentInteractor> mPresenter;
@@ -41,6 +39,17 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     private ListPreference mFrequency;
     private CheckBoxPreference mOnlyWifi;
     private int JOBID = 112233;
+
+    private Preference.OnPreferenceChangeListener onCheckablePreferenceChanged = (preference, newValue) -> {
+        mPresenter.onPreferenceChange(
+                preference,
+                newValue,
+                getString(R.string.prefs_key_random_flag),
+                getString(R.string.prefs_key_custom_tag_flag)
+        );
+        return true;
+    };
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -53,6 +62,10 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
                 prefs.isUseCustomTag(),
                 prefs.isUseRandomTag()
         );
+        mPresenter.resolveWallpaperCustomTagSummary(prefs.getKeywordForWallpapers());
+        mPresenter.resolveWallpaperTagsSummary(prefs.getWallpaperTags());
+        mPresenter.resolveWallpaperChangeFrequencySummary(prefs.getWallpaperChangesFrequency());
+
         setHasOptionsMenu(true);
     }
 
@@ -73,8 +86,21 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
 
     @Override
     public void initListeners() {
-        mCustomTag.setOnPreferenceChangeListener(this);
-        mRandomTag.setOnPreferenceChangeListener(this);
+        mWallpaperTags.setOnPreferenceChangeListener(((preference, newValue) -> {
+            mPresenter.resolveWallpaperTagsSummary((Set<String>) newValue);
+            return true;
+        }));
+        mTagText.setOnPreferenceChangeListener(((preference, newValue) -> {
+            mPresenter.resolveWallpaperCustomTagSummary((String) newValue);
+            return true;
+        }));
+        mFrequency.setOnPreferenceChangeListener(((preference, newValue) -> {
+            mPresenter.resolveWallpaperChangeFrequencySummary(Integer.parseInt((String) newValue));
+            return true;
+        }));
+
+        mCustomTag.setOnPreferenceChangeListener(onCheckablePreferenceChanged);
+        mRandomTag.setOnPreferenceChangeListener(onCheckablePreferenceChanged);
     }
 
     @Override
@@ -129,6 +155,41 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     }
 
     @Override
+    public void setSummaryForKeyword(String keywordForWallpapers) {
+        mTagText.setSummary(getString(R.string.selected, keywordForWallpapers));
+    }
+
+    @Override
+    public void setDefaultSummaryForKeyword() {
+        mTagText.setSummary(getString(R.string.keyword_hint));
+    }
+
+    @Override
+    public void setSummaryForFrequency(int frequency) {
+        mFrequency.setSummary(getString(R.string.selected_hours, frequency));
+    }
+
+    @Override
+    public void setDefaultSummaryForFrequency() {
+        mFrequency.setSummary(getString(R.string.change_frequency_summary));
+    }
+
+    @Override
+    public void setSummaryForFrequencyDaily() {
+        mFrequency.setSummary(getString(R.string.frequency_daily));
+    }
+
+    @Override
+    public void setDefaultSummaryForTags() {
+        mWallpaperTags.setSummary(getString(R.string.wallpaper_topic_summary));
+    }
+
+    @Override
+    public void setSummaryForTags(String wallpaperTags) {
+        mWallpaperTags.setSummary(getString(R.string.selected, wallpaperTags));
+    }
+
+    @Override
     public void starJob(boolean useRandomTag, boolean useCustomTag, boolean loadOnlyWhenWifi,
                         Set<String> wallpaperTags, String keywordForWallpapers,
                         int wallpaperChangesFrequency) {
@@ -160,20 +221,5 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
             DialogUtils.show(getBaseActivity(), "Scheduled successfully");
             getBaseActivity().finish();
         }
-    }
-
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        mPresenter.onPreferenceChange(
-                preference,
-                newValue,
-                getString(R.string.prefs_key_random_flag),
-                getString(R.string.prefs_key_custom_tag_flag)
-        );
-        return true;
-    }
-
-    public int boolToInt(boolean b) {
-        return b ? 1 : 0;
     }
 }
