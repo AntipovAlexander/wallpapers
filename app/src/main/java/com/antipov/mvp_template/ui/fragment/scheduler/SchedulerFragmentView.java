@@ -9,7 +9,7 @@ public interface SchedulerFragmentView extends IBaseView {
 
     void makeLayoutForCustomTag();
 
-    void setAllEnabled();
+    void resetToDefaults();
 
     void starJob(boolean useCustomTag, boolean useCustomTag1, boolean loadOnlyWhenWifi, Set<String> wallpaperTags, String keywordForWallpapers, int wallpaperChangesFrequency);
 

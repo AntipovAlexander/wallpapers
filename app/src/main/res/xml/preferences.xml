@@ -20,6 +20,7 @@
             android:key="@string/prefs_key_keyword"
             android:title="@string/your_keyword"
             android:hint="@string/keyword_hint"
+            android:enabled="false"
             android:summary="@string/keyword_hint"
             />
     </PreferenceCategory>

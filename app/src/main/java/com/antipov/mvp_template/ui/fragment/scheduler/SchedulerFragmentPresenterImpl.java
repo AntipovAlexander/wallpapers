@@ -23,6 +23,8 @@ public class SchedulerFragmentPresenterImpl<V extends SchedulerFragmentView, I e
             getView().makeLayoutForRandomTag();
         } else if (useCustomTag) {
             getView().makeLayoutForCustomTag();
+        } else {
+            getView().resetToDefaults();
         }
     }
 
@@ -37,7 +39,7 @@ public class SchedulerFragmentPresenterImpl<V extends SchedulerFragmentView, I e
                 if (isSelected) {
                     getView().makeLayoutForRandomTag();
                 } else {
-                    getView().setAllEnabled();
+                    getView().resetToDefaults();
                 }
             }
 
@@ -46,7 +48,7 @@ public class SchedulerFragmentPresenterImpl<V extends SchedulerFragmentView, I e
                 if (isSelected) {
                     getView().makeLayoutForCustomTag();
                 } else {
-                    getView().setAllEnabled();
+                    getView().resetToDefaults();
                 }
             }
         }

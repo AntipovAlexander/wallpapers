@@ -147,10 +147,10 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     }
 
     @Override
-    public void setAllEnabled() {
+    public void resetToDefaults() {
         mWallpaperTags.setEnabled(true);
         mCustomTag.setEnabled(true);
-        mTagText.setEnabled(true);
+        mTagText.setEnabled(false);
         mRandomTag.setEnabled(true);
     }
 

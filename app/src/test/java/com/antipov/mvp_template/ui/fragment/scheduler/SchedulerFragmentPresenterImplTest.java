@@ -73,7 +73,7 @@ public class SchedulerFragmentPresenterImplTest {
         verify(mMockedView).makeLayoutForRandomTag();
         isSelected = false;
         mPresenter.onPreferenceChange(preference, isSelected, keyRandom, "");
-        verify(mMockedView).setAllEnabled();
+        verify(mMockedView).resetToDefaults();
         verifyNoMoreInteractions(mMockedView);
     }
 
@@ -86,7 +86,7 @@ public class SchedulerFragmentPresenterImplTest {
         verify(mMockedView).makeLayoutForCustomTag();
         isSelected = false;
         mPresenter.onPreferenceChange(preference, isSelected, "", keyCustom);
-        verify(mMockedView).setAllEnabled();
+        verify(mMockedView).resetToDefaults();
         verifyNoMoreInteractions(mMockedView);
     }
 }
