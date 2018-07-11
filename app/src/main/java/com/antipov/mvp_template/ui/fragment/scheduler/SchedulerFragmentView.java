@@ -25,5 +25,5 @@ public interface SchedulerFragmentView extends IBaseView {
 
     void setDefaultSummaryForTags();
 
-    void setSummaryForTags(String wallpaperTags);
+    void setSummaryForTags(Set<String> wallpaperTags);
 }

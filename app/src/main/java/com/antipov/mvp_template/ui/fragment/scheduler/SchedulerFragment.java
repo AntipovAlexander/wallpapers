@@ -13,6 +13,7 @@ import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -185,8 +186,8 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     }
 
     @Override
-    public void setSummaryForTags(String wallpaperTags) {
-        mWallpaperTags.setSummary(getString(R.string.selected, wallpaperTags));
+    public void setSummaryForTags(Set<String> wallpaperTags) {
+        mWallpaperTags.setSummary(getString(R.string.selected, TextUtils.join(", ", wallpaperTags)));
     }
 
     @Override

@@ -106,7 +106,7 @@ public class SchedulerFragmentPresenterImpl<V extends SchedulerFragmentView, I e
         if (wallpaperTags.size() == 0){
             getView().setDefaultSummaryForTags();
         } else {
-            getView().setSummaryForTags(TextUtils.join(", ", wallpaperTags));
+            getView().setSummaryForTags(wallpaperTags);
         }
     }
 

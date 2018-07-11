@@ -6,8 +6,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -56,12 +61,12 @@ public class SchedulerFragmentPresenterImplTest {
     }
 
     @Test
-    public void resolveEnabledPreferencesForNothing() {
+    public void resolveDefaultEnabledPreferences() {
         mPresenter.resolveEnabledPreferences(
                 false,
                 false
         );
-        verifyZeroInteractions(mMockedView);
+        verify(mMockedView).resetToDefaults();
     }
 
     @Test
@@ -89,4 +94,137 @@ public class SchedulerFragmentPresenterImplTest {
         verify(mMockedView).resetToDefaults();
         verifyNoMoreInteractions(mMockedView);
     }
+
+    @Test
+    public void onApplyWithoutFrequency(){
+        mPresenter.onApplyClicked(
+                true,
+                false,
+                false,
+                new HashSet<String>(),
+                "",
+                0
+
+        );
+        verify(mMockedView).onError(ArgumentMatchers.anyInt());
+    }
+
+    @Test
+    public void onApplyWithoutCustomKeyword(){
+        mPresenter.onApplyClicked(
+                false,
+                true,
+                false,
+                new HashSet<String>(),
+                "",
+                1
+
+        );
+        verify(mMockedView).onError(ArgumentMatchers.anyInt());
+    }
+
+    @Test
+    public void onApplyWithoutTags(){
+        mPresenter.onApplyClicked(
+                false,
+                false,
+                false,
+                new HashSet<>(),
+                "foo",
+                1
+
+        );
+        verify(mMockedView).onError(ArgumentMatchers.anyInt());
+    }
+
+    @Test
+    public void onApplyPositiveRandom(){
+        mPresenter.onApplyClicked(
+                true,
+                false,
+                false,
+                new HashSet<>(),
+                "foo",
+                1
+
+        );
+        verify(mMockedView).starJob(
+                ArgumentMatchers.anyBoolean(),
+                ArgumentMatchers.anyBoolean(),
+                ArgumentMatchers.anyBoolean(),
+                ArgumentMatchers.anySet(),
+                ArgumentMatchers.anyString(),
+                ArgumentMatchers.anyInt());
+    }
+
+    @Test
+    public void onApplyPositiveCustom(){
+        mPresenter.onApplyClicked(
+                false,
+                true,
+                false,
+                new HashSet<>(),
+                "foo",
+                1
+
+        );
+        verify(mMockedView).starJob(
+                ArgumentMatchers.anyBoolean(),
+                ArgumentMatchers.anyBoolean(),
+                ArgumentMatchers.anyBoolean(),
+                ArgumentMatchers.anySet(),
+                ArgumentMatchers.anyString(),
+                ArgumentMatchers.anyInt());
+    }
+
+    @Test
+    public void onApplyPositiveWithTags(){
+        Set<String> set = new HashSet<>();
+        set.add("string");
+        mPresenter.onApplyClicked(
+                false,
+                true,
+                false,
+                 set,
+                "foo",
+                1
+
+        );
+        verify(mMockedView).starJob(
+                ArgumentMatchers.anyBoolean(),
+                ArgumentMatchers.anyBoolean(),
+                ArgumentMatchers.anyBoolean(),
+                ArgumentMatchers.anySet(),
+                ArgumentMatchers.anyString(),
+                ArgumentMatchers.anyInt());
+    }
+
+    @Test
+    public void resolveWallpaperCustomTagSummary(){
+        mPresenter.resolveWallpaperCustomTagSummary("");
+        verify(mMockedView).setDefaultSummaryForKeyword();
+        mPresenter.resolveWallpaperCustomTagSummary("fsdfsfsd");
+        verify(mMockedView).setSummaryForKeyword(ArgumentMatchers.anyString());
+    }
+
+    @Test
+    public void resolveWallpaperTagsSummary(){
+        Set<String> s = new HashSet<>();
+        mPresenter.resolveWallpaperTagsSummary(s);
+        verify(mMockedView).setDefaultSummaryForTags();
+        s.add("foo");
+        mPresenter.resolveWallpaperTagsSummary(s);
+        verify(mMockedView).setSummaryForTags(ArgumentMatchers.anySet());
+    }
+
+    @Test
+    public void resolveWallpaperChangeFrequencySummary(){
+        mPresenter.resolveWallpaperChangeFrequencySummary(0);
+        verify(mMockedView).setDefaultSummaryForFrequency();
+        mPresenter.resolveWallpaperChangeFrequencySummary(1);
+        verify(mMockedView).setSummaryForFrequency(ArgumentMatchers.anyInt());
+        mPresenter.resolveWallpaperChangeFrequencySummary(12);
+        verify(mMockedView).setDefaultSummaryForFrequency();
+    }
+
 }
