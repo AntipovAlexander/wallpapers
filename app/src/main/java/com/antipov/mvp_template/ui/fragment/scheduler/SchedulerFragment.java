@@ -4,6 +4,7 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.preference.CheckBoxPreference;
@@ -21,6 +22,7 @@ import com.antipov.mvp_template.application.Application;
 import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.service.change_wallpaper.ChangeWallpaperService;
 import com.antipov.mvp_template.ui.base.BasePreferenceFragment;
+import com.antipov.mvp_template.utils.DialogUtils;
 import com.antipov.mvp_template.utils.SharedPrefs;
 
 import java.util.Set;
@@ -150,6 +152,13 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
             if (scheduler != null){
                 scheduler.schedule(jobInfo.build());
             }
+
+            // FIXME: 10.07.18 REMOVE IT, IT ONLY FOR TESTING PURPOSES
+            Intent i = new Intent(Intent.ACTION_MAIN);
+            i.addCategory(Intent.CATEGORY_HOME);
+            startActivity(i);
+            DialogUtils.show(getBaseActivity(), "Scheduled successfully");
+            getBaseActivity().finish();
         }
     }
 

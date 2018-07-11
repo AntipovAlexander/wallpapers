@@ -1,7 +1,6 @@
 package com.antipov.mvp_template.utils.WallPapperSetter;
 
 import android.app.WallpaperManager;
-import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.antipov.mvp_template.rx.TestSchedulerProvider;
@@ -14,17 +13,13 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import rx.schedulers.TestScheduler;
-
-import static org.junit.Assert.*;
 
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+
 @RunWith(MockitoJUnitRunner.class)
 public class WallPaperSetterTest {
 
@@ -59,7 +54,7 @@ public class WallPaperSetterTest {
         doThrow(new IOException()).when(mMockWallpaperManager).setBitmap(ArgumentMatchers.any(Bitmap.class));
         mWallpaperSetter.setWallPaper(bitmap, mMockListener);
         mTestScheduler.triggerActions();
-        verify(mMockListener).onWallPaperChangedFailure();
+        verify(mMockListener).onWallPaperChangedFailure(throwable.getMessage());
         verifyNoMoreInteractions(mMockListener);
     }
 }

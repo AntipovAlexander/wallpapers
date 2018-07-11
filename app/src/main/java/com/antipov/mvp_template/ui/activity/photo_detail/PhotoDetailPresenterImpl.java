@@ -62,7 +62,7 @@ public class PhotoDetailPresenterImpl <V extends PhotoDetailView, I extends Phot
     }
 
     @Override
-    public void onWallPaperChangedFailure() {
+    public void onWallPaperChangedFailure(String message) {
         if (!isViewAttached()) return;
         getView().hideLoading();
     }

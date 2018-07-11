@@ -1,23 +1,13 @@
 package com.antipov.mvp_template.utils.WallPapperSetter;
 
 import android.app.WallpaperManager;
-import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.antipov.mvp_template.utils.rx.SchedulerProvider;
 
-import java.io.IOException;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
 import javax.inject.Inject;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class WallPaperSetter {
     private final SchedulerProvider provider;
@@ -43,7 +33,7 @@ public class WallPaperSetter {
             synchronized (WallPaperSetter.class){
                 try {
                     manager.setBitmap(bitmap);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     return false;
                 }
@@ -56,9 +46,9 @@ public class WallPaperSetter {
                     if (isSuccess){
                         onWallPaperChanged.onWallPaperChangedSuccess();
                     } else {
-                        onWallPaperChanged.onWallPaperChangedFailure();
+                        onWallPaperChanged.onWallPaperChangedFailure("Error while setting wallpaper");
                     }
                 },
-                        throwable -> onWallPaperChanged.onWallPaperChangedFailure());
+                        throwable -> onWallPaperChanged.onWallPaperChangedFailure(throwable.getMessage()));
     }
 }

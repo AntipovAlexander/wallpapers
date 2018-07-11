@@ -3,15 +3,13 @@ package com.antipov.mvp_template.service.change_wallpaper;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.graphics.Bitmap;
-import android.os.PersistableBundle;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.antipov.mvp_template.api.Api;
 import com.antipov.mvp_template.api.RetrofitUtils;
 import com.antipov.mvp_template.application.Application;
-import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.utils.GlideApp;
 import com.antipov.mvp_template.utils.SharedPrefs;
@@ -24,17 +22,12 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.inject.Inject;
 
-import retrofit2.Retrofit;
-import rx.Observable;
-
 import static com.antipov.mvp_template.common.Const.PORTRAIT;
-import static com.antipov.mvp_template.common.Const.WALLPAPER;
 
 
 public class ChangeWallpaperService extends JobService implements  IOnWallPaperChanged {
@@ -77,7 +70,7 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
                 .getApi()
                 .create(Api.class)
                 .getPhotos(PORTRAIT, keyword, 1)
-                .subscribeOn(schedulerProvider.newThread())
+                .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(
                     pictures -> {
@@ -124,11 +117,7 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
     }
 
     @Override
-    public void onWallPaperChangedFailure() {
+    public void onWallPaperChangedFailure(String message) {
 
-    }
-
-    public boolean intToBool(int i) {
-        return i == 1;
     }
 }
