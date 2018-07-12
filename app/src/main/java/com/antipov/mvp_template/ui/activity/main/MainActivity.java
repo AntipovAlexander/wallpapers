@@ -38,6 +38,8 @@ public class MainActivity extends BaseActivity implements MainView, View.OnClick
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        // setup new theme after showing splash
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         getComponent().inject(this);
         setupAdapter();
