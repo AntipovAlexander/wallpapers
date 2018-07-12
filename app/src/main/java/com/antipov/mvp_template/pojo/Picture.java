@@ -21,6 +21,7 @@ public class Picture {
     private Boolean likedByUser;
     private Object slug;
     private User user;
+    private boolean isCurrent = false;
 
     public class User{
         private String id;
@@ -283,5 +284,13 @@ public class Picture {
         pictureArrayList.add(picture);
 
         return pictureArrayList;
+    }
+
+    public boolean isCurrent() {
+        return isCurrent;
+    }
+
+    public void setCurrent(boolean current) {
+        isCurrent = current;
     }
 }

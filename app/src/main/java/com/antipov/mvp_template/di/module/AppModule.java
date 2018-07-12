@@ -22,6 +22,7 @@ import com.antipov.mvp_template.utils.SharedPrefs;
 import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
 import com.antipov.mvp_template.utils.rx.AppSchedulerProvider;
 import com.antipov.mvp_template.utils.rx.SchedulerProvider;
+import com.antipov.mvp_template.utils.shared.CurrentWallpaperPrefs;
 
 import dagger.Module;
 import dagger.Provides;
@@ -44,6 +45,11 @@ public class AppModule {
     @Provides
     public SharedPrefs provideSharedPrefs(){
         return new SharedPrefs(mContext);
+    }
+
+    @Provides
+    public CurrentWallpaperPrefs provideCurrentWallpaperPrefs(){
+        return new CurrentWallpaperPrefs(mContext);
     }
 
     @Provides

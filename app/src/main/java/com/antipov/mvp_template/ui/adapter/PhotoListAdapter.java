@@ -31,6 +31,8 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
     private final GlideRequests mGlide;
     private final Context mContext;
     private List<Picture> mData = new ArrayList<>();
+    private final int NOT_CURRENT = 0;
+    private final int CURRENT = 1;
 
     public PhotoListAdapter(Context context, GlideRequests glide) {
         this.mGlide = glide;
@@ -41,7 +43,12 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
     @Override
     public PhotoListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.recycler_item_photo_card, parent, false);
+        View view;
+        if (viewType == NOT_CURRENT) {
+            view = inflater.inflate(R.layout.recycler_item_photo_card, parent, false);
+        } else {
+            view = inflater.inflate(R.layout.recycler_item_current_wallpaper, parent, false);
+        }
         return new ViewHolder(view);
     }
 
@@ -50,17 +57,32 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
         mGlide
             .load(mData.get(position).getUrls().getSmall())
             .into(holder.mImagePreview);
-        holder.mTitle.setText(mContext.getString(R.string.author_placeholder, mData.get(position).getUser().getName()));
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(mContext, PhotoDetailActivity.class);
             intent.putExtra(Const.Args.ID, mData.get(position).getId());
             mContext.startActivity(intent);
         });
+
+        // if it current wallpaper leaving text from xml
+        if (holder.getItemViewType() == CURRENT){
+            return;
+        } else {
+            holder.mTitle.setText(mContext.getString(R.string.author_placeholder, mData.get(position).getUser().getName()));
+        }
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (mData.get(position).isCurrent()) {
+            return CURRENT;
+        } else {
+            return NOT_CURRENT;
+        }
     }
 
     public void setPictures(List<Picture> model){

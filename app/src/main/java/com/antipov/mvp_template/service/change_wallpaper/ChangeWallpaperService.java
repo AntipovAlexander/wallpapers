@@ -17,6 +17,7 @@ import com.antipov.mvp_template.utils.WallPapperSetter.IOnWallPaperChanged;
 import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
 import com.antipov.mvp_template.utils.rx.AppSchedulerProvider;
 import com.antipov.mvp_template.utils.rx.SchedulerProvider;
+import com.antipov.mvp_template.utils.shared.CurrentWallpaperPrefs;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
@@ -34,6 +35,8 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
 
     @Inject WallPaperSetter wallPaperSetter;
     @Inject SharedPrefs sharedPrefs;
+    @Inject CurrentWallpaperPrefs currentWallpaperPrefs;
+    private Picture mPicture;
 
 
     @Override
@@ -75,7 +78,8 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
                 .subscribe(
                     pictures -> {
                         if (pictures.size() >= 1){
-                            downloadBitmap(pictures.get(0));
+                            this.mPicture = pictures.get(0);
+                            downloadBitmap(mPicture);
                         }
                     },
                     throwable -> { }
@@ -113,7 +117,14 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
 
     @Override
     public void onWallPaperChangedSuccess() {
-
+        currentWallpaperPrefs.save(
+                mPicture.getId(),
+                mPicture.getUrls().getSmall(),
+                mPicture.getUrls().getFull(),
+                mPicture.getUser().getName(),
+                mPicture.getUser().getBio(),
+                mPicture.getUser().getLocation()
+        );
     }
 
     @Override

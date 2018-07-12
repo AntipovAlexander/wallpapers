@@ -7,4 +7,6 @@ import rx.Observable;
 
 public interface PhotoDetailInteractor extends IBaseInteractor {
     Observable<Picture> getPicture(String id);
+
+    void saveCurrentWallpaper(String id, String small, String full, String name, String bio, String location);
 }

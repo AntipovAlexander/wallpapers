@@ -3,6 +3,7 @@ package com.antipov.mvp_template.ui.activity.photo_detail;
 import android.graphics.Bitmap;
 
 import com.antipov.mvp_template.R;
+import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.ui.base.BasePresenter;
 import com.antipov.mvp_template.utils.WallPapperSetter.IOnWallPaperChanged;
 import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
@@ -13,6 +14,7 @@ public class PhotoDetailPresenterImpl <V extends PhotoDetailView, I extends Phot
     implements PhotoDetailPresenter<V, I>, IOnWallPaperChanged {
 
     private final WallPaperSetter mWallpaperSetter;
+    private Picture mPicture;
 
     @Inject
     public PhotoDetailPresenterImpl(I interactor, WallPaperSetter wallPaperSetter) {
@@ -25,6 +27,7 @@ public class PhotoDetailPresenterImpl <V extends PhotoDetailView, I extends Phot
         if (isViewAttached()) getView().showLoadingFullScreen();
         getInteractor().getPicture(id).subscribe(picture -> {
             if (isViewAttached()){
+                this.mPicture = picture;
                 getView().renderLayout(picture);
             }},
                 throwable -> {
@@ -57,6 +60,14 @@ public class PhotoDetailPresenterImpl <V extends PhotoDetailView, I extends Phot
     @Override
     public void onWallPaperChangedSuccess() {
         if (!isViewAttached()) return;
+        getInteractor().saveCurrentWallpaper(
+                mPicture.getId(),
+                mPicture.getUrls().getSmall(),
+                mPicture.getUrls().getFull(),
+                mPicture.getUser().getName(),
+                mPicture.getUser().getBio(),
+                mPicture.getUser().getLocation()
+        );
         getView().hideLoading();
         getView().showMessage(R.string.setup_successfully);
     }
