@@ -13,4 +13,6 @@ public interface MainView extends IBaseView {
     void setPictures(List<Picture> model);
 
     void showFullScreenError(String error);
+
+    void stopRefreshing();
 }

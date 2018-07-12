@@ -39,6 +39,7 @@ public class MainInteractorImpl extends BaseInteractor implements MainInteractor
                             if (picture != null) {
                                 // if current picture is saved to prefs, geti it from there and put as
                                 // first element of pictures list
+                                pictures.remove(0);
                                 pictures.add(0, picture);
                             }
                             return pictures;

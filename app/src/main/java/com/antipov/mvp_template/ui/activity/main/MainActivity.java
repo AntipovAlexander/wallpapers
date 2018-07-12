@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -25,13 +26,14 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements MainView, View.OnClickListener {
+public class MainActivity extends BaseActivity implements MainView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject MainPresenter<MainView, MainInteractor> mPresenter;
     @BindView(R.id.rv_photos) RecyclerView mPhotos;
     @BindView(R.id.fl_progress) FrameLayout mProgress;
     @BindView(R.id.error_layout) RelativeLayout mError;
     @BindView(R.id.tv_schedule) TextView mSchedule;
+    @BindView(R.id.srl_refresh) SwipeRefreshLayout mRefresh;
     private PhotoListAdapter mAdapter;
 
     @Override
@@ -78,6 +80,7 @@ public class MainActivity extends BaseActivity implements MainView, View.OnClick
     @Override
     public void initListeners() {
         mSchedule.setOnClickListener(this);
+        mRefresh.setOnRefreshListener(this);
     }
 
     @Override
@@ -88,6 +91,16 @@ public class MainActivity extends BaseActivity implements MainView, View.OnClick
                 startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.getPictures();
+    }
+
+    @Override
+    public void stopRefreshing() {
+        mRefresh.setRefreshing(false);
     }
 
     @Override
