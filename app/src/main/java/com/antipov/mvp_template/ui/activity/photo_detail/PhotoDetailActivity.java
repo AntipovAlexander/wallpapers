@@ -102,6 +102,7 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setElevation(0.0f);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.transluent_toolbar)));
     }
 
