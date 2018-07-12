@@ -2,6 +2,8 @@ package com.antipov.mvp_template.ui.fragment.scheduler;
 
 import android.preference.Preference;
 
+import com.antipov.mvp_template.pojo.Preferences;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +14,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import rx.Observable;
 
 import static org.mockito.Mockito.*;
 
@@ -97,106 +101,135 @@ public class SchedulerFragmentPresenterImplTest {
 
     @Test
     public void onApplyWithoutFrequency(){
-        mPresenter.onApplyClicked(
+        Preferences preferences = new Preferences(
                 true,
                 false,
                 false,
                 new HashSet<String>(),
                 "",
                 0
-
         );
+        mPresenter.onApplyClicked(preferences);
         verify(mMockedView).onError(ArgumentMatchers.anyInt());
     }
 
     @Test
     public void onApplyWithoutCustomKeyword(){
-        mPresenter.onApplyClicked(
+        Preferences preferences = new Preferences(
                 false,
                 true,
                 false,
                 new HashSet<String>(),
                 "",
                 1
-
         );
+
+        mPresenter.onApplyClicked(preferences);
         verify(mMockedView).onError(ArgumentMatchers.anyInt());
     }
 
     @Test
     public void onApplyWithoutTags(){
-        mPresenter.onApplyClicked(
+        Preferences preferences = new Preferences(
                 false,
                 false,
                 false,
                 new HashSet<>(),
                 "foo",
                 1
-
         );
+        mPresenter.onApplyClicked(preferences);
         verify(mMockedView).onError(ArgumentMatchers.anyInt());
     }
 
     @Test
     public void onApplyPositiveRandom(){
-        mPresenter.onApplyClicked(
+        Preferences preferences = new Preferences(
                 true,
                 false,
                 false,
                 new HashSet<>(),
                 "foo",
                 1
-
         );
-        verify(mMockedView).starJob(
-                ArgumentMatchers.anyBoolean(),
-                ArgumentMatchers.anyBoolean(),
-                ArgumentMatchers.anyBoolean(),
-                ArgumentMatchers.anySet(),
-                ArgumentMatchers.anyString(),
-                ArgumentMatchers.anyInt());
+        when(mMockedInteractor.savePrefs(preferences)).thenReturn(true);
+        mPresenter.onApplyClicked(preferences);
+        verify(mMockedView).starJob(preferences);
     }
 
     @Test
     public void onApplyPositiveCustom(){
-        mPresenter.onApplyClicked(
+        Preferences preferences = new Preferences(
                 false,
                 true,
                 false,
                 new HashSet<>(),
                 "foo",
                 1
-
         );
-        verify(mMockedView).starJob(
-                ArgumentMatchers.anyBoolean(),
-                ArgumentMatchers.anyBoolean(),
-                ArgumentMatchers.anyBoolean(),
-                ArgumentMatchers.anySet(),
-                ArgumentMatchers.anyString(),
-                ArgumentMatchers.anyInt());
+        when(mMockedInteractor.savePrefs(preferences)).thenReturn(true);
+        mPresenter.onApplyClicked(preferences);
+        verify(mMockedView).starJob(preferences);
     }
 
     @Test
     public void onApplyPositiveWithTags(){
         Set<String> set = new HashSet<>();
         set.add("string");
-        mPresenter.onApplyClicked(
+        Preferences preferences = new Preferences(false,
+                true,
+                false,
+                set,
+                "foo",
+                1);
+        when(mMockedInteractor.savePrefs(preferences)).thenReturn(true);
+        mPresenter.onApplyClicked(preferences);
+        verify(mMockedView).starJob(preferences);
+    }
+
+    @Test
+    public void onApplyNegativeRandom(){
+        Preferences preferences = new Preferences(
+                true,
+                false,
+                false,
+                new HashSet<>(),
+                "foo",
+                1
+        );
+        when(mMockedInteractor.savePrefs(preferences)).thenReturn(false);
+        mPresenter.onApplyClicked(preferences);
+        verify(mMockedView).onError(ArgumentMatchers.anyInt());
+    }
+
+    @Test
+    public void onApplyNegativeCustom(){
+        Preferences preferences = new Preferences(
                 false,
                 true,
                 false,
-                 set,
+                new HashSet<>(),
                 "foo",
                 1
-
         );
-        verify(mMockedView).starJob(
-                ArgumentMatchers.anyBoolean(),
-                ArgumentMatchers.anyBoolean(),
-                ArgumentMatchers.anyBoolean(),
-                ArgumentMatchers.anySet(),
-                ArgumentMatchers.anyString(),
-                ArgumentMatchers.anyInt());
+        when(mMockedInteractor.savePrefs(preferences)).thenReturn(false);
+        mPresenter.onApplyClicked(preferences);
+        verify(mMockedView).onError(ArgumentMatchers.anyInt());
+    }
+
+    @Test
+    public void onApplyNegativeWithTags(){
+        Set<String> set = new HashSet<>();
+        set.add("string");
+        Preferences preferences = new Preferences(false,
+                true,
+                false,
+                set,
+                "foo",
+                1);
+        when(mMockedInteractor.savePrefs(preferences)).thenReturn(false);
+        mPresenter.onApplyClicked(preferences);
+        verify(mMockedView).onError(ArgumentMatchers.anyInt());
     }
 
     @Test
@@ -225,6 +258,35 @@ public class SchedulerFragmentPresenterImplTest {
         verify(mMockedView).setSummaryForFrequency(ArgumentMatchers.anyInt());
         mPresenter.resolveWallpaperChangeFrequencySummary(12);
         verify(mMockedView).setDefaultSummaryForFrequency();
+    }
+
+    @Test
+    public void loadPrefsDataPositive(){
+//        doReturn(Observable.just(new Exception())).when(mMockedInteractor.loadPrefsData());
+        Preferences preferences = new Preferences(false,
+                true,
+                false,
+                new HashSet<>(),
+                "foo",
+                1);
+        when(mMockedInteractor.loadPrefsData()).thenReturn(Observable.just(preferences));
+        mPresenter.loadPrefsData();
+        verify(mMockedView).hideLoadingFullScreen();
+        verify(mMockedView).initPreferencesScreen(preferences);
+    }
+
+    @Test
+    public void loadPrefsDataNegative(){
+        Preferences preferences = new Preferences(false,
+                true,
+                false,
+                new HashSet<>(),
+                "foo",
+                1);
+        doReturn(Observable.just(new Exception())).when(mMockedInteractor).loadPrefsData();
+        mPresenter.loadPrefsData();
+        verify(mMockedView).hideLoadingFullScreen();
+        verify(mMockedView).onError(ArgumentMatchers.anyString());
     }
 
 }
