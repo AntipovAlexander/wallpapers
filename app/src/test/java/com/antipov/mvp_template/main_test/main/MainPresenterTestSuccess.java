@@ -6,6 +6,7 @@ import com.antipov.mvp_template.ui.activity.main.MainInteractorImpl;
 import com.antipov.mvp_template.ui.activity.main.MainPresenter;
 import com.antipov.mvp_template.ui.activity.main.MainPresenterImpl;
 import com.antipov.mvp_template.ui.activity.main.MainView;
+import com.antipov.mvp_template.utils.shared.CurrentWallpaperPrefs;
 
 import org.junit.After;
 import org.junit.Before;
@@ -28,6 +29,9 @@ public class MainPresenterTestSuccess {
     @Mock
     MainView mMockedMainView;
 
+    @Mock
+    CurrentWallpaperPrefs currentWallpaperPrefs;
+
     MainInteractor mMainInteractor;
     MainPresenter<MainView, MainInteractor> mPresenter;
     TestScheduler mTestScheduler;
@@ -35,7 +39,7 @@ public class MainPresenterTestSuccess {
     @Before
     public void setUp(){
         mTestScheduler = new TestScheduler();
-        mMainInteractor = new MainInteractorImpl(new TestSchedulerProvider(mTestScheduler));
+        mMainInteractor = new MainInteractorImpl(new TestSchedulerProvider(mTestScheduler), currentWallpaperPrefs);
         mPresenter = new MainPresenterImpl<>(mMainInteractor);
         mPresenter.attachView(mMockedMainView);
     }

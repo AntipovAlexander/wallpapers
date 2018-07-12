@@ -14,7 +14,6 @@ public class PhotoDetailPresenterImpl <V extends PhotoDetailView, I extends Phot
     implements PhotoDetailPresenter<V, I>, IOnWallPaperChanged {
 
     private final WallPaperSetter mWallpaperSetter;
-    private Picture mPicture;
 
     @Inject
     public PhotoDetailPresenterImpl(I interactor, WallPaperSetter wallPaperSetter) {
@@ -27,7 +26,6 @@ public class PhotoDetailPresenterImpl <V extends PhotoDetailView, I extends Phot
         if (isViewAttached()) getView().showLoadingFullScreen();
         getInteractor().getPicture(id).subscribe(picture -> {
             if (isViewAttached()){
-                this.mPicture = picture;
                 getView().renderLayout(picture);
             }},
                 throwable -> {
@@ -51,14 +49,14 @@ public class PhotoDetailPresenterImpl <V extends PhotoDetailView, I extends Phot
     }
 
     @Override
-    public void setWallPaper(Bitmap mBitmap) {
+    public void setWallPaper(Bitmap mBitmap, Picture mPicture) {
         if (!isViewAttached()) return;
         getView().showLoading();
-        mWallpaperSetter.setWallPaper(mBitmap, this);
+        mWallpaperSetter.setWallPaper(mBitmap, mPicture, this);
     }
 
     @Override
-    public void onWallPaperChangedSuccess() {
+    public void onWallPaperChangedSuccess(Picture mPicture) {
         if (!isViewAttached()) return;
         getInteractor().saveCurrentWallpaper(
                 mPicture.getId(),

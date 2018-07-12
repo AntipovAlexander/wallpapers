@@ -23,6 +23,23 @@ public class Picture {
     private User user;
     private boolean isCurrent = false;
 
+    public static Picture getForTests() {
+        Picture p = new Picture();
+        Picture.User user = p. new User("test");
+        user.setBio("test");
+        user.setLocation("test");
+        user.setName("test");
+        p.setUser(user);
+
+        Urls urls = p. new Urls();
+        urls.setSmall("test");
+        urls.setFull("test");
+
+        p.setUrls(urls);
+
+        return p;
+    }
+
     public class User{
         private String id;
         private String updatedAt;

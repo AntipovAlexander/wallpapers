@@ -3,6 +3,7 @@ package com.antipov.mvp_template.utils.WallPapperSetter;
 import android.app.WallpaperManager;
 import android.graphics.Bitmap;
 
+import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.rx.TestSchedulerProvider;
 
 import org.junit.Before;
@@ -43,18 +44,20 @@ public class WallPaperSetterTest {
 
     @Test
     public void setWallPaperSuccess() {
-        mWallpaperSetter.setWallPaper(bitmap, mMockListener);
+        Picture mPicture = Picture.getForTests();
+        mWallpaperSetter.setWallPaper(bitmap, mPicture, mMockListener);
         mTestScheduler.triggerActions();
-        verify(mMockListener).onWallPaperChangedSuccess();
+        verify(mMockListener).onWallPaperChangedSuccess(mPicture);
         verifyNoMoreInteractions(mMockListener);
     }
 
     @Test
     public void setWallPaperError() throws IOException {
+        Picture mPicture = Picture.getForTests();
         doThrow(new IOException()).when(mMockWallpaperManager).setBitmap(ArgumentMatchers.any(Bitmap.class));
-        mWallpaperSetter.setWallPaper(bitmap, mMockListener);
+        mWallpaperSetter.setWallPaper(bitmap, mPicture, mMockListener);
         mTestScheduler.triggerActions();
-        verify(mMockListener).onWallPaperChangedFailure("err");
+        verify(mMockListener).onWallPaperChangedFailure(ArgumentMatchers.anyString());
         verifyNoMoreInteractions(mMockListener);
     }
 }

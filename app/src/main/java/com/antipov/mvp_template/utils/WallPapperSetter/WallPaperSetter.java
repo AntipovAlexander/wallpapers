@@ -3,6 +3,7 @@ package com.antipov.mvp_template.utils.WallPapperSetter;
 import android.app.WallpaperManager;
 import android.graphics.Bitmap;
 
+import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.utils.rx.SchedulerProvider;
 
 import javax.inject.Inject;
@@ -24,11 +25,11 @@ public class WallPaperSetter {
      * Using rx java for providing test schedulers in unt tests
      *
      * https://medium.com/code-yoga/using-rxjava-instead-asynctask-3052697c0f48
-     *
-     * @param bitmap image which will be set up as wallpaper
+     *  @param bitmap image which will be set up as wallpaper
+     * @param mPicture
      * @param onWallPaperChanged set up wallpaper listener
      */
-    public void setWallPaper(Bitmap bitmap, IOnWallPaperChanged onWallPaperChanged){
+    public void setWallPaper(Bitmap bitmap, Picture mPicture, IOnWallPaperChanged onWallPaperChanged){
         Observable.fromCallable(() -> {
             synchronized (WallPaperSetter.class){
                 try {
@@ -44,7 +45,7 @@ public class WallPaperSetter {
                 .observeOn(provider.ui())
                 .subscribe(isSuccess -> {
                     if (isSuccess){
-                        onWallPaperChanged.onWallPaperChangedSuccess();
+                        onWallPaperChanged.onWallPaperChangedSuccess(mPicture);
                     } else {
                         onWallPaperChanged.onWallPaperChangedFailure("Error while setting wallpaper");
                     }

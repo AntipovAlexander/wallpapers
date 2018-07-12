@@ -119,12 +119,13 @@ public class PhotoDetailPresenterImplTest {
 
     @Test
     public void testSetupWallPaperSuccess() {
+        Picture mPicture = Picture.getForTests();
         IOnWallPaperChanged listener = (IOnWallPaperChanged) mPresenter;
         doAnswer(invocation -> {
-            listener.onWallPaperChangedSuccess();
+            listener.onWallPaperChangedSuccess(mPicture);
             return null;
-        }).when(mMockedWallpaperSetter).setWallPaper(bitmap, listener);
-        mPresenter.setWallPaper(bitmap);
+        }).when(mMockedWallpaperSetter).setWallPaper(bitmap, mPicture, listener);
+        mPresenter.setWallPaper(bitmap, mPicture);
         verify(mMockedView).showLoading();
         verify(mMockedView).hideLoading();
         verify(mMockedView).showMessage(ArgumentMatchers.anyInt());
@@ -133,12 +134,13 @@ public class PhotoDetailPresenterImplTest {
 
     @Test
     public void testSetupWallPaperError() {
+        Picture mPicture = Picture.getForTests();
         IOnWallPaperChanged listener = (IOnWallPaperChanged) mPresenter;
         doAnswer(invocation -> {
             listener.onWallPaperChangedFailure("err");
             return null;
-        }).when(mMockedWallpaperSetter).setWallPaper(bitmap, listener);
-        mPresenter.setWallPaper(bitmap);
+        }).when(mMockedWallpaperSetter).setWallPaper(bitmap, mPicture, listener);
+        mPresenter.setWallPaper(bitmap, mPicture);
         verify(mMockedView).showLoading();
         verify(mMockedView).hideLoading();
         verifyNoMoreInteractions(mMockedView);

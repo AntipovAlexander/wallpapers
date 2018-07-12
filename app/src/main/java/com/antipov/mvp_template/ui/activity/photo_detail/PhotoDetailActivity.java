@@ -37,6 +37,7 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
     @BindView(R.id.bottom_sheet) LinearLayout mBottomSheet;
     private String id;
     private Bitmap mBitmap;
+    private Picture mPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +92,7 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
         switch (item.getItemId()){
             case R.id.set_wallpaper:
                 showLoading();
-                mPresenter.setWallPaper(mBitmap);
+                mPresenter.setWallPaper(mBitmap, mPicture);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -113,6 +114,7 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
 
     @Override
     public void renderLayout(Picture model) {
+        this.mPicture = model;
         GlideApp.with(this)
                 .asBitmap()
                 .load(model.getUrls().getFull())

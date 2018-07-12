@@ -3,7 +3,6 @@ package com.antipov.mvp_template.service.change_wallpaper;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -107,7 +106,7 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
     }
 
     private void setWallpaperFromBitmap(Bitmap bmp) {
-        wallPaperSetter.setWallPaper(bmp, this);
+        wallPaperSetter.setWallPaper(bmp, mPicture, this);
     }
 
     @Override
@@ -116,14 +115,14 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
     }
 
     @Override
-    public void onWallPaperChangedSuccess() {
+    public void onWallPaperChangedSuccess(Picture mPicture) {
         currentWallpaperPrefs.save(
-                mPicture.getId(),
-                mPicture.getUrls().getSmall(),
-                mPicture.getUrls().getFull(),
-                mPicture.getUser().getName(),
-                mPicture.getUser().getBio(),
-                mPicture.getUser().getLocation()
+                this.mPicture.getId(),
+                this.mPicture.getUrls().getSmall(),
+                this.mPicture.getUrls().getFull(),
+                this.mPicture.getUser().getName(),
+                this.mPicture.getUser().getBio(),
+                this.mPicture.getUser().getLocation()
         );
     }
 
