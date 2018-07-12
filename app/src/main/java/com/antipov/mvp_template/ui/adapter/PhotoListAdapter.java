@@ -59,7 +59,7 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
             .into(holder.mImagePreview);
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(mContext, PhotoDetailActivity.class);
-            intent.putExtra(Const.Args.ID, mData.get(position).getId());
+            intent.putExtra(Const.Args.PICTURE, mData.get(position));
             mContext.startActivity(intent);
         });
 

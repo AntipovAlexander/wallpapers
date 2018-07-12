@@ -35,7 +35,6 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
     @BindView(R.id.tv_location) TextView mLocation;
     @BindView(R.id.tv_description) TextView mDescription;
     @BindView(R.id.bottom_sheet) LinearLayout mBottomSheet;
-    private String id;
     private Bitmap mBitmap;
     private Picture mPicture;
 
@@ -44,14 +43,14 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
         super.onCreate(savedInstanceState);
         getComponent().inject(this);
         mPresenter.attachView(this);
-        mPresenter.getPicture(id);
+        mPresenter.onViewPrepared(mPicture);
     }
 
     @Override
     public void getExtras() {
         Bundle args = getIntent().getExtras();
         if (args != null){
-            id = args.getString(Const.Args.ID);
+            mPicture = (Picture) args.getSerializable(Const.Args.PICTURE);
         }
     }
 
@@ -114,7 +113,6 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
 
     @Override
     public void renderLayout(Picture model) {
-        this.mPicture = model;
         GlideApp.with(this)
                 .asBitmap()
                 .load(model.getUrls().getFull())

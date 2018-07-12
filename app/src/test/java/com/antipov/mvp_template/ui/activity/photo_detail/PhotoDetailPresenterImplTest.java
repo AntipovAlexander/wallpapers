@@ -49,36 +49,6 @@ public class PhotoDetailPresenterImplTest {
         mPresenter.detachView();
     }
 
-    /**
-     * test successful loading picture model from api
-     */
-    @Test
-    public void getPictureModelSuccess() {
-        Picture picture = new Picture();
-        doReturn(Observable.just(picture)).when(mMockedInteractor).getPicture(ArgumentMatchers.anyString());
-        doAnswer(invocation -> {
-            mPresenter.onPictureLoaded();
-            return null;
-        }).when(mMockedView).renderLayout(picture);
-        mPresenter.getPicture("");
-        verify(mMockedView).showLoadingFullScreen();
-        verify(mMockedView).renderLayout(picture);
-        verify(mMockedView).hideLoadingFullScreen();
-        verifyNoMoreInteractions(mMockedView);
-    }
-
-    /**
-     * test failure loading picture model from api
-     */
-    @Test
-    public void getPictureModelError() {
-        doReturn(Observable.just(new Exception())).when(mMockedInteractor).getPicture(ArgumentMatchers.anyString());
-        mPresenter.getPicture("");
-        verify(mMockedView).showLoadingFullScreen();
-        verify(mMockedView).showFullScreenError(ArgumentMatchers.anyString());
-        verify(mMockedView).hideLoadingFullScreen();
-        verifyNoMoreInteractions(mMockedView);
-    }
 
     /**
      * test error, while loading image from url via glide
@@ -86,13 +56,11 @@ public class PhotoDetailPresenterImplTest {
     @Test
     public void testLoadPictureFromUrlSuccess () {
         Picture picture = new Picture();
-        doReturn(Observable.just(picture)).when(mMockedInteractor).getPicture(ArgumentMatchers.anyString());
         doAnswer(invocation -> {
             mPresenter.onPictureLoaded();
             return null;
         }).when(mMockedView).renderLayout(picture);
-        mPresenter.getPicture("");
-        verify(mMockedView).showLoadingFullScreen();
+        mPresenter.onViewPrepared(picture);
         verify(mMockedView).renderLayout(picture);
         verify(mMockedView).hideLoadingFullScreen();
         verifyNoMoreInteractions(mMockedView);
@@ -104,13 +72,11 @@ public class PhotoDetailPresenterImplTest {
     @Test
     public void testLoadPictureFromUrlFailure() {
         Picture picture = new Picture();
-        doReturn(Observable.just(picture)).when(mMockedInteractor).getPicture(ArgumentMatchers.anyString());
         doAnswer(invocation -> {
-            mPresenter.onPictureNotLoaded(ArgumentMatchers.anyString());
+            mPresenter.onPictureNotLoaded("error message");
             return null;
         }).when(mMockedView).renderLayout(picture);
-        mPresenter.getPicture("");
-        verify(mMockedView).showLoadingFullScreen();
+        mPresenter.onViewPrepared(picture);
         verify(mMockedView).renderLayout(picture);
         verify(mMockedView).hideLoadingFullScreen();
         verify(mMockedView).showFullScreenError(ArgumentMatchers.anyString());

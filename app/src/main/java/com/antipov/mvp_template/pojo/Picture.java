@@ -1,5 +1,6 @@
 package com.antipov.mvp_template.pojo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by AlexanderAntipov on 05.06.2018.
  */
 
-public class Picture {
+public class Picture implements Serializable{
     private String id;
     private String createdAt;
     private String updatedAt;
@@ -40,7 +41,7 @@ public class Picture {
         return p;
     }
 
-    public class User{
+    public class User implements Serializable {
         private String id;
         private String updatedAt;
         private String username;
@@ -137,7 +138,7 @@ public class Picture {
         }
     }
 
-    public class Urls{
+    public class Urls implements Serializable {
         private String raw;
         private String full;
         private String regular;

@@ -22,20 +22,6 @@ public class PhotoDetailPresenterImpl <V extends PhotoDetailView, I extends Phot
     }
 
     @Override
-    public void getPicture(String id) {
-        if (isViewAttached()) getView().showLoadingFullScreen();
-        getInteractor().getPicture(id).subscribe(picture -> {
-            if (isViewAttached()){
-                getView().renderLayout(picture);
-            }},
-                throwable -> {
-            if (isViewAttached()){
-                getView().hideLoadingFullScreen();
-                getView().showFullScreenError(throwable.getMessage());
-            }});
-    }
-
-    @Override
     public void onPictureNotLoaded(String message) {
         if (!isViewAttached()) return;
         getView().hideLoadingFullScreen();
@@ -53,6 +39,12 @@ public class PhotoDetailPresenterImpl <V extends PhotoDetailView, I extends Phot
         if (!isViewAttached()) return;
         getView().showLoading();
         mWallpaperSetter.setWallPaper(mBitmap, mPicture, this);
+    }
+
+    @Override
+    public void onViewPrepared(Picture mPicture) {
+        if (!isViewAttached()) return;
+        getView().renderLayout(mPicture);
     }
 
     @Override

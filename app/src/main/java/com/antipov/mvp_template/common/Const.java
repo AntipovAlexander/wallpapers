@@ -18,6 +18,7 @@ public class Const {
         public static final String RANDOM = "random";
         public static final String KEYWORD = "keyword";
         public static final String TAGS = "tags";
+        public static final String PICTURE = "picture";
     }
 
     public static class Prefs{
