@@ -224,6 +224,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
             ComponentName serviceName = new ComponentName(getBaseActivity(), ChangeWallpaperService.class);
             JobInfo.Builder jobInfo = new JobInfo.Builder(JOBID, serviceName)
                     .setPersisted(true)
+                    .setRequiresDeviceIdle(true)
                     .setPeriodic(TimeUnit.MINUTES.toMillis(15));
 //                    .setPeriodic(TimeUnit.HOURS.toMillis(wallpaperChangesFrequency))
 
