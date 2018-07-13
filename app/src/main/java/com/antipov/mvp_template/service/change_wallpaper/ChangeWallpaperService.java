@@ -41,10 +41,11 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
     @Inject SharedPrefs sharedPrefs;
     @Inject CurrentWallpaperPrefs currentWallpaperPrefs;
     private Picture mPicture;
-    private final String CHANNEL_ID = "wallpaper-id";
+    private JobParameters params;
 
     @Override
     public boolean onStartJob(JobParameters params) {
+        this.params = params;
         ((Application) getApplication())
                 .getComponent()
                 .inject(this);
@@ -89,7 +90,7 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
                     throwable -> { }
                 );
 
-        return false;
+        return true;
     }
 
     private void downloadBitmap(@NonNull Picture picture) {
@@ -129,10 +130,11 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
                 this.mPicture.getUser().getBio(),
                 this.mPicture.getUser().getLocation()
         );
+        jobFinished(params, false);
     }
 
     @Override
     public void onWallPaperChangedFailure(String message) {
-
+        jobFinished(params, false);
     }
 }
