@@ -116,7 +116,7 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
     public void renderLayout(Picture model) {
         GlideApp.with(this)
                 .asBitmap()
-                .load(model.getUrls().getFull())
+                .load(model.getUrls().getRegular())
                 .listener(new RequestListener<Bitmap>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {

@@ -53,7 +53,7 @@ public class PhotoDetailPresenterImpl <V extends PhotoDetailView, I extends Phot
         getInteractor().saveCurrentWallpaper(
                 mPicture.getId(),
                 mPicture.getUrls().getSmall(),
-                mPicture.getUrls().getFull(),
+                mPicture.getUrls().getRegular(),
                 mPicture.getUser().getName(),
                 mPicture.getUser().getBio(),
                 mPicture.getUser().getLocation()

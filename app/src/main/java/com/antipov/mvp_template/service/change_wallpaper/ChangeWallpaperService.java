@@ -1,11 +1,16 @@
 package com.antipov.mvp_template.service.change_wallpaper;
 
+import android.app.NotificationManager;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 
+import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.api.Api;
 import com.antipov.mvp_template.api.RetrofitUtils;
 import com.antipov.mvp_template.application.Application;
@@ -36,7 +41,7 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
     @Inject SharedPrefs sharedPrefs;
     @Inject CurrentWallpaperPrefs currentWallpaperPrefs;
     private Picture mPicture;
-
+    private final String CHANNEL_ID = "wallpaper-id";
 
     @Override
     public boolean onStartJob(JobParameters params) {
@@ -90,7 +95,7 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
     private void downloadBitmap(@NonNull Picture picture) {
         GlideApp.with(this)
                 .asBitmap()
-                .load(picture.getUrls().getFull())
+                .load(picture.getUrls().getRegular())
                 .listener(new RequestListener<Bitmap>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
@@ -119,7 +124,7 @@ public class ChangeWallpaperService extends JobService implements  IOnWallPaperC
         currentWallpaperPrefs.save(
                 this.mPicture.getId(),
                 this.mPicture.getUrls().getSmall(),
-                this.mPicture.getUrls().getFull(),
+                this.mPicture.getUrls().getRegular(),
                 this.mPicture.getUser().getName(),
                 this.mPicture.getUser().getBio(),
                 this.mPicture.getUser().getLocation()
