@@ -22,6 +22,7 @@ public class Picture implements Serializable {
     private Boolean likedByUser;
     private Object slug;
     private User user;
+    private Links links;
     private boolean isCurrent = false;
 
     public static Picture getForTests() {
@@ -55,6 +56,14 @@ public class Picture implements Serializable {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Links getLinks() {
+        return links;
+    }
+
+    public void setLinks(Links links) {
+        this.links = links;
     }
 
     public String getUpdatedAt() {
@@ -144,6 +153,8 @@ public class Picture implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
+
+
 
     public List<Picture> getListForTest() {
         Picture picture = new Picture();
@@ -261,6 +272,18 @@ public class Picture implements Serializable {
 
         public void setLocation(String location) {
             this.location = location;
+        }
+    }
+
+    public class Links implements Serializable {
+        private String html;
+
+        public String getHtml() {
+            return html;
+        }
+
+        public void setHtml(String html) {
+            this.html = html;
         }
     }
 

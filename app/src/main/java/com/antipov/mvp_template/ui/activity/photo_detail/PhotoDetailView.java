@@ -7,4 +7,6 @@ public interface PhotoDetailView extends IBaseView {
     void renderLayout(Picture model);
 
     void showFullScreenError(String error);
+
+    void startBrowserIntent();
 }

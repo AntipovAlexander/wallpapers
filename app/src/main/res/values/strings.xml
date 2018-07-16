@@ -39,4 +39,5 @@
     <string name="frequency_daily">Selected daily frequency</string>
     <string name="error_when_updating_prefs">Error when updating prefs</string>
     <string name="active_wallpaper">Active wallpaper. \nTouch for details</string>
+    <string name="open_in_browser">Open in browser</string>
 </resources>

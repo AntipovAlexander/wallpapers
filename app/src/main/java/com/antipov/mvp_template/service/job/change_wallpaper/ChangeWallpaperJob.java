@@ -125,6 +125,7 @@ public class ChangeWallpaperJob extends JobService implements IOnWallPaperChange
                 this.mPicture.getId(),
                 this.mPicture.getUrls().getSmall(),
                 this.mPicture.getUrls().getRegular(),
+                this.mPicture.getLinks().getHtml(),
                 this.mPicture.getUser().getName(),
                 this.mPicture.getUser().getBio(),
                 this.mPicture.getUser().getLocation()

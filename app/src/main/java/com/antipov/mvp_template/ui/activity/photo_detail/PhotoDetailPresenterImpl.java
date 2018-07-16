@@ -48,12 +48,19 @@ public class PhotoDetailPresenterImpl<V extends PhotoDetailView, I extends Photo
     }
 
     @Override
+    public void onOpenInBrowserClicked() {
+        if (!isViewAttached()) return;
+        getView().startBrowserIntent();
+    }
+
+    @Override
     public void onWallPaperChangedSuccess(Picture mPicture) {
         if (!isViewAttached()) return;
         getInteractor().saveCurrentWallpaper(
                 mPicture.getId(),
                 mPicture.getUrls().getSmall(),
                 mPicture.getUrls().getRegular(),
+                mPicture.getLinks().getHtml(),
                 mPicture.getUser().getName(),
                 mPicture.getUser().getBio(),
                 mPicture.getUser().getLocation()

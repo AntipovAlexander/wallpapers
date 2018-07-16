@@ -18,6 +18,7 @@ public class CurrentWallpaperPrefs {
     public void save(String id,
                      String pictureSmallUrl,
                      String pictureFullUrl,
+                     String htmlLink,
                      String userName,
                      String userBio,
                      String userLocation) {
@@ -29,6 +30,7 @@ public class CurrentWallpaperPrefs {
         editor.putString(Const.Prefs.USERNAME, userName);
         editor.putString(Const.Prefs.USERBIO, userBio);
         editor.putString(Const.Prefs.USERNAME, userLocation);
+        editor.putString(Const.Prefs.HTML_LINK, htmlLink);
         editor.apply();
     }
 
@@ -36,6 +38,11 @@ public class CurrentWallpaperPrefs {
         Picture picture = new Picture();
         Picture.Urls urls = picture.new Urls();
         Picture.User user = picture.new User(sharedPref.getString(Const.Prefs.USERNAME, ""));
+
+        Picture.Links links = picture.new Links();
+        links.setHtml(sharedPref.getString(Const.Prefs.HTML_LINK, ""));
+
+        picture.setLinks(links);
 
         String id = sharedPref.getString(Const.Prefs.ID, "");
         if (id.isEmpty()) return null;

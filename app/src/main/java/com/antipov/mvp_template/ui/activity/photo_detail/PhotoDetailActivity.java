@@ -1,7 +1,9 @@
 package com.antipov.mvp_template.ui.activity.photo_detail;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -45,6 +47,9 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
     TextView mDescription;
     @BindView(R.id.bottom_sheet)
     LinearLayout mBottomSheet;
+    @BindView(R.id.tv_open_in_browser)
+    TextView mOpenInBrowser;
+
     private Bitmap mBitmap;
     private Picture mPicture;
 
@@ -76,7 +81,7 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
 
     @Override
     public void initListeners() {
-
+        mOpenInBrowser.setOnClickListener(l -> mPresenter.onOpenInBrowserClicked());
     }
 
     @Override
@@ -155,6 +160,14 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
             mDescription.setText(model.getUser().getBio());
 
         mBottomSheet.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void startBrowserIntent() {
+        String url = mPicture.getLinks().getHtml();
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 
     @Override

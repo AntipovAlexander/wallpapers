@@ -17,7 +17,7 @@ public class PhotoDetailInteractorImpl extends BaseInteractor implements PhotoDe
     }
 
     @Override
-    public void saveCurrentWallpaper(String id, String small, String full, String name, String bio, String location) {
-        mPrefs.save(id, small, full, name, bio, location);
+    public void saveCurrentWallpaper(String id, String small, String full, String html,  String name, String bio, String location) {
+        mPrefs.save(id, small, full, html, name, bio, location);
     }
 }

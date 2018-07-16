@@ -30,5 +30,6 @@ public class Const {
         public static final String USERNAME = "user-name";
         public static final String USERLOCATION = "user-location";
         public static final String USERBIO = "user-bio";
+        public static final String HTML_LINK = "html-link";
     }
 }
