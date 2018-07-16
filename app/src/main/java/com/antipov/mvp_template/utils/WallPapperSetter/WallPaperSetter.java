@@ -8,9 +8,8 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.IBinder;
 
-import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.pojo.Picture;
-import com.antipov.mvp_template.service.foreground.ChangeWallPaperForeground;
+import com.antipov.mvp_template.service.foreground.change_wallpaper.ChangeWallPaperForeground;
 
 import javax.inject.Inject;
 
@@ -22,7 +21,7 @@ public class WallPaperSetter {
 
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
-            ChangeWallPaperForeground.MyBinder binder = (ChangeWallPaperForeground.MyBinder) service;
+            ChangeWallPaperForeground.ChangeWallPaperForegroundBinder binder = (ChangeWallPaperForeground.ChangeWallPaperForegroundBinder) service;
             myService = binder.getService();
             isBound = true;
         }

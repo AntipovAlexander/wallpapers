@@ -1,4 +1,4 @@
-package com.antipov.mvp_template.service.change_wallpaper;
+package com.antipov.mvp_template.service.job.change_wallpaper;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
@@ -30,7 +30,7 @@ import javax.inject.Inject;
 import static com.antipov.mvp_template.common.Const.PORTRAIT;
 
 
-public class ChangeWallpaperService extends JobService implements  IOnWallPaperChanged {
+public class ChangeWallpaperJob extends JobService implements IOnWallPaperChanged {
 
     @Inject WallPaperSetter wallPaperSetter;
     @Inject SharedPrefs sharedPrefs;

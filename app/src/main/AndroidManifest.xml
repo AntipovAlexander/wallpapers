@@ -30,10 +30,10 @@
         <activity android:name=".ui.activity.scheduler.SchedulerActivity" />
 
         <service
-            android:name=".service.change_wallpaper.ChangeWallpaperService"
+            android:name=".service.job.change_wallpaper.ChangeWallpaperJob"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name=".service.foreground.ChangeWallPaperForeground"
+            android:name=".service.foreground.change_wallpaper.ChangeWallPaperForeground"
             android:enabled="true"
             android:exported="false" />
     </application>

@@ -1,4 +1,4 @@
-package com.antipov.mvp_template.service.foreground;
+package com.antipov.mvp_template.service.foreground.change_wallpaper;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -17,7 +17,6 @@ import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.application.Application;
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.utils.WallPapperSetter.IOnWallPaperChanged;
-import com.antipov.mvp_template.utils.rx.AppSchedulerProvider;
 import com.antipov.mvp_template.utils.rx.SchedulerProvider;
 
 import javax.inject.Inject;
@@ -31,7 +30,7 @@ public class ChangeWallPaperForeground extends Service {
     private final String CHANNEL_NAME = "Wallpappers";
     private final int NOTIFICATION_ID = 696;
     private Notification mNotification;
-    private final IBinder mBinder = new MyBinder();
+    private final IBinder mBinder = new ChangeWallPaperForegroundBinder();
 
     public ChangeWallPaperForeground() {}
 
@@ -112,7 +111,7 @@ public class ChangeWallPaperForeground extends Service {
         stopForeground(true);
     }
 
-    public class MyBinder extends Binder {
+    public class ChangeWallPaperForegroundBinder extends Binder {
         public ChangeWallPaperForeground getService() {
             return ChangeWallPaperForeground.this;
         }

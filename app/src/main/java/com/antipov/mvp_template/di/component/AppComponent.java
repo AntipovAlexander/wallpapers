@@ -1,8 +1,8 @@
 package com.antipov.mvp_template.di.component;
 
 import com.antipov.mvp_template.di.module.AppModule;
-import com.antipov.mvp_template.service.change_wallpaper.ChangeWallpaperService;
-import com.antipov.mvp_template.service.foreground.ChangeWallPaperForeground;
+import com.antipov.mvp_template.service.job.change_wallpaper.ChangeWallpaperJob;
+import com.antipov.mvp_template.service.foreground.change_wallpaper.ChangeWallPaperForeground;
 import com.antipov.mvp_template.ui.activity.main.MainActivity;
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailActivity;
 import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragment;
@@ -21,7 +21,7 @@ public interface AppComponent {
 
     void inject(SchedulerFragment schedulerFragment);
 
-    void inject(ChangeWallpaperService changeWallpaperService);
+    void inject(ChangeWallpaperJob changeWallpaperService);
 
     void inject(ChangeWallPaperForeground changeWallPaperForeground);
 }

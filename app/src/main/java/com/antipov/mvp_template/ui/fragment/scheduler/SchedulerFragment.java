@@ -19,7 +19,7 @@ import android.view.View;
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.application.Application;
 import com.antipov.mvp_template.pojo.Preferences;
-import com.antipov.mvp_template.service.change_wallpaper.ChangeWallpaperService;
+import com.antipov.mvp_template.service.job.change_wallpaper.ChangeWallpaperJob;
 import com.antipov.mvp_template.ui.base.BasePreferenceFragment;
 import com.antipov.mvp_template.utils.DialogUtils;
 
@@ -219,7 +219,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
         // start scheduling wallpapers change
         if (getBaseActivity() != null) {
 
-            ComponentName serviceName = new ComponentName(getBaseActivity(), ChangeWallpaperService.class);
+            ComponentName serviceName = new ComponentName(getBaseActivity(), ChangeWallpaperJob.class);
             JobInfo.Builder jobInfo = new JobInfo.Builder(JOBID, serviceName)
                     .setPersisted(true)
                     .setRequiresDeviceIdle(false)
