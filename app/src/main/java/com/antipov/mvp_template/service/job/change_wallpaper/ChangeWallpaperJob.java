@@ -133,6 +133,12 @@ public class ChangeWallpaperJob extends JobService implements IOnWallPaperChange
     }
 
     @Override
+    public void onDestroy() {
+        wallPaperSetter.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
     public void onWallPaperChangedFailure(String message) {
         jobFinished(params, false);
     }

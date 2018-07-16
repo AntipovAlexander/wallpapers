@@ -67,4 +67,10 @@ public class PhotoDetailPresenterImpl<V extends PhotoDetailView, I extends Photo
         if (!isViewAttached()) return;
         getView().hideLoading();
     }
+
+    @Override
+    public void detachView() {
+        super.detachView();
+        mWallpaperSetter.onDestroy();
+    }
 }

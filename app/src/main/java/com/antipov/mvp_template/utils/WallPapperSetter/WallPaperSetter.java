@@ -56,4 +56,10 @@ public class WallPaperSetter {
             myService.setupWallpaper(bitmap, mPicture, onWallPaperChanged);
         }
     }
+
+    public void onDestroy() {
+        if (isBound) {
+            context.unbindService(myConnection);
+        }
+    }
 }

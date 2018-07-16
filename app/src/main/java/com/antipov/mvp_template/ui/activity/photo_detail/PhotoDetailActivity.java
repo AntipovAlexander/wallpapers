@@ -161,4 +161,10 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
     public void showFullScreenError(String error) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.detachView();
+    }
 }
