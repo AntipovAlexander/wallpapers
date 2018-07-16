@@ -26,7 +26,7 @@ import rx.Observable;
 public class ChangeWallPaperForeground extends Service {
 
     private final String CHANNEL_ID = "com.antipov.wallpapers";
-    private final String CHANNEL_NAME = "Wallpappers";
+    private String CHANNEL_NAME;
     private final int NOTIFICATION_ID = 696;
     private final IBinder mBinder = new ChangeWallPaperForegroundBinder();
     @Inject
@@ -39,6 +39,7 @@ public class ChangeWallPaperForeground extends Service {
     @Override
     public void onCreate() {
         ((Application) getApplication()).getComponent().inject(this);
+        CHANNEL_NAME = getString(R.string.app_name);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_LOW);
 
@@ -50,16 +51,17 @@ public class ChangeWallPaperForeground extends Service {
             mNotificationManager.createNotificationChannel(mChannel);
 
             Notification.Builder builder = new Notification.Builder(this, CHANNEL_ID)
-                    .setContentTitle(getString(R.string.app_name))
-                    .setSmallIcon(R.drawable.ic_check)
-                    .setContentText("Content text")
+                    .setContentTitle(getString(R.string.set_up_your_wallpaper))
+                    .setSmallIcon(R.drawable.ic_wallpaper)
+                    .setContentText(getString(R.string.wait_a_second))
                     .setAutoCancel(true);
 
             mNotification = builder.build();
         } else {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                    .setContentTitle(getString(R.string.app_name))
-                    .setContentText("Content text")
+                    .setContentTitle(getString(R.string.set_up_your_wallpaper))
+                    .setSmallIcon(R.drawable.ic_wallpaper)
+                    .setContentText(getString(R.string.wait_a_second))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setAutoCancel(true);
             mNotification = builder.build();
