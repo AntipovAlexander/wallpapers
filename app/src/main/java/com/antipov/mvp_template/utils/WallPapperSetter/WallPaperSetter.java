@@ -53,7 +53,9 @@ public class WallPaperSetter {
         }
 
         synchronized (WallPaperSetter.class) {
-            myService.setupWallpaper(bitmap, mPicture, onWallPaperChanged);
+            if (myService != null){
+                myService.setupWallpaper(bitmap, mPicture, onWallPaperChanged);
+            }
         }
     }
 

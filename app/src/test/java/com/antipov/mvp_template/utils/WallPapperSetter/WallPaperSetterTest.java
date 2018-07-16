@@ -1,7 +1,11 @@
 package com.antipov.mvp_template.utils.WallPapperSetter;
 
 import android.app.WallpaperManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.rx.TestSchedulerProvider;
@@ -11,9 +15,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 import rx.schedulers.TestScheduler;
 
@@ -33,31 +39,30 @@ public class WallPaperSetterTest {
     @Mock
     Bitmap bitmap;
 
+    @Mock
+    Context context;
+
     WallPaperSetter mWallpaperSetter;
-    TestScheduler mTestScheduler;
 
     @Before
     public void setUp(){
-        mTestScheduler = new TestScheduler();
-        mWallpaperSetter = new WallPaperSetter(new TestSchedulerProvider(mTestScheduler), mMockWallpaperManager);
+        mWallpaperSetter = new WallPaperSetter(context);
     }
 
     @Test
-    public void setWallPaperSuccess() {
+    public void testStartServiceAndUnbind() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
         Picture mPicture = Picture.getForTests();
         mWallpaperSetter.setWallPaper(bitmap, mPicture, mMockListener);
-        mTestScheduler.triggerActions();
-        verify(mMockListener).onWallPaperChangedSuccess(mPicture);
-        verifyNoMoreInteractions(mMockListener);
-    }
+        verify(context).startService(ArgumentMatchers.any(Intent.class));
 
-    @Test
-    public void setWallPaperError() throws IOException {
-        Picture mPicture = Picture.getForTests();
-        doThrow(new IOException()).when(mMockWallpaperManager).setBitmap(ArgumentMatchers.any(Bitmap.class));
-        mWallpaperSetter.setWallPaper(bitmap, mPicture, mMockListener);
-        mTestScheduler.triggerActions();
-        verify(mMockListener).onWallPaperChangedFailure(ArgumentMatchers.anyString());
+        // hack with reflection for changing isBound from 'false' to 'true'
+        Field delegateField = Class.forName("com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter")
+                .getDeclaredField("isBound");
+        delegateField.setAccessible(true);
+        delegateField.setBoolean(mWallpaperSetter, true);
+
+        mWallpaperSetter.onDestroy();
+        verify(context).unbindService(ArgumentMatchers.any(ServiceConnection.class));
         verifyNoMoreInteractions(mMockListener);
     }
 }
