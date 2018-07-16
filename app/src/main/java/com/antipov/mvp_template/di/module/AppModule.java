@@ -54,7 +54,7 @@ public class AppModule {
 
     @Provides
     public WallPaperSetter provideWallPaperSetter(){
-        return new WallPaperSetter(provideSchedulerProvider(), WallpaperManager.getInstance(mContext));
+        return new WallPaperSetter(mContext);
     }
 
     @Provides

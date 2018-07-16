@@ -15,10 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.main.MainActivity"
+        <activity
+            android:name=".ui.activity.main.MainActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -26,9 +28,14 @@
             android:name=".ui.activity.photo_detail.PhotoDetailActivity"
             android:theme="@style/AppTheme.NoTitle" />
         <activity android:name=".ui.activity.scheduler.SchedulerActivity" />
+
         <service
             android:name=".service.change_wallpaper.ChangeWallpaperService"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".service.foreground.ChangeWallPaperForeground"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

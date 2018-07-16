@@ -1,55 +1,61 @@
 package com.antipov.mvp_template.utils.WallPapperSetter;
 
-import android.app.WallpaperManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
+import android.os.Build;
+import android.os.IBinder;
 
+import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.pojo.Picture;
-import com.antipov.mvp_template.utils.rx.SchedulerProvider;
+import com.antipov.mvp_template.service.foreground.ChangeWallPaperForeground;
 
 import javax.inject.Inject;
 
-import rx.Observable;
-
 public class WallPaperSetter {
-    private final SchedulerProvider provider;
-    private final WallpaperManager manager;
+    private final Context context;
+    private ChangeWallPaperForeground myService;
+    private boolean isBound;
+    private ServiceConnection myConnection = new ServiceConnection() {
+
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            ChangeWallPaperForeground.MyBinder binder = (ChangeWallPaperForeground.MyBinder) service;
+            myService = binder.getService();
+            isBound = true;
+        }
+
+        public void onServiceDisconnected(ComponentName arg0) {
+            isBound = false;
+        }
+
+    };
+
 
     @Inject
-    public WallPaperSetter(SchedulerProvider provider, WallpaperManager wallpaperManager) {
-        this.provider = provider;
-        this.manager = wallpaperManager;
+    public WallPaperSetter(Context context) {
+        this.context = context;
+        this.context.bindService(new Intent(context, ChangeWallPaperForeground.class), myConnection, Context.BIND_AUTO_CREATE);
     }
 
     /**
-     * Async method for setup wallpaper
-     * Using rx java for providing test schedulers in unt tests
      *
-     * https://medium.com/code-yoga/using-rxjava-instead-asynctask-3052697c0f48
      *  @param bitmap image which will be set up as wallpaper
      * @param mPicture
      * @param onWallPaperChanged set up wallpaper listener
      */
     public void setWallPaper(Bitmap bitmap, Picture mPicture, IOnWallPaperChanged onWallPaperChanged){
-        Observable.fromCallable(() -> {
-            synchronized (WallPaperSetter.class){
-                try {
-                    manager.setBitmap(bitmap);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return false;
-                }
-            }
-            return true;
-        })
-                .subscribeOn(provider.io())
-                .observeOn(provider.ui())
-                .subscribe(isSuccess -> {
-                    if (isSuccess){
-                        onWallPaperChanged.onWallPaperChangedSuccess(mPicture);
-                    } else {
-                        onWallPaperChanged.onWallPaperChangedFailure("Error while setting wallpaper");
-                    }
-                },
-                        throwable -> onWallPaperChanged.onWallPaperChangedFailure(throwable.getMessage()));
+        Intent i = new Intent(context, ChangeWallPaperForeground.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(i);
+        } else {
+            context.startService(i);
+        }
+
+        synchronized (WallPaperSetter.class) {
+            myService.setupWallpaper(bitmap, mPicture, onWallPaperChanged);
+        }
     }
 }

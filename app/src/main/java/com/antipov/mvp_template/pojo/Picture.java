@@ -8,7 +8,7 @@ import java.util.List;
  * Created by AlexanderAntipov on 05.06.2018.
  */
 
-public class Picture implements Serializable{
+public class Picture implements Serializable {
     private String id;
     private String createdAt;
     private String updatedAt;
