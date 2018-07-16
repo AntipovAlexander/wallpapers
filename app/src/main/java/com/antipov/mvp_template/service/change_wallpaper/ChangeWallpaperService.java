@@ -1,27 +1,22 @@
 package com.antipov.mvp_template.service.change_wallpaper;
 
-import android.app.NotificationManager;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 
-import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.api.Api;
 import com.antipov.mvp_template.api.RetrofitUtils;
 import com.antipov.mvp_template.application.Application;
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.utils.GlideApp;
-import com.antipov.mvp_template.utils.SharedPrefs;
+import com.antipov.mvp_template.utils.prefs.SharedPrefs;
 import com.antipov.mvp_template.utils.WallPapperSetter.IOnWallPaperChanged;
 import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
 import com.antipov.mvp_template.utils.rx.AppSchedulerProvider;
 import com.antipov.mvp_template.utils.rx.SchedulerProvider;
-import com.antipov.mvp_template.utils.shared.CurrentWallpaperPrefs;
+import com.antipov.mvp_template.utils.prefs.CurrentWallpaperPrefs;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;

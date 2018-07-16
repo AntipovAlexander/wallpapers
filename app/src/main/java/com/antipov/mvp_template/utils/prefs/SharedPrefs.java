@@ -1,9 +1,7 @@
-package com.antipov.mvp_template.utils;
+package com.antipov.mvp_template.utils.prefs;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.common.Const;

@@ -18,11 +18,11 @@ import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentInteracto
 import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentPresenter;
 import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentPresenterImpl;
 import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentView;
-import com.antipov.mvp_template.utils.SharedPrefs;
+import com.antipov.mvp_template.utils.prefs.SharedPrefs;
 import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
 import com.antipov.mvp_template.utils.rx.AppSchedulerProvider;
 import com.antipov.mvp_template.utils.rx.SchedulerProvider;
-import com.antipov.mvp_template.utils.shared.CurrentWallpaperPrefs;
+import com.antipov.mvp_template.utils.prefs.CurrentWallpaperPrefs;
 
 import dagger.Module;
 import dagger.Provides;

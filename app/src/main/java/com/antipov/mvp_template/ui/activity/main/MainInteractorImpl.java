@@ -6,7 +6,7 @@ import com.antipov.mvp_template.api.RetrofitUtils;
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.ui.base.BaseInteractor;
 import com.antipov.mvp_template.utils.rx.SchedulerProvider;
-import com.antipov.mvp_template.utils.shared.CurrentWallpaperPrefs;
+import com.antipov.mvp_template.utils.prefs.CurrentWallpaperPrefs;
 
 import java.util.List;
 import javax.inject.Inject;

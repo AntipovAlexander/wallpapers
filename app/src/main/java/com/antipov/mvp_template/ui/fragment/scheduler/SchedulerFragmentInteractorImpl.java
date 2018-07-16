@@ -2,7 +2,7 @@ package com.antipov.mvp_template.ui.fragment.scheduler;
 
 import com.antipov.mvp_template.pojo.Preferences;
 import com.antipov.mvp_template.ui.base.BaseInteractor;
-import com.antipov.mvp_template.utils.SharedPrefs;
+import com.antipov.mvp_template.utils.prefs.SharedPrefs;
 import com.antipov.mvp_template.utils.rx.SchedulerProvider;
 
 import javax.inject.Inject;

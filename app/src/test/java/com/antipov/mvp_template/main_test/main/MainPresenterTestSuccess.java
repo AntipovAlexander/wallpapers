@@ -6,7 +6,7 @@ import com.antipov.mvp_template.ui.activity.main.MainInteractorImpl;
 import com.antipov.mvp_template.ui.activity.main.MainPresenter;
 import com.antipov.mvp_template.ui.activity.main.MainPresenterImpl;
 import com.antipov.mvp_template.ui.activity.main.MainView;
-import com.antipov.mvp_template.utils.shared.CurrentWallpaperPrefs;
+import com.antipov.mvp_template.utils.prefs.CurrentWallpaperPrefs;
 
 import org.junit.After;
 import org.junit.Before;

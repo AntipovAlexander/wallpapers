@@ -1,4 +1,4 @@
-package com.antipov.mvp_template.utils.shared;
+package com.antipov.mvp_template.utils.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -42,7 +42,7 @@ public class CurrentWallpaperPrefs {
 
         picture.setId(id);
 
-        urls.setFull(sharedPref.getString(Const.Prefs.FULL, ""));
+        urls.setRegular(sharedPref.getString(Const.Prefs.FULL, ""));
         urls.setSmall(sharedPref.getString(Const.Prefs.SMALL, ""));
         picture.setUrls(urls);
 

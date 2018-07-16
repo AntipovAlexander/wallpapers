@@ -10,7 +10,6 @@ import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.MultiSelectListPreference;
-import android.preference.Preference;
 import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -23,7 +22,6 @@ import com.antipov.mvp_template.pojo.Preferences;
 import com.antipov.mvp_template.service.change_wallpaper.ChangeWallpaperService;
 import com.antipov.mvp_template.ui.base.BasePreferenceFragment;
 import com.antipov.mvp_template.utils.DialogUtils;
-import com.antipov.mvp_template.utils.SharedPrefs;
 
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
