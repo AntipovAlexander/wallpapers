@@ -12,7 +12,7 @@ public class Const {
     public static final String WALLPAPER = "wallpaper";
     public static final String APP_PREFERENCES_CURRENT_WALLPAPER = "wallpapers-shared-prefs-current";
 
-    public static class Args{
+    public static class Args {
         public static final String ID = "id";
         public static final String CUSTOM = "custom";
         public static final String RANDOM = "random";
@@ -23,7 +23,7 @@ public class Const {
         public static final String LISTENER = "listener";
     }
 
-    public static class Prefs{
+    public static class Prefs {
         public static final String ID = "id";
         public static final String SMALL = "small-pic";
         public static final String FULL = "full-pic";

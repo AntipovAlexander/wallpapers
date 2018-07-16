@@ -24,11 +24,11 @@ public class RetrofitUtils {
 
     private static final String API_KEY = "346652235a10a04683919753df4614f9161679616216af41dc9c28c312cf8793";
 
-    public static Retrofit getApi(){
+    public static Retrofit getApi() {
 
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         // set up logger for debug
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
             httpClientBuilder.addInterceptor(logging);

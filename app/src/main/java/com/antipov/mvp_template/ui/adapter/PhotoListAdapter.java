@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.R;
+import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailActivity;
 import com.antipov.mvp_template.utils.GlideRequests;
@@ -30,9 +30,9 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
 
     private final GlideRequests mGlide;
     private final Context mContext;
-    private List<Picture> mData = new ArrayList<>();
     private final int NOT_CURRENT = 0;
     private final int CURRENT = 1;
+    private List<Picture> mData = new ArrayList<>();
 
     public PhotoListAdapter(Context context, GlideRequests glide) {
         this.mGlide = glide;
@@ -55,8 +55,8 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull PhotoListAdapter.ViewHolder holder, int position) {
         mGlide
-            .load(mData.get(position).getUrls().getSmall())
-            .into(holder.mImagePreview);
+                .load(mData.get(position).getUrls().getSmall())
+                .into(holder.mImagePreview);
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(mContext, PhotoDetailActivity.class);
             intent.putExtra(Const.Args.PICTURE, mData.get(position));
@@ -64,7 +64,7 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
         });
 
         // if it current wallpaper leaving text from xml
-        if (holder.getItemViewType() == CURRENT){
+        if (holder.getItemViewType() == CURRENT) {
             return;
         } else {
             holder.mTitle.setText(mContext.getString(R.string.author_placeholder, mData.get(position).getUser().getName()));
@@ -85,17 +85,20 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
         }
     }
 
-    public void setPictures(List<Picture> model){
+    public void setPictures(List<Picture> model) {
         mData = model;
         notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.iv_preview) ImageView mImagePreview;
-        @BindView(R.id.tv_title) TextView mTitle;
+        @BindView(R.id.iv_preview)
+        ImageView mImagePreview;
+        @BindView(R.id.tv_title)
+        TextView mTitle;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

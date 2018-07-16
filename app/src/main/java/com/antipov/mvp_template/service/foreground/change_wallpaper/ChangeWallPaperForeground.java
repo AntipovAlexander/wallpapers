@@ -25,14 +25,16 @@ import rx.Observable;
 
 public class ChangeWallPaperForeground extends Service {
 
-    @Inject SchedulerProvider mProvider;
     private final String CHANNEL_ID = "com.antipov.wallpapers";
     private final String CHANNEL_NAME = "Wallpappers";
     private final int NOTIFICATION_ID = 696;
-    private Notification mNotification;
     private final IBinder mBinder = new ChangeWallPaperForegroundBinder();
+    @Inject
+    SchedulerProvider mProvider;
+    private Notification mNotification;
 
-    public ChangeWallPaperForeground() {}
+    public ChangeWallPaperForeground() {
+    }
 
     @Override
     public void onCreate() {
@@ -79,20 +81,20 @@ public class ChangeWallPaperForeground extends Service {
 
     public void setupWallpaper(Bitmap bitmap, Picture mPicture, IOnWallPaperChanged onWallPaperChanged) {
         Observable.fromCallable(() -> {
-                try {
-                    WallpaperManager.getInstance(this).setBitmap(bitmap);
-                    return true;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return false;
-                }
+            try {
+                WallpaperManager.getInstance(this).setBitmap(bitmap);
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
         })
                 .subscribeOn(mProvider.io())
                 .observeOn(mProvider.ui())
                 .subscribe(
                         isSuccess -> {
                             stopThisService();
-                            if (isSuccess){
+                            if (isSuccess) {
                                 onWallPaperChanged.onWallPaperChangedSuccess(mPicture);
                             } else {
                                 onWallPaperChanged.onWallPaperChangedFailure("Error while setting wallpaper");
@@ -106,7 +108,7 @@ public class ChangeWallPaperForeground extends Service {
 
     }
 
-    private void stopThisService(){
+    private void stopThisService() {
         stopSelf();
         stopForeground(true);
     }

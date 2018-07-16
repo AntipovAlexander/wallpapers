@@ -8,47 +8,37 @@ import android.content.SharedPreferences;
  */
 
 public class SessionManager {
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
-    int PRIVATE_MODE = 0;
-
     // Sharedpref file name
     private final String PREF_NAME = "ApexClubSession";
-
     // login or not login
     private final String IS_LOGIN = "IS_LOGIN";
-
     // Token
     private final String HEADER = "Authentication";
-
     // Full name
     private final String FULL_NAME = "full-name";
-
     // primary car
     private final String PRIMARY_CAR = "user-car";
-
     // avatar url
     private final String AVATAR = "avatar-url";
-
     // social network
-    private final String SOCIAL= "social-network";
-
+    private final String SOCIAL = "social-network";
     // user id
     private final String ID = "user-id";
+    int PRIVATE_MODE = 0;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
 
-
-
-    public SessionManager(Context context){
+    public SessionManager(Context context) {
         sharedPreferences = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = sharedPreferences.edit();
     }
 
-    public boolean isLoggedIn(){
-        return  sharedPreferences.getBoolean(IS_LOGIN, false);
+    public boolean isLoggedIn() {
+        return sharedPreferences.getBoolean(IS_LOGIN, false);
     }
 
-    public void logInUser(String token, String name, String avatar, String network, String id, String primaryCar){
+    public void logInUser(String token, String name, String avatar, String network, String id, String primaryCar) {
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(HEADER, token);
         editor.putString(FULL_NAME, name);
@@ -66,31 +56,31 @@ public class SessionManager {
         editor.commit();
     }
 
-    public String getToken(){
+    public String getToken() {
         return sharedPreferences.getString(HEADER, "");
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return sharedPreferences.getString(FULL_NAME, "");
     }
 
-    public String getAvatar(){
+    public String getAvatar() {
         return sharedPreferences.getString(AVATAR, "");
     }
 
-    public String getSocial(){
+    public String getSocial() {
         return sharedPreferences.getString(SOCIAL, "");
     }
 
-    public String getId(){
+    public String getId() {
         return sharedPreferences.getString(ID, "");
     }
 
-    public String getPrimaryCar(){
+    public String getPrimaryCar() {
         return sharedPreferences.getString(PRIMARY_CAR, "no primary car");
     }
 
-    public void removeSession(){
+    public void removeSession() {
         editor.clear();
         editor.commit();
     }

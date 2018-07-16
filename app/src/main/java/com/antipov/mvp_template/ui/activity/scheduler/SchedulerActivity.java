@@ -1,4 +1,3 @@
-
 package com.antipov.mvp_template.ui.activity.scheduler;
 
 import android.os.Bundle;

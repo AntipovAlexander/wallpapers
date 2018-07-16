@@ -39,13 +39,13 @@ public class PhotoDetailPresenterImplTest {
     PhotoDetailPresenter<PhotoDetailView, PhotoDetailInteractor> mPresenter;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         mPresenter = new PhotoDetailPresenterImpl<>(mMockedInteractor, mMockedWallpaperSetter);
         mPresenter.attachView(mMockedView);
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         mPresenter.detachView();
     }
 

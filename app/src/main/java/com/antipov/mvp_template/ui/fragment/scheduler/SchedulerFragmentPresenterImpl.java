@@ -1,12 +1,13 @@
 package com.antipov.mvp_template.ui.fragment.scheduler;
 
 import android.preference.Preference;
-import android.text.TextUtils;
 
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.pojo.Preferences;
 import com.antipov.mvp_template.ui.base.BasePresenter;
+
 import java.util.Set;
+
 import javax.inject.Inject;
 
 public class SchedulerFragmentPresenterImpl<V extends SchedulerFragmentView, I extends SchedulerFragmentInteractor>
@@ -85,19 +86,19 @@ public class SchedulerFragmentPresenterImpl<V extends SchedulerFragmentView, I e
         }
 
         // if user using custom tag we must validate that keyword was entered
-        if (preferences.isCustom() && !validateKeyword(preferences.getWallpaperKey())){
+        if (preferences.isCustom() && !validateKeyword(preferences.getWallpaperKey())) {
             getView().onError(R.string.enter_keyword);
             return;
         }
 
         // if user wants getting images by provided tags, validate that array with tags isnt empty
-        if (!preferences.isCustom() && !preferences.isRandom() && preferences.getWallpaperTags().size() == 0){
+        if (!preferences.isCustom() && !preferences.isRandom() && preferences.getWallpaperTags().size() == 0) {
             getView().onError(R.string.select_tags);
             return;
         }
 
         // saving prefs and staring job if success
-        if (getInteractor().savePrefs(preferences)){
+        if (getInteractor().savePrefs(preferences)) {
             getView().starJob(preferences);
         } else {
             getView().onError(R.string.error_when_updating_prefs);
@@ -108,7 +109,7 @@ public class SchedulerFragmentPresenterImpl<V extends SchedulerFragmentView, I e
     public void resolveWallpaperCustomTagSummary(String keywordForWallpapers) {
         if (!isViewAttached()) return;
 
-        if (!keywordForWallpapers.isEmpty()){
+        if (!keywordForWallpapers.isEmpty()) {
             getView().setSummaryForKeyword(keywordForWallpapers);
         } else {
             getView().setDefaultSummaryForKeyword();
@@ -119,7 +120,7 @@ public class SchedulerFragmentPresenterImpl<V extends SchedulerFragmentView, I e
     public void resolveWallpaperTagsSummary(Set<String> wallpaperTags) {
         if (!isViewAttached()) return;
 
-        if (wallpaperTags.size() == 0){
+        if (wallpaperTags.size() == 0) {
             getView().setDefaultSummaryForTags();
         } else {
             getView().setSummaryForTags(wallpaperTags);
@@ -130,9 +131,9 @@ public class SchedulerFragmentPresenterImpl<V extends SchedulerFragmentView, I e
     public void resolveWallpaperChangeFrequencySummary(int frequency) {
         if (!isViewAttached()) return;
 
-        if (frequency == 0){
+        if (frequency == 0) {
             getView().setDefaultSummaryForFrequency();
-        } else if (frequency == 12){
+        } else if (frequency == 12) {
             getView().setSummaryForFrequencyDaily();
         } else {
             getView().setSummaryForFrequency(frequency);
@@ -144,7 +145,7 @@ public class SchedulerFragmentPresenterImpl<V extends SchedulerFragmentView, I e
         return !keywordForWallpapers.isEmpty();
     }
 
-    private boolean validateFrequency(int f){
+    private boolean validateFrequency(int f) {
         return f > 0;
     }
 }

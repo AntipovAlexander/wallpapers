@@ -10,8 +10,8 @@ import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
 
 import javax.inject.Inject;
 
-public class PhotoDetailPresenterImpl <V extends PhotoDetailView, I extends PhotoDetailInteractor> extends BasePresenter<V, I>
-    implements PhotoDetailPresenter<V, I>, IOnWallPaperChanged {
+public class PhotoDetailPresenterImpl<V extends PhotoDetailView, I extends PhotoDetailInteractor> extends BasePresenter<V, I>
+        implements PhotoDetailPresenter<V, I>, IOnWallPaperChanged {
 
     private final WallPaperSetter mWallpaperSetter;
 

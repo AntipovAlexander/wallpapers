@@ -26,19 +26,145 @@ public class Picture implements Serializable {
 
     public static Picture getForTests() {
         Picture p = new Picture();
-        Picture.User user = p. new User("test");
+        Picture.User user = p.new User("test");
         user.setBio("test");
         user.setLocation("test");
         user.setName("test");
         p.setUser(user);
 
-        Urls urls = p. new Urls();
+        Urls urls = p.new Urls();
         urls.setSmall("test");
         urls.setFull("test");
 
         p.setUrls(urls);
 
         return p;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public Object getDescription() {
+        return description;
+    }
+
+    public void setDescription(Object description) {
+        this.description = description;
+    }
+
+    public Urls getUrls() {
+        return urls;
+    }
+
+    public void setUrls(Urls urls) {
+        this.urls = urls;
+    }
+
+    public Boolean getSponsored() {
+        return sponsored;
+    }
+
+    public void setSponsored(Boolean sponsored) {
+        this.sponsored = sponsored;
+    }
+
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Integer likes) {
+        this.likes = likes;
+    }
+
+    public Boolean getLikedByUser() {
+        return likedByUser;
+    }
+
+    public void setLikedByUser(Boolean likedByUser) {
+        this.likedByUser = likedByUser;
+    }
+
+    public Object getSlug() {
+        return slug;
+    }
+
+    public void setSlug(Object slug) {
+        this.slug = slug;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Picture> getListForTest() {
+        Picture picture = new Picture();
+        picture.setId("");
+        picture.setUrls(new Urls());
+        picture.setUser(new User("John doe"));
+
+        List<Picture> pictureArrayList = new ArrayList<>();
+        pictureArrayList.add(picture);
+        pictureArrayList.add(picture);
+        pictureArrayList.add(picture);
+
+        return pictureArrayList;
+    }
+
+    public boolean isCurrent() {
+        return isCurrent;
+    }
+
+    public void setCurrent(boolean current) {
+        isCurrent = current;
     }
 
     public class User implements Serializable {
@@ -184,131 +310,5 @@ public class Picture implements Serializable {
         public void setThumb(String thumb) {
             this.thumb = thumb;
         }
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Integer getWidth() {
-        return width;
-    }
-
-    public void setWidth(Integer width) {
-        this.width = width;
-    }
-
-    public Integer getHeight() {
-        return height;
-    }
-
-    public void setHeight(Integer height) {
-        this.height = height;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public Object getDescription() {
-        return description;
-    }
-
-    public void setDescription(Object description) {
-        this.description = description;
-    }
-
-    public Urls getUrls() {
-        return urls;
-    }
-
-    public void setUrls(Urls urls) {
-        this.urls = urls;
-    }
-
-    public Boolean getSponsored() {
-        return sponsored;
-    }
-
-    public void setSponsored(Boolean sponsored) {
-        this.sponsored = sponsored;
-    }
-
-    public Integer getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Integer likes) {
-        this.likes = likes;
-    }
-
-    public Boolean getLikedByUser() {
-        return likedByUser;
-    }
-
-    public void setLikedByUser(Boolean likedByUser) {
-        this.likedByUser = likedByUser;
-    }
-
-    public Object getSlug() {
-        return slug;
-    }
-
-    public void setSlug(Object slug) {
-        this.slug = slug;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<Picture> getListForTest(){
-        Picture picture = new Picture();
-        picture.setId("");
-        picture.setUrls(new Urls());
-        picture.setUser(new User("John doe"));
-
-        List<Picture> pictureArrayList = new ArrayList<>();
-        pictureArrayList.add(picture);
-        pictureArrayList.add(picture);
-        pictureArrayList.add(picture);
-
-        return pictureArrayList;
-    }
-
-    public boolean isCurrent() {
-        return isCurrent;
-    }
-
-    public void setCurrent(boolean current) {
-        isCurrent = current;
     }
 }

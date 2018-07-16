@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.pojo.Picture;
@@ -22,19 +23,28 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+
 import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView {
 
-    @Inject PhotoDetailPresenter<PhotoDetailView, PhotoDetailInteractor> mPresenter;
-    @BindView(R.id.iv_image) ImageView mImage;
-    @BindView(R.id.fl_progress) FrameLayout mProgress;
-    @BindView(R.id.tv_name) TextView mName;
-    @BindView(R.id.tv_location) TextView mLocation;
-    @BindView(R.id.tv_description) TextView mDescription;
-    @BindView(R.id.bottom_sheet) LinearLayout mBottomSheet;
+    @Inject
+    PhotoDetailPresenter<PhotoDetailView, PhotoDetailInteractor> mPresenter;
+    @BindView(R.id.iv_image)
+    ImageView mImage;
+    @BindView(R.id.fl_progress)
+    FrameLayout mProgress;
+    @BindView(R.id.tv_name)
+    TextView mName;
+    @BindView(R.id.tv_location)
+    TextView mLocation;
+    @BindView(R.id.tv_description)
+    TextView mDescription;
+    @BindView(R.id.bottom_sheet)
+    LinearLayout mBottomSheet;
     private Bitmap mBitmap;
     private Picture mPicture;
 
@@ -49,7 +59,7 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
     @Override
     public void getExtras() {
         Bundle args = getIntent().getExtras();
-        if (args != null){
+        if (args != null) {
             mPicture = (Picture) args.getSerializable(Const.Args.PICTURE);
         }
     }
@@ -88,7 +98,7 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.set_wallpaper:
                 showLoading();
                 mPresenter.setWallPaper(mBitmap, mPicture);
@@ -135,10 +145,13 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
 
         mName.setText(model.getUser().getName());
 
-        if (model.getUser().getLocation() == null || model.getUser().getLocation().isEmpty()) mLocation.setVisibility(View.GONE);
-            else mLocation.setText(model.getUser().getLocation());
+        if (model.getUser().getLocation() == null || model.getUser().getLocation().isEmpty())
+            mLocation.setVisibility(View.GONE);
+        else mLocation.setText(model.getUser().getLocation());
 
-        if (model.getUser().getBio() == null || model.getUser().getBio().isEmpty()) mDescription.setVisibility(View.GONE); else
+        if (model.getUser().getBio() == null || model.getUser().getBio().isEmpty())
+            mDescription.setVisibility(View.GONE);
+        else
             mDescription.setText(model.getUser().getBio());
 
         mBottomSheet.setVisibility(View.VISIBLE);

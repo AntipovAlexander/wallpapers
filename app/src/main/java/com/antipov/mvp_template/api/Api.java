@@ -4,7 +4,6 @@ import com.antipov.mvp_template.pojo.Picture;
 
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;

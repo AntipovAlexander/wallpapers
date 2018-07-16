@@ -20,7 +20,7 @@ public class CurrentWallpaperPrefs {
                      String pictureFullUrl,
                      String userName,
                      String userBio,
-                     String userLocation){
+                     String userLocation) {
 
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(Const.Prefs.ID, id);
@@ -32,7 +32,7 @@ public class CurrentWallpaperPrefs {
         editor.apply();
     }
 
-    public Picture get(){
+    public Picture get() {
         Picture picture = new Picture();
         Picture.Urls urls = picture.new Urls();
         Picture.User user = picture.new User(sharedPref.getString(Const.Prefs.USERNAME, ""));

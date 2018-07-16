@@ -7,7 +7,7 @@ import com.antipov.mvp_template.ui.base.IBasePresenter;
 
 import java.util.Set;
 
-public interface SchedulerFragmentPresenter <V extends SchedulerFragmentView, I extends SchedulerFragmentInteractor>
+public interface SchedulerFragmentPresenter<V extends SchedulerFragmentView, I extends SchedulerFragmentInteractor>
         extends IBasePresenter<V, I> {
     void resolveEnabledPreferences(boolean useCustomTag, boolean useRandomTag);
 

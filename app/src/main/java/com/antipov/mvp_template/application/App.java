@@ -22,7 +22,7 @@ public class App extends Application implements com.antipov.mvp_template.applica
 
     @Override
     public AppComponent getComponent() {
-        if (component == null){
+        if (component == null) {
             component = DaggerAppComponent.builder().appModule(new AppModule(
                     getApplicationContext(),
                     new AppSchedulerProvider())).build();

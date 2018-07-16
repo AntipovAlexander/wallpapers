@@ -34,13 +34,13 @@ public class SchedulerFragmentPresenterImplTest {
     SchedulerFragmentPresenter<SchedulerFragmentView, SchedulerFragmentInteractor> mPresenter;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         mPresenter = new SchedulerFragmentPresenterImpl<>(mMockedInteractor);
         mPresenter.attachView(mMockedView);
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         mPresenter.detachView();
     }
 

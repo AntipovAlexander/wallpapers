@@ -40,12 +40,11 @@ public class WallPaperSetter {
     }
 
     /**
-     *
-     *  @param bitmap image which will be set up as wallpaper
+     * @param bitmap             image which will be set up as wallpaper
      * @param mPicture
      * @param onWallPaperChanged set up wallpaper listener
      */
-    public void setWallPaper(Bitmap bitmap, Picture mPicture, IOnWallPaperChanged onWallPaperChanged){
+    public void setWallPaper(Bitmap bitmap, Picture mPicture, IOnWallPaperChanged onWallPaperChanged) {
         Intent i = new Intent(context, ChangeWallPaperForeground.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(i);

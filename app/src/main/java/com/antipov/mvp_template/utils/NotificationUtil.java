@@ -9,7 +9,7 @@ import android.os.Build;
 import com.antipov.mvp_template.R;
 
 public class NotificationUtil {
-    public static void notify(Context context, String title, String text){
+    public static void notify(Context context, String title, String text) {
         // Sets an ID for the notification, so it can be updated.
         int notifyID = 1;
         String CHANNEL_ID = "my_channel_01";// The id of the channel.
@@ -21,11 +21,12 @@ public class NotificationUtil {
                 .setContentText(text);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             builder.setChannelId(CHANNEL_ID);
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
-            if (notificationManager != null) notificationManager.createNotificationChannel(mChannel);
+            if (notificationManager != null)
+                notificationManager.createNotificationChannel(mChannel);
         }
 
         if (notificationManager != null) notificationManager.notify(notifyID, builder.build());

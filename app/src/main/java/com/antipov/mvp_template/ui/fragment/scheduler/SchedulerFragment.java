@@ -30,7 +30,8 @@ import javax.inject.Inject;
 
 public class SchedulerFragment extends BasePreferenceFragment implements SchedulerFragmentView {
 
-    @Inject SchedulerFragmentPresenter<SchedulerFragmentView, SchedulerFragmentInteractor> mPresenter;
+    @Inject
+    SchedulerFragmentPresenter<SchedulerFragmentView, SchedulerFragmentInteractor> mPresenter;
     private MultiSelectListPreference mWallpaperTags;
     private SwitchPreference mRandomTag;
     private SwitchPreference mCustomTag;
@@ -43,7 +44,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((Application)getActivity().getApplication())
+        ((Application) getActivity().getApplication())
                 .getComponent()
                 .inject(this);
         mPresenter.attachView(this);
@@ -147,7 +148,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.schedule_wallpaper:
                 mPresenter.onApplyClicked(preferences);
                 break;
@@ -234,7 +235,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
             }
 
             JobScheduler scheduler = (JobScheduler) getBaseActivity().getSystemService(Context.JOB_SCHEDULER_SERVICE);
-            if (scheduler != null){
+            if (scheduler != null) {
                 scheduler.schedule(jobInfo.build());
             }
 

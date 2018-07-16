@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.antipov.mvp_template.application.Application;
 import com.antipov.mvp_template.R;
+import com.antipov.mvp_template.application.Application;
 import com.antipov.mvp_template.di.component.AppComponent;
 import com.antipov.mvp_template.utils.DialogUtils;
 import com.antipov.mvp_template.utils.NetworkUtils;
@@ -27,7 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
         // some activities may be without content, e.g splash screen.
         // get layout id may return -1 in that case
-        if (getLayoutId() != -1){
+        if (getLayoutId() != -1) {
             setContentView(getLayoutId());
         }
         getExtras();
@@ -36,8 +36,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         initListeners();
     }
 
-    public AppComponent getComponent(){
-        return ((Application)getApplication()).getComponent();
+    public AppComponent getComponent() {
+        return ((Application) getApplication()).getComponent();
     }
 
     @Override

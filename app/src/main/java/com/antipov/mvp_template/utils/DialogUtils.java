@@ -21,7 +21,7 @@ import java.util.List;
 
 public class DialogUtils {
 
-    public static void  showSnackbar(AppCompatActivity activity, String msg){
+    public static void showSnackbar(AppCompatActivity activity, String msg) {
         Snackbar snackbar = Snackbar.make(activity.getWindow().getDecorView().getRootView(),
                 msg, Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();
@@ -30,7 +30,7 @@ public class DialogUtils {
         snackbar.show();
     }
 
-    public static void showSnackbar(MaterialDialog dialog, String msg){
+    public static void showSnackbar(MaterialDialog dialog, String msg) {
         Snackbar snackbar = Snackbar.make(dialog.getWindow().getDecorView(),
                 msg, Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();
@@ -39,7 +39,7 @@ public class DialogUtils {
         snackbar.show();
     }
 
-    public static Snackbar showSnackbar(AppCompatActivity activity, String msg, String actionMasg, View.OnClickListener onClickListener, int length){
+    public static Snackbar showSnackbar(AppCompatActivity activity, String msg, String actionMasg, View.OnClickListener onClickListener, int length) {
         Snackbar snackbar = Snackbar.make(activity.getWindow().getDecorView().getRootView(),
                 msg, length).setAction(actionMasg, onClickListener);
         View snackbarView = snackbar.getView();

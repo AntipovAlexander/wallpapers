@@ -11,12 +11,12 @@ import com.antipov.mvp_template.api.RetrofitUtils;
 import com.antipov.mvp_template.application.Application;
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.utils.GlideApp;
-import com.antipov.mvp_template.utils.prefs.SharedPrefs;
 import com.antipov.mvp_template.utils.WallPapperSetter.IOnWallPaperChanged;
 import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
+import com.antipov.mvp_template.utils.prefs.CurrentWallpaperPrefs;
+import com.antipov.mvp_template.utils.prefs.SharedPrefs;
 import com.antipov.mvp_template.utils.rx.AppSchedulerProvider;
 import com.antipov.mvp_template.utils.rx.SchedulerProvider;
-import com.antipov.mvp_template.utils.prefs.CurrentWallpaperPrefs;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
@@ -32,9 +32,12 @@ import static com.antipov.mvp_template.common.Const.PORTRAIT;
 
 public class ChangeWallpaperJob extends JobService implements IOnWallPaperChanged {
 
-    @Inject WallPaperSetter wallPaperSetter;
-    @Inject SharedPrefs sharedPrefs;
-    @Inject CurrentWallpaperPrefs currentWallpaperPrefs;
+    @Inject
+    WallPaperSetter wallPaperSetter;
+    @Inject
+    SharedPrefs sharedPrefs;
+    @Inject
+    CurrentWallpaperPrefs currentWallpaperPrefs;
     private Picture mPicture;
     private JobParameters params;
 
@@ -59,7 +62,7 @@ public class ChangeWallpaperJob extends JobService implements IOnWallPaperChange
             keyword = null;
         }
 
-        if (!isCustom && !isRandom){
+        if (!isCustom && !isRandom) {
             //if not custom tag or not random wallpaper selecting one tag from provided array
             int keywordIndex = ThreadLocalRandom.current().nextInt(
                     0,
@@ -76,13 +79,14 @@ public class ChangeWallpaperJob extends JobService implements IOnWallPaperChange
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(
-                    pictures -> {
-                        if (pictures.size() >= 1){
-                            this.mPicture = pictures.get(0);
-                            downloadBitmap(mPicture);
+                        pictures -> {
+                            if (pictures.size() >= 1) {
+                                this.mPicture = pictures.get(0);
+                                downloadBitmap(mPicture);
+                            }
+                        },
+                        throwable -> {
                         }
-                    },
-                    throwable -> { }
                 );
 
         return true;

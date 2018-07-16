@@ -20,19 +20,19 @@ public class BaseInteractor implements IBaseInteractor {
         this.mScheduler = scheduler;
     }
 
-    public Scheduler io(){
+    public Scheduler io() {
         return mScheduler.io();
     }
 
-    public Scheduler ui(){
+    public Scheduler ui() {
         return mScheduler.ui();
     }
 
-    public Scheduler computation(){
+    public Scheduler computation() {
         return mScheduler.computation();
     }
 
-    public Scheduler newThread(){
+    public Scheduler newThread() {
         return mScheduler.newThread();
     }
 }

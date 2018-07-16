@@ -23,7 +23,7 @@ public class SharedPrefs {
         sharedPref = context.getSharedPreferences(Const.APP_PREFERENCES, Context.MODE_PRIVATE);
     }
 
-    public Preferences getPreferences(){
+    public Preferences getPreferences() {
         return new Preferences(
                 isUseRandomTag(),
                 isUseCustomTag(),
@@ -34,7 +34,7 @@ public class SharedPrefs {
         );
     }
 
-    public boolean isUseRandomTag(){
+    public boolean isUseRandomTag() {
         return sharedPref
                 .getBoolean(
                         context.getString(R.string.prefs_key_random_flag),
@@ -42,7 +42,7 @@ public class SharedPrefs {
                 );
     }
 
-    public boolean isUseCustomTag(){
+    public boolean isUseCustomTag() {
         return sharedPref
                 .getBoolean(
                         context.getString(R.string.prefs_key_custom_tag_flag),
@@ -50,7 +50,7 @@ public class SharedPrefs {
                 );
     }
 
-    public String getKeywordForWallpapers(){
+    public String getKeywordForWallpapers() {
         return sharedPref
                 .getString(
                         context.getString(R.string.prefs_key_keyword),
@@ -58,7 +58,7 @@ public class SharedPrefs {
                 );
     }
 
-    public int getWallpaperChangesFrequency(){
+    public int getWallpaperChangesFrequency() {
         return sharedPref
                 .getInt(
                         context.getString(R.string.prefs_key_frequency),
@@ -66,7 +66,7 @@ public class SharedPrefs {
                 );
     }
 
-    public boolean isLoadOnlyWhenWifi(){
+    public boolean isLoadOnlyWhenWifi() {
         return sharedPref
                 .getBoolean(
                         context.getString(R.string.prefs_key_onlywifi),
@@ -74,7 +74,7 @@ public class SharedPrefs {
                 );
     }
 
-    public Set<String> getWallpaperTags(){
+    public Set<String> getWallpaperTags() {
         return sharedPref
                 .getStringSet(
                         context.getString(R.string.prefs_key_tags),
@@ -93,7 +93,7 @@ public class SharedPrefs {
             editor.putStringSet(context.getString(R.string.prefs_key_tags), preferences.getWallpaperTags());
             editor.apply();
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }

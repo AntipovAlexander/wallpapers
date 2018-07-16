@@ -1,6 +1,5 @@
 package com.antipov.mvp_template.di.module;
 
-import android.app.WallpaperManager;
 import android.content.Context;
 
 import com.antipov.mvp_template.ui.activity.main.MainInteractor;
@@ -18,11 +17,11 @@ import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentInteracto
 import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentPresenter;
 import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentPresenterImpl;
 import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentView;
-import com.antipov.mvp_template.utils.prefs.SharedPrefs;
 import com.antipov.mvp_template.utils.WallPapperSetter.WallPaperSetter;
+import com.antipov.mvp_template.utils.prefs.CurrentWallpaperPrefs;
+import com.antipov.mvp_template.utils.prefs.SharedPrefs;
 import com.antipov.mvp_template.utils.rx.AppSchedulerProvider;
 import com.antipov.mvp_template.utils.rx.SchedulerProvider;
-import com.antipov.mvp_template.utils.prefs.CurrentWallpaperPrefs;
 
 import dagger.Module;
 import dagger.Provides;
@@ -43,17 +42,17 @@ public class AppModule {
     }
 
     @Provides
-    public SharedPrefs provideSharedPrefs(){
+    public SharedPrefs provideSharedPrefs() {
         return new SharedPrefs(mContext);
     }
 
     @Provides
-    public CurrentWallpaperPrefs provideCurrentWallpaperPrefs(){
+    public CurrentWallpaperPrefs provideCurrentWallpaperPrefs() {
         return new CurrentWallpaperPrefs(mContext);
     }
 
     @Provides
-    public WallPaperSetter provideWallPaperSetter(){
+    public WallPaperSetter provideWallPaperSetter() {
         return new WallPaperSetter(mContext);
     }
 
@@ -63,36 +62,36 @@ public class AppModule {
     }
 
     @Provides
-    public MainPresenter<MainView, MainInteractor> provideMainPresenter(MainPresenterImpl<MainView, MainInteractor> presenter){
+    public MainPresenter<MainView, MainInteractor> provideMainPresenter(MainPresenterImpl<MainView, MainInteractor> presenter) {
         return presenter;
     }
 
     @Provides
     public PhotoDetailPresenter<PhotoDetailView, PhotoDetailInteractor> providerPhotoDetailPresenter(
             PhotoDetailPresenterImpl<PhotoDetailView, PhotoDetailInteractor> presenter
-    ){
+    ) {
         return presenter;
     }
 
     @Provides
     public SchedulerFragmentPresenter<SchedulerFragmentView, SchedulerFragmentInteractor> providerSchedulerFragmentPresenter(
             SchedulerFragmentPresenterImpl<SchedulerFragmentView, SchedulerFragmentInteractor> presenter
-    ){
+    ) {
         return presenter;
     }
 
     @Provides
-    public MainInteractor provideMainInteractor(MainInteractorImpl interactor){
+    public MainInteractor provideMainInteractor(MainInteractorImpl interactor) {
         return interactor;
     }
 
     @Provides
-    public PhotoDetailInteractor providePhotoDetailInteractor(PhotoDetailInteractorImpl interactor){
+    public PhotoDetailInteractor providePhotoDetailInteractor(PhotoDetailInteractorImpl interactor) {
         return interactor;
     }
 
     @Provides
-    public SchedulerFragmentInteractor provideSchedulerFragmentInteractor(SchedulerFragmentInteractorImpl interactor){
+    public SchedulerFragmentInteractor provideSchedulerFragmentInteractor(SchedulerFragmentInteractorImpl interactor) {
         return interactor;
     }
 }
