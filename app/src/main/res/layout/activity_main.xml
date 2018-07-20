@@ -26,6 +26,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:drawablePadding="16dp"
+                android:lineSpacingExtra="3dp"
                 android:text="@string/schedule_your_wallpaper"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 

@@ -11,6 +11,7 @@ public class Const {
     public static final String PORTRAIT = "portrait";
     public static final String WALLPAPER = "wallpaper";
     public static final String APP_PREFERENCES_CURRENT_WALLPAPER = "wallpapers-shared-prefs-current";
+    public static final int WALLPAPER_JOB_ID = 112233;
 
     public static class Args {
         public static final String ID = "id";

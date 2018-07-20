@@ -15,4 +15,10 @@ public interface MainView extends IBaseView {
     void showFullScreenError(String error);
 
     void stopRefreshing();
+
+    void checkJobIsScheduled();
+
+    void setIsScheduled();
+
+    void setIsNotScheduled();
 }

@@ -18,6 +18,7 @@ import android.view.View;
 
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.application.Application;
+import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.pojo.Preferences;
 import com.antipov.mvp_template.service.job.change_wallpaper.ChangeWallpaperJob;
 import com.antipov.mvp_template.ui.base.BasePreferenceFragment;
@@ -38,7 +39,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     private EditTextPreference mTagText;
     private ListPreference mFrequency;
     private CheckBoxPreference mOnlyWifi;
-    private int JOBID = 112233;
+
     private Preferences preferences;
 
     @Override
@@ -221,11 +222,10 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
         if (getBaseActivity() != null) {
 
             ComponentName serviceName = new ComponentName(getBaseActivity(), ChangeWallpaperJob.class);
-            JobInfo.Builder jobInfo = new JobInfo.Builder(JOBID, serviceName)
+            JobInfo.Builder jobInfo = new JobInfo.Builder(Const.WALLPAPER_JOB_ID, serviceName)
                     .setPersisted(true)
                     .setRequiresDeviceIdle(false)
-                    .setPeriodic(TimeUnit.MINUTES.toMillis(15));
-//                    .setPeriodic(TimeUnit.HOURS.toMillis(wallpaperChangesFrequency))
+                    .setPeriodic(TimeUnit.HOURS.toMillis(preferences.getFrequency()));
 
             // resolving network type
             if (preferences.isOnlyWiFi()) {

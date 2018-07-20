@@ -8,4 +8,6 @@ import com.antipov.mvp_template.ui.base.IBasePresenter;
 
 public interface MainPresenter<V extends MainView, I extends MainInteractor> extends IBasePresenter<V, I> {
     void getPictures();
+
+    void onJobScheduled(boolean isScheduled);
 }

@@ -33,4 +33,14 @@ public class MainPresenterImpl<V extends MainView, I extends MainInteractor> ext
                     }
                 });
     }
+
+    @Override
+    public void onJobScheduled(boolean isScheduled) {
+        if (!isViewAttached()) return;
+        if (isScheduled) {
+            getView().setIsScheduled();
+        } else {
+            getView().setIsNotScheduled();
+        }
+    }
 }
