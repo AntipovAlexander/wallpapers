@@ -15,11 +15,7 @@ public class JobScheduledChecker {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             if (scheduler != null) {
                 JobInfo job = scheduler.getPendingJob(Const.WALLPAPER_JOB_ID);
-                if (job != null) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return job != null;
             }
         } else {
             if (scheduler != null){
@@ -27,7 +23,6 @@ public class JobScheduledChecker {
                     if (jobInfo.getId() == Const.WALLPAPER_JOB_ID) {
                         return true;
                     }
-                    return false;
                 }
             }
         }
