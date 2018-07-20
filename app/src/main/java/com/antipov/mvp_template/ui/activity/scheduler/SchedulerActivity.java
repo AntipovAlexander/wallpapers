@@ -5,20 +5,26 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.antipov.mvp_template.R;
+import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.ui.base.BaseActivity;
 import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragment;
 
 public class SchedulerActivity extends BaseActivity {
 
+    private boolean isScheduled = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getFragmentManager().beginTransaction().replace(R.id.content, new SchedulerFragment()).commit();
+        getFragmentManager().beginTransaction().replace(R.id.content, SchedulerFragment.newInstance(isScheduled)).commit();
     }
 
     @Override
     public void getExtras() {
-
+        Bundle args = getIntent().getExtras();
+        if (args != null) {
+            isScheduled = args.getBoolean(Const.Args.IS_SCHEDULED);
+        }
     }
 
     @Override

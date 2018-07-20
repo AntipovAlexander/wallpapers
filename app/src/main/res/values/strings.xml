@@ -31,6 +31,7 @@
     <string name="prefs_key_keyword">prefs_key_keyword</string>
     <string name="prefs_key_frequency">prefs_key_frequency</string>
     <string name="prefs_key_onlywifi">prefs_key_onlywifi</string>
+    <string name="prefs_key_disable_scheduling">prefs_key_disable_scheduling</string>
     <string name="select_frequency">Please, select frequency</string>
     <string name="enter_keyword">When you are using custom tag, you are must provide keyword. Enter it above</string>
     <string name="select_tags">Select tags from list above</string>
@@ -43,4 +44,7 @@
     <string name="set_up_your_wallpaper">Set up your wallpaper</string>
     <string name="wait_a_second">Just wait a second!</string>
     <string name="wallpaper_scheduled">Wallpaper scheduled!\n Touch to open settings</string>
+    <string name="disable_scheduling">Disable scheduling</string>
+    <string name="disable_scheduling_summary_not_enabled">Scheduling not enabled yet</string>
+    <string name="disable_scheduling_summary_enabled">Tap to disable scheduling and keep current wallpapper</string>
 </resources>

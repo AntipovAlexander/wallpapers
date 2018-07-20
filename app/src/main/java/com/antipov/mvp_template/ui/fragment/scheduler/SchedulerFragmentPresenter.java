@@ -22,4 +22,6 @@ public interface SchedulerFragmentPresenter<V extends SchedulerFragmentView, I e
     void resolveWallpaperChangeFrequencySummary(int keywordForWallpapers);
 
     void loadPrefsData();
+
+    void resolveDisableScheduling(boolean isScheduled);
 }

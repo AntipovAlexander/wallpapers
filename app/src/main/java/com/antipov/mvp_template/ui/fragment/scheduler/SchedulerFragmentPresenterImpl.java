@@ -38,6 +38,19 @@ public class SchedulerFragmentPresenterImpl<V extends SchedulerFragmentView, I e
     }
 
     @Override
+    public void resolveDisableScheduling(boolean isScheduled) {
+        if (!isViewAttached()) return;
+
+        if (isScheduled) {
+            getView().setSummaryForDisableScheduling();
+            getView().enableDisableScheduling();
+        } else {
+            getView().setDefaultForDisableScheduling();
+            getView().disableDisableScheduling();
+        }
+    }
+
+    @Override
     public void resolveEnabledPreferences(boolean useCustomTag, boolean useRandomTag) {
         if (!isViewAttached()) return;
         if (useRandomTag) {

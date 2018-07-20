@@ -10,6 +10,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.MultiSelectListPreference;
+import android.preference.Preference;
 import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -41,6 +42,16 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     private CheckBoxPreference mOnlyWifi;
 
     private Preferences preferences;
+    private Preference mDisableScheduling;
+    private boolean isScheduled = false;
+
+    public static SchedulerFragment newInstance(boolean isScheduled) {
+        Bundle args = new Bundle();
+        args.putBoolean(Const.Args.IS_SCHEDULED, isScheduled);
+        SchedulerFragment fragment = new SchedulerFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -66,6 +77,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
         mTagText = (EditTextPreference) getPreferenceScreen().findPreference(getString(R.string.prefs_key_keyword));
         mFrequency = (ListPreference) getPreferenceScreen().findPreference(getString(R.string.prefs_key_frequency));
         mOnlyWifi = (CheckBoxPreference) getPreferenceScreen().findPreference(getString(R.string.prefs_key_onlywifi));
+        mDisableScheduling = getPreferenceScreen().findPreference(getString(R.string.prefs_key_disable_scheduling));
     }
 
     @Override
@@ -87,6 +99,8 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
         mPresenter.resolveWallpaperCustomTagSummary(preferences.getWallpaperKey());
         mPresenter.resolveWallpaperTagsSummary(preferences.getWallpaperTags());
         mPresenter.resolveWallpaperChangeFrequencySummary(preferences.getFrequency());
+
+        mPresenter.resolveDisableScheduling(isScheduled);
     }
 
     @Override
@@ -135,6 +149,18 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
             preferences.setOnlyWiFi((boolean) newValue);
             return true;
         });
+
+        mDisableScheduling.setOnPreferenceClickListener((view)->{
+            return true;
+        });
+    }
+
+    @Override
+    public void getExtras() {
+        Bundle args = getArguments();
+        if (args != null) {
+            isScheduled = args.getBoolean(Const.Args.IS_SCHEDULED);
+        }
     }
 
     @Override
@@ -214,6 +240,26 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     @Override
     public void setSummaryForTags(Set<String> wallpaperTags) {
         mWallpaperTags.setSummary(getString(R.string.selected, TextUtils.join(", ", wallpaperTags)));
+    }
+
+    @Override
+    public void setDefaultForDisableScheduling() {
+        mDisableScheduling.setSummary(R.string.disable_scheduling_summary_not_enabled);
+    }
+
+    @Override
+    public void setSummaryForDisableScheduling() {
+        mDisableScheduling.setSummary(R.string.disable_scheduling_summary_enabled);
+    }
+
+    @Override
+    public void disableDisableScheduling() {
+        mDisableScheduling.setEnabled(false);
+    }
+
+    @Override
+    public void enableDisableScheduling() {
+        mDisableScheduling.setEnabled(true);
     }
 
     @Override

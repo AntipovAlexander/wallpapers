@@ -30,6 +30,7 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(getPreferenceXml());
+        getExtras();
         initViews();
         initListeners();
     }
@@ -119,4 +120,6 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
     public abstract void initViews();
 
     public abstract void initListeners();
+
+    public abstract void getExtras();
 }

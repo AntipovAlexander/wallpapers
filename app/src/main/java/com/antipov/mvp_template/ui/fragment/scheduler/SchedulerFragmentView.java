@@ -29,4 +29,12 @@ public interface SchedulerFragmentView extends IBaseView {
     void setSummaryForTags(Set<String> wallpaperTags);
 
     void initPreferencesScreen(Preferences preferences);
+
+    void setDefaultForDisableScheduling();
+
+    void enableDisableScheduling();
+
+    void setSummaryForDisableScheduling();
+
+    void disableDisableScheduling();
 }

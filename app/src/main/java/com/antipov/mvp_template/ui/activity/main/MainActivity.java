@@ -1,12 +1,7 @@
 package com.antipov.mvp_template.ui.activity.main;
 
-import android.app.ActivityManager;
 import android.app.ActivityOptions;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,7 +15,6 @@ import android.widget.TextView;
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.pojo.Picture;
-import com.antipov.mvp_template.service.job.change_wallpaper.ChangeWallpaperJob;
 import com.antipov.mvp_template.ui.activity.scheduler.SchedulerActivity;
 import com.antipov.mvp_template.ui.adapter.PhotoListAdapter;
 import com.antipov.mvp_template.ui.base.BaseActivity;
@@ -106,6 +100,7 @@ public class MainActivity extends BaseActivity implements MainView, View.OnClick
         switch (v.getId()) {
             case R.id.tv_schedule:
                 Intent i = new Intent(this, SchedulerActivity.class);
+                i.putExtra(Const.Args.IS_SCHEDULED, JobScheduledChecker.isWallpapperWorkScheduled(this));
                 startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
         }

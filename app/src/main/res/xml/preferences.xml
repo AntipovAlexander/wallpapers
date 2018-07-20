@@ -43,5 +43,12 @@
             android:title="@string/only_when_wifi"
             android:defaultValue="true"
             android:summary="@string/only_when_wifi_summary" />
+
+        <Preference
+            android:key="@string/prefs_key_disable_scheduling"
+            android:title="@string/disable_scheduling"
+            android:summary="@string/disable_scheduling_summary_not_enabled"
+            android:enabled="false"
+            />
     </PreferenceCategory>
 </PreferenceScreen>

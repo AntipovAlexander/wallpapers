@@ -22,6 +22,7 @@ public class Const {
         public static final String PICTURE = "picture";
         public static final String BITMAP = "bitmap";
         public static final String LISTENER = "listener";
+        public static final String IS_SCHEDULED = "is-sched";
     }
 
     public static class Prefs {
