@@ -1,5 +1,6 @@
 package com.antipov.mvp_template.ui.fragment.scheduler;
 
+import android.app.Activity;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
@@ -24,6 +25,7 @@ import com.antipov.mvp_template.pojo.Preferences;
 import com.antipov.mvp_template.service.job.change_wallpaper.ChangeWallpaperJob;
 import com.antipov.mvp_template.ui.base.BasePreferenceFragment;
 import com.antipov.mvp_template.utils.DialogUtils;
+import com.antipov.mvp_template.utils.job.JobUtils;
 
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -151,6 +153,12 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
         });
 
         mDisableScheduling.setOnPreferenceClickListener((view)->{
+            if (isScheduled) {
+                JobUtils.killWallpaperJob(getBaseActivity());
+                isScheduled = false;
+                mPresenter.resolveDisableScheduling(isScheduled);
+                getBaseActivity().setResult(Activity.RESULT_OK);
+            }
             return true;
         });
     }

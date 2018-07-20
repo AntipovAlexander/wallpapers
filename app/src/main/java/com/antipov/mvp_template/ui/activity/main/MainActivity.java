@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +20,7 @@ import com.antipov.mvp_template.ui.activity.scheduler.SchedulerActivity;
 import com.antipov.mvp_template.ui.adapter.PhotoListAdapter;
 import com.antipov.mvp_template.ui.base.BaseActivity;
 import com.antipov.mvp_template.utils.GlideApp;
-import com.antipov.mvp_template.utils.job.JobScheduledChecker;
+import com.antipov.mvp_template.utils.job.JobUtils;
 
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class MainActivity extends BaseActivity implements MainView, View.OnClick
     SwipeRefreshLayout mRefresh;
 
     private PhotoListAdapter mAdapter;
+    private final int START_OPTIONS = 101;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,10 +102,26 @@ public class MainActivity extends BaseActivity implements MainView, View.OnClick
         switch (v.getId()) {
             case R.id.tv_schedule:
                 Intent i = new Intent(this, SchedulerActivity.class);
-                i.putExtra(Const.Args.IS_SCHEDULED, JobScheduledChecker.isWallpapperWorkScheduled(this));
-                startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                i.putExtra(Const.Args.IS_SCHEDULED, JobUtils.isWallpapperWorkScheduled(this));
+                ActivityCompat.startActivityForResult(
+                        this,
+                        i,
+                        START_OPTIONS,
+                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case START_OPTIONS:
+                if (resultCode == RESULT_OK) {
+                    mPresenter.onJobScheduled(JobUtils.isWallpapperWorkScheduled(this));
+                }
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -120,7 +138,7 @@ public class MainActivity extends BaseActivity implements MainView, View.OnClick
     @Override
     public void checkJobIsScheduled() {
         mPresenter.onJobScheduled(
-                JobScheduledChecker.isWallpapperWorkScheduled(this)
+                JobUtils.isWallpapperWorkScheduled(this)
         );
     }
 
