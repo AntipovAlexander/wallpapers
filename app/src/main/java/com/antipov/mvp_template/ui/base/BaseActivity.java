@@ -10,7 +10,10 @@ import android.view.inputmethod.InputMethodManager;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.application.Application;
+import com.antipov.mvp_template.di.component.ActivityComponent;
 import com.antipov.mvp_template.di.component.AppComponent;
+import com.antipov.mvp_template.di.component.DaggerActivityComponent;
+import com.antipov.mvp_template.di.module.ActivityModule;
 import com.antipov.mvp_template.utils.DialogUtils;
 import com.antipov.mvp_template.utils.NetworkUtils;
 
@@ -20,6 +23,7 @@ import com.antipov.mvp_template.utils.NetworkUtils;
 
 public abstract class BaseActivity extends AppCompatActivity implements IBaseView {
     private MaterialDialog materialDialog;
+    private ActivityComponent mActivityComponent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,8 +40,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         initListeners();
     }
 
-    public AppComponent getComponent() {
-        return ((Application) getApplication()).getComponent();
+    public ActivityComponent getComponent() {
+        mActivityComponent = DaggerActivityComponent
+                .builder()
+                .activityModule(new ActivityModule())
+                .appComponent(((Application) getApplication()).getComponent())
+                .build();
+        return mActivityComponent;
     }
 
     @Override

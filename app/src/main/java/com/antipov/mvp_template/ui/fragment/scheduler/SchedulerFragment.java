@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.antipov.mvp_template.R;
-import com.antipov.mvp_template.application.Application;
 import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.pojo.Preferences;
 import com.antipov.mvp_template.service.job.change_wallpaper.ChangeWallpaperJob;
@@ -58,9 +57,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((Application) getActivity().getApplication())
-                .getComponent()
-                .inject(this);
+        getActivityComponent().inject(this);
         mPresenter.attachView(this);
         mPresenter.loadPrefsData();
         setHasOptionsMenu(true);

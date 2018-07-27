@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.antipov.mvp_template.R;
+import com.antipov.mvp_template.di.component.ActivityComponent;
 import com.antipov.mvp_template.di.component.AppComponent;
 
 public abstract class BasePreferenceFragment extends PreferenceFragment implements IBaseView {
@@ -108,7 +109,7 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
     }
 
     @Nullable
-    public AppComponent getAppComponent() {
+    public ActivityComponent getActivityComponent() {
         if (mActivity != null) {
             return mActivity.getComponent();
         }

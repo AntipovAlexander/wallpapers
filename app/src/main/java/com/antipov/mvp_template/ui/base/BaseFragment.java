@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.antipov.mvp_template.R;
+import com.antipov.mvp_template.di.component.ActivityComponent;
 import com.antipov.mvp_template.di.component.AppComponent;
 
 public abstract class BaseFragment extends Fragment implements IBaseView {
@@ -119,7 +120,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     }
 
     @Nullable
-    public AppComponent getAppComponent() {
+    public ActivityComponent getAppComponent() {
         if (mActivity != null) {
             return mActivity.getComponent();
         }
