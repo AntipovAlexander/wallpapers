@@ -1,5 +1,8 @@
 package com.antipov.mvp_template.di.component;
 
+import android.content.Context;
+
+import com.antipov.mvp_template.di.ApplicationContext;
 import com.antipov.mvp_template.di.module.AppModule;
 import com.antipov.mvp_template.service.foreground.change_wallpaper.ChangeWallPaperForeground;
 import com.antipov.mvp_template.service.job.change_wallpaper.ChangeWallpaperJob;
@@ -25,6 +28,9 @@ public interface AppComponent {
     void inject(ChangeWallPaperForeground changeWallPaperForeground);
 
     // provide dependencies from app module to dependent components
+
+    @ApplicationContext
+    Context context();
 
     SharedPrefs sharedPrefs();
 

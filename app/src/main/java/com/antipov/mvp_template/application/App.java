@@ -27,7 +27,7 @@ public class App extends Application implements com.antipov.mvp_template.applica
                     .builder()
                     .appModule(
                             new AppModule(
-                                    getApplicationContext(),
+                                    this,
                                     new AppSchedulerProvider()
                             )
                     ).build();

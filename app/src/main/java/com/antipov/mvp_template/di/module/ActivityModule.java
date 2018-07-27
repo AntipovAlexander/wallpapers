@@ -1,5 +1,10 @@
 package com.antipov.mvp_template.di.module;
 
+import android.app.Activity;
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+
+import com.antipov.mvp_template.di.ActivityContext;
 import com.antipov.mvp_template.ui.activity.main.MainInteractor;
 import com.antipov.mvp_template.ui.activity.main.MainInteractorImpl;
 import com.antipov.mvp_template.ui.activity.main.MainPresenter;
@@ -21,6 +26,18 @@ import dagger.Provides;
 
 @Module
 public class ActivityModule {
+
+    Activity activity;
+
+    public ActivityModule(AppCompatActivity activity) {
+        this.activity = activity;
+    }
+
+    @Provides
+    @ActivityContext
+    Context provideActivityContext(){
+        return activity;
+    }
 
     @Provides
     public MainPresenter<MainView, MainInteractor> provideMainPresenter(MainPresenterImpl<MainView, MainInteractor> presenter) {

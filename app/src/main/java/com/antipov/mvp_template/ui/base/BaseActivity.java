@@ -43,7 +43,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     public ActivityComponent getComponent() {
         mActivityComponent = DaggerActivityComponent
                 .builder()
-                .activityModule(new ActivityModule())
+                .activityModule(new ActivityModule(this))
                 .appComponent(((Application) getApplication()).getComponent())
                 .build();
         return mActivityComponent;

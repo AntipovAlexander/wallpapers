@@ -1,6 +1,7 @@
 package com.antipov.mvp_template.ui.activity.main;
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.common.Const;
+import com.antipov.mvp_template.di.ApplicationContext;
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.ui.activity.scheduler.SchedulerActivity;
 import com.antipov.mvp_template.ui.adapter.PhotoListAdapter;

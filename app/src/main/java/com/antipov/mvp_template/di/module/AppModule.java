@@ -1,7 +1,9 @@
 package com.antipov.mvp_template.di.module;
 
+import android.app.Application;
 import android.content.Context;
 
+import com.antipov.mvp_template.di.ApplicationContext;
 import com.antipov.mvp_template.ui.activity.main.MainInteractor;
 import com.antipov.mvp_template.ui.activity.main.MainInteractorImpl;
 import com.antipov.mvp_template.ui.activity.main.MainPresenter;
@@ -33,27 +35,33 @@ import dagger.Provides;
 @Module
 public class AppModule {
 
-    private final Context mContext;
+    private final Application mApplication;
     private final AppSchedulerProvider mScheduleProvider;
 
-    public AppModule(Context context, AppSchedulerProvider appSchedulerProvider) {
-        this.mContext = context;
+    public AppModule(Application application, AppSchedulerProvider appSchedulerProvider) {
         this.mScheduleProvider = appSchedulerProvider;
+        this.mApplication = application;
+    }
+
+    @Provides
+    @ApplicationContext
+    Context provideApplicationContext() {
+        return mApplication;
     }
 
     @Provides
     public SharedPrefs provideSharedPrefs() {
-        return new SharedPrefs(mContext);
+        return new SharedPrefs(mApplication);
     }
 
     @Provides
     public CurrentWallpaperPrefs provideCurrentWallpaperPrefs() {
-        return new CurrentWallpaperPrefs(mContext);
+        return new CurrentWallpaperPrefs(mApplication);
     }
 
     @Provides
     public WallPaperSetter provideWallPaperSetter() {
-        return new WallPaperSetter(mContext);
+        return new WallPaperSetter(mApplication);
     }
 
     @Provides
