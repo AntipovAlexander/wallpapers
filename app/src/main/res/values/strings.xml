@@ -47,4 +47,9 @@
     <string name="disable_scheduling">Disable scheduling</string>
     <string name="disable_scheduling_summary_not_enabled">Scheduling not enabled yet</string>
     <string name="disable_scheduling_summary_enabled">Tap to disable scheduling and keep current wallpapper</string>
+    <string name="home_screen">Home screen</string>
+    <string name="lock_screen">Lock screen</string>
+    <string name="home_and_lock_screen">Home and lock screen</string>
+    <string name="dialog_title_wallpaper_target">Wallpaper target</string>
+    <string name="dismiss">Dismiss</string>
 </resources>
