@@ -14,8 +14,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import rx.Observable;
-
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
@@ -90,7 +88,7 @@ public class PhotoDetailPresenterImplTest {
         doAnswer(invocation -> {
             listener.onWallPaperChangedSuccess(mPicture);
             return null;
-        }).when(mMockedWallpaperSetter).setWallPaper(bitmap, mPicture, listener);
+        }).when(mMockedWallpaperSetter).setWallPaper(bitmap, mPicture, flag, listener);
         mPresenter.setWallPaper(bitmap, mPicture);
         verify(mMockedView).showLoading();
         verify(mMockedView).hideLoading();
@@ -105,7 +103,7 @@ public class PhotoDetailPresenterImplTest {
         doAnswer(invocation -> {
             listener.onWallPaperChangedFailure("err");
             return null;
-        }).when(mMockedWallpaperSetter).setWallPaper(bitmap, mPicture, listener);
+        }).when(mMockedWallpaperSetter).setWallPaper(bitmap, mPicture, flag, listener);
         mPresenter.setWallPaper(bitmap, mPicture);
         verify(mMockedView).showLoading();
         verify(mMockedView).hideLoading();

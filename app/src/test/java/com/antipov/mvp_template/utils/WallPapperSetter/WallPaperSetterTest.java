@@ -5,23 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
-import android.support.v7.app.AppCompatDelegate;
 
 import com.antipov.mvp_template.pojo.Picture;
-import com.antipov.mvp_template.rx.TestSchedulerProvider;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
-
-import rx.schedulers.TestScheduler;
 
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
@@ -52,7 +46,7 @@ public class WallPaperSetterTest {
     @Test
     public void testStartServiceAndUnbind() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
         Picture mPicture = Picture.getForTests();
-        mWallpaperSetter.setWallPaper(bitmap, mPicture, mMockListener);
+        mWallpaperSetter.setWallPaper(bitmap, mPicture, flag, mMockListener);
         verify(context).startService(ArgumentMatchers.any(Intent.class));
 
         // hack with reflection for changing isBound from 'false' to 'true'

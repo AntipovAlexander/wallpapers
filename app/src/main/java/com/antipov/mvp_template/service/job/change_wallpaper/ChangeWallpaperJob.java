@@ -111,7 +111,7 @@ public class ChangeWallpaperJob extends JobService implements IOnWallPaperChange
     }
 
     private void setWallpaperFromBitmap(Bitmap bmp) {
-        wallPaperSetter.setWallPaper(bmp, mPicture, this);
+//        wallPaperSetter.setWallPaper(bmp, mPicture, flag, this);
     }
 
     @Override

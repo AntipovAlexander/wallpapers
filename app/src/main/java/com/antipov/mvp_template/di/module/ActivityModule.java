@@ -1,6 +1,7 @@
 package com.antipov.mvp_template.di.module;
 
 import android.app.Activity;
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
@@ -15,6 +16,7 @@ import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailInteractorIm
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailPresenter;
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailPresenterImpl;
 import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailView;
+import com.antipov.mvp_template.ui.dialog.WallpaperTargetDialog;
 import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentInteractor;
 import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentInteractorImpl;
 import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentPresenter;
@@ -37,6 +39,11 @@ public class ActivityModule {
     @ActivityContext
     Context provideActivityContext(){
         return activity;
+    }
+
+    @Provides
+    WallpaperTargetDialog provideWallpaperTargetDialog(){
+        return new WallpaperTargetDialog(activity);
     }
 
     @Provides

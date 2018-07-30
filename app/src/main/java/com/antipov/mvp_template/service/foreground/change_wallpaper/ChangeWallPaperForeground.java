@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 
 import com.antipov.mvp_template.R;
@@ -32,6 +33,7 @@ public class ChangeWallPaperForeground extends Service {
     @Inject
     SchedulerProvider mProvider;
     private Notification mNotification;
+    private Observable<Boolean> observable;
 
     public ChangeWallPaperForeground() {
     }
@@ -81,8 +83,8 @@ public class ChangeWallPaperForeground extends Service {
         return mBinder;
     }
 
-    public void setupWallpaper(Bitmap bitmap, Picture mPicture, IOnWallPaperChanged onWallPaperChanged) {
-        Observable.fromCallable(() -> {
+    public void setupWallpaper(Bitmap bitmap, Picture mPicture, IOnWallPaperChanged listener) {
+        observable = Observable.fromCallable(() -> {
             try {
                 WallpaperManager.getInstance(this).setBitmap(bitmap);
                 return true;
@@ -90,24 +92,44 @@ public class ChangeWallPaperForeground extends Service {
                 e.printStackTrace();
                 return false;
             }
-        })
-                .subscribeOn(mProvider.io())
-                .observeOn(mProvider.ui())
-                .subscribe(
-                        isSuccess -> {
-                            stopThisService();
-                            if (isSuccess) {
-                                onWallPaperChanged.onWallPaperChangedSuccess(mPicture);
-                            } else {
-                                onWallPaperChanged.onWallPaperChangedFailure("Error while setting wallpaper");
-                            }
-                        },
+        });
 
-                        throwable -> {
-                            stopThisService();
-                            onWallPaperChanged.onWallPaperChangedFailure(throwable.getMessage());
-                        });
+        subscribeForWallpaperChanges(observable, listener, mPicture);
+    }
 
+    @RequiresApi(24)
+    public void setupWallpaper(Bitmap bitmap, Picture mPicture, int flag, IOnWallPaperChanged listener) {
+        observable = Observable.fromCallable(() -> {
+            try {
+                WallpaperManager.getInstance(this).setBitmap(bitmap, null, true, flag);
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        });
+
+        subscribeForWallpaperChanges(observable, listener, mPicture);
+    }
+
+    private void subscribeForWallpaperChanges(Observable<Boolean> observable, IOnWallPaperChanged listener, Picture mPicture) {
+        observable
+            .subscribeOn(mProvider.io())
+            .observeOn(mProvider.ui())
+            .subscribe(
+                    isSuccess -> {
+                        stopThisService();
+                        if (isSuccess) {
+                            listener.onWallPaperChangedSuccess(mPicture);
+                        } else {
+                            listener.onWallPaperChangedFailure("Error while setting wallpaper");
+                        }
+                    },
+
+                    throwable -> {
+                        stopThisService();
+                        listener.onWallPaperChangedFailure(throwable.getMessage());
+                    });
     }
 
     private void stopThisService() {

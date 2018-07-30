@@ -12,6 +12,8 @@ public interface PhotoDetailPresenter<V extends PhotoDetailView, I extends Photo
 
     void setWallPaper(Bitmap mBitmap, Picture mPicture);
 
+    void setWallPaper(Bitmap mBitmap, Picture mPicture, int flag);
+
     void onViewPrepared(Picture mPicture);
 
     void onOpenInBrowserClicked();

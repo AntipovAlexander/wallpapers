@@ -1,11 +1,14 @@
 package com.antipov.mvp_template.ui.activity.photo_detail;
 
+import android.app.WallpaperManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +23,7 @@ import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.ui.base.BaseActivity;
+import com.antipov.mvp_template.ui.dialog.WallpaperTargetDialog;
 import com.antipov.mvp_template.utils.GlideApp;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -31,10 +35,12 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView {
+public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView, WallpaperTargetDialog.OnWallpaperTargetSelected {
 
     @Inject
     PhotoDetailPresenter<PhotoDetailView, PhotoDetailInteractor> mPresenter;
+    @Inject
+    WallpaperTargetDialog mDialog;
     @BindView(R.id.iv_image)
     ImageView mImage;
     @BindView(R.id.fl_progress)
@@ -105,11 +111,32 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.set_wallpaper:
-                showLoading();
-                mPresenter.setWallPaper(mBitmap, mPicture);
+                // if runs in android N or above, we can add flag for lock screen
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    mDialog.show(this);
+                } else {
+                    mPresenter.setWallPaper(mBitmap, mPicture);
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @RequiresApi(24)
+    @Override
+    public void onSelectedHomeScreenAsTarget() {
+        mPresenter.setWallPaper(mBitmap, mPicture, WallpaperManager.FLAG_SYSTEM);
+    }
+
+    @RequiresApi(24)
+    @Override
+    public void onSelectedLockScreenAsTarget() {
+        mPresenter.setWallPaper(mBitmap, mPicture, WallpaperManager.FLAG_LOCK);
+    }
+
+    @Override
+    public void onSelectedHomeAndLockScreenAsTarget() {
+        mPresenter.setWallPaper(mBitmap, mPicture);
     }
 
     @Override

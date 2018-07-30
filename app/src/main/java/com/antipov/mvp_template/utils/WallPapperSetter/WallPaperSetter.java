@@ -1,5 +1,6 @@
 package com.antipov.mvp_template.utils.WallPapperSetter;
 
+import android.app.WallpaperManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,9 @@ import android.os.IBinder;
 
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.service.foreground.change_wallpaper.ChangeWallPaperForeground;
+import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailInteractor;
+import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailPresenterImpl;
+import com.antipov.mvp_template.ui.activity.photo_detail.PhotoDetailView;
 
 import javax.inject.Inject;
 
@@ -40,22 +44,47 @@ public class WallPaperSetter {
     }
 
     /**
+     * Method for setting up wallpaper via service connection. Has overloaded version
+     * with target flag {@link WallPaperSetter#setWallPaper(Bitmap, Picture, int, IOnWallPaperChanged)}
+     *
      * @param bitmap             image which will be set up as wallpaper
-     * @param mPicture
-     * @param onWallPaperChanged set up wallpaper listener
+     * @param picture           wallpaper model
+     * @param listener set up wallpaper listener
      */
-    public void setWallPaper(Bitmap bitmap, Picture mPicture, IOnWallPaperChanged onWallPaperChanged) {
+    public void setWallPaper(Bitmap bitmap, Picture picture, PhotoDetailPresenterImpl listener) {
+        startService();
+
+        synchronized (WallPaperSetter.class) {
+            if (myService != null){
+                myService.setupWallpaper(bitmap, picture, listener);
+            }
+        }
+    }
+
+    /**
+     * Method for setting up wallpaper via service connection
+     *
+     * @param bitmap             image which will be set up as wallpaper
+     * @param mPicture           wallpaper model
+     * @param flag               target for wallpaper: {@link WallpaperManager#FLAG_LOCK}, {@link WallpaperManager#FLAG_SYSTEM}
+     * @param listener set up wallpaper listener
+     */
+    public void setWallPaper(Bitmap bitmap, Picture mPicture, int flag, IOnWallPaperChanged listener) {
+        startService();
+
+        synchronized (WallPaperSetter.class) {
+            if (myService != null){
+                myService.setupWallpaper(bitmap, mPicture, flag, listener);
+            }
+        }
+    }
+
+    private void startService() {
         Intent i = new Intent(context, ChangeWallPaperForeground.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(i);
         } else {
             context.startService(i);
-        }
-
-        synchronized (WallPaperSetter.class) {
-            if (myService != null){
-                myService.setupWallpaper(bitmap, mPicture, onWallPaperChanged);
-            }
         }
     }
 

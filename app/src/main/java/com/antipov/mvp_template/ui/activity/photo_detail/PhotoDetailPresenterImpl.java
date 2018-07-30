@@ -42,6 +42,13 @@ public class PhotoDetailPresenterImpl<V extends PhotoDetailView, I extends Photo
     }
 
     @Override
+    public void setWallPaper(Bitmap mBitmap, Picture mPicture, int flag) {
+        if (!isViewAttached()) return;
+        getView().showLoading();
+        mWallpaperSetter.setWallPaper(mBitmap, mPicture, flag,this);
+    }
+
+    @Override
     public void onViewPrepared(Picture mPicture) {
         if (!isViewAttached()) return;
         getView().renderLayout(mPicture);
