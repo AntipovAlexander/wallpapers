@@ -1,8 +1,10 @@
 package com.antipov.mvp_template.service.job.change_wallpaper;
 
+import android.app.WallpaperManager;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -111,7 +113,16 @@ public class ChangeWallpaperJob extends JobService implements IOnWallPaperChange
     }
 
     private void setWallpaperFromBitmap(Bitmap bmp) {
-//        wallPaperSetter.setWallPaper(bmp, mPicture, flag, this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (sharedPrefs.targetIsBothScreen()) {
+                wallPaperSetter.setWallPaper(bmp, mPicture,this);
+            } else {
+                if (sharedPrefs.targetIsHome()) wallPaperSetter.setWallPaper(bmp, mPicture, WallpaperManager.FLAG_SYSTEM, this);
+                if (sharedPrefs.targetIsLock()) wallPaperSetter.setWallPaper(bmp, mPicture, WallpaperManager.FLAG_LOCK, this);
+            }
+        } else {
+            wallPaperSetter.setWallPaper(bmp, mPicture,this);
+        }
     }
 
     @Override

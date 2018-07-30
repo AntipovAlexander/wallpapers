@@ -52,4 +52,7 @@
     <string name="home_and_lock_screen">Home and lock screen</string>
     <string name="dialog_title_wallpaper_target">Wallpaper target</string>
     <string name="dismiss">Dismiss</string>
+    <string name="prefs_key_target_both">target_both</string>
+    <string name="prefs_key_target_home">target_home</string>
+    <string name="prefs_key_target_lock">target_lock</string>
 </resources>

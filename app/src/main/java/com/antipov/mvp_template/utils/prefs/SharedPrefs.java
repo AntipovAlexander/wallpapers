@@ -28,6 +28,9 @@ public class SharedPrefs {
                 isUseRandomTag(),
                 isUseCustomTag(),
                 isLoadOnlyWhenWifi(),
+                targetIsBothScreen(),
+                targetIsHome(),
+                targetIsLock(),
                 getWallpaperTags(),
                 getKeywordForWallpapers(),
                 getWallpaperChangesFrequency()
@@ -82,6 +85,30 @@ public class SharedPrefs {
                 );
     }
 
+    public boolean targetIsBothScreen() {
+        return sharedPref
+                .getBoolean(
+                        context.getString(R.string.prefs_key_target_both),
+                        true
+                );
+    }
+
+    public boolean targetIsHome() {
+        return sharedPref
+                .getBoolean(
+                        context.getString(R.string.prefs_key_target_home),
+                        false
+                );
+    }
+
+    public boolean targetIsLock() {
+        return sharedPref
+                .getBoolean(
+                        context.getString(R.string.prefs_key_target_lock),
+                        false
+                );
+    }
+
     public boolean save(Preferences preferences) {
         try {
             SharedPreferences.Editor editor = sharedPref.edit();
@@ -91,6 +118,9 @@ public class SharedPrefs {
             editor.putInt(context.getString(R.string.prefs_key_frequency), preferences.getFrequency());
             editor.putBoolean(context.getString(R.string.prefs_key_onlywifi), preferences.isOnlyWiFi());
             editor.putStringSet(context.getString(R.string.prefs_key_tags), preferences.getWallpaperTags());
+            editor.putBoolean(context.getString(R.string.prefs_key_target_home), preferences.isTargetHome());
+            editor.putBoolean(context.getString(R.string.prefs_key_target_lock), preferences.isTargetLock());
+            editor.putBoolean(context.getString(R.string.prefs_key_target_both), preferences.isTargetBoth());
             editor.apply();
             return true;
         } catch (Exception e) {

@@ -6,6 +6,7 @@ import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -23,6 +24,7 @@ import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.pojo.Preferences;
 import com.antipov.mvp_template.service.job.change_wallpaper.ChangeWallpaperJob;
 import com.antipov.mvp_template.ui.base.BasePreferenceFragment;
+import com.antipov.mvp_template.ui.dialog.WallpaperTargetDialog;
 import com.antipov.mvp_template.utils.DialogUtils;
 import com.antipov.mvp_template.utils.job.JobUtils;
 
@@ -31,10 +33,12 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-public class SchedulerFragment extends BasePreferenceFragment implements SchedulerFragmentView {
+public class SchedulerFragment extends BasePreferenceFragment implements SchedulerFragmentView, WallpaperTargetDialog.OnWallpaperTargetSelected {
 
     @Inject
     SchedulerFragmentPresenter<SchedulerFragmentView, SchedulerFragmentInteractor> mPresenter;
+    @Inject
+    WallpaperTargetDialog mDialog;
     private MultiSelectListPreference mWallpaperTags;
     private SwitchPreference mRandomTag;
     private SwitchPreference mCustomTag;
@@ -182,10 +186,38 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.schedule_wallpaper:
-                mPresenter.onApplyClicked(preferences);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    mDialog.show(this);
+                } else {
+                    mPresenter.onApplyClicked(preferences);
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSelectedHomeScreenAsTarget() {
+        preferences.setTargetHome(true);
+        preferences.setTargetBoth(false);
+        preferences.setTargetLock(false);
+        mPresenter.onApplyClicked(preferences);
+    }
+
+    @Override
+    public void onSelectedLockScreenAsTarget() {
+        preferences.setTargetHome(false);
+        preferences.setTargetBoth(false);
+        preferences.setTargetLock(true);
+        mPresenter.onApplyClicked(preferences);
+    }
+
+    @Override
+    public void onSelectedHomeAndLockScreenAsTarget() {
+        preferences.setTargetHome(false);
+        preferences.setTargetBoth(true);
+        preferences.setTargetLock(false);
+        mPresenter.onApplyClicked(preferences);
     }
 
     @Override

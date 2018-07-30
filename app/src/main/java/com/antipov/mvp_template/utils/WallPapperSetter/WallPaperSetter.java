@@ -51,7 +51,7 @@ public class WallPaperSetter {
      * @param picture           wallpaper model
      * @param listener set up wallpaper listener
      */
-    public void setWallPaper(Bitmap bitmap, Picture picture, PhotoDetailPresenterImpl listener) {
+    public void setWallPaper(Bitmap bitmap, Picture picture, IOnWallPaperChanged listener) {
         startService();
 
         synchronized (WallPaperSetter.class) {
