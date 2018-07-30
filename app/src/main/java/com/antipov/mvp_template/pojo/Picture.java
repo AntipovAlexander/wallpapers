@@ -39,6 +39,9 @@ public class Picture implements Serializable {
 
         p.setUrls(urls);
 
+        Links links = p.new Links();
+        p.setLinks(links);
+
         return p;
     }
 

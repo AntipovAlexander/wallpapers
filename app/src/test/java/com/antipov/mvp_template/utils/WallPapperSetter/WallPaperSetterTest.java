@@ -46,7 +46,7 @@ public class WallPaperSetterTest {
     @Test
     public void testStartServiceAndUnbind() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
         Picture mPicture = Picture.getForTests();
-        mWallpaperSetter.setWallPaper(bitmap, mPicture, flag, mMockListener);
+        mWallpaperSetter.setWallPaper(bitmap, mPicture, 0, mMockListener);
         verify(context).startService(ArgumentMatchers.any(Intent.class));
 
         // hack with reflection for changing isBound from 'false' to 'true'

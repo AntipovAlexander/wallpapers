@@ -105,6 +105,9 @@ public class SchedulerFragmentPresenterImplTest {
                 true,
                 false,
                 false,
+                true,
+                false,
+                false,
                 new HashSet<String>(),
                 "",
                 0
@@ -118,6 +121,9 @@ public class SchedulerFragmentPresenterImplTest {
         Preferences preferences = new Preferences(
                 false,
                 true,
+                false,
+                true,
+                false,
                 false,
                 new HashSet<String>(),
                 "",
@@ -134,6 +140,9 @@ public class SchedulerFragmentPresenterImplTest {
                 false,
                 false,
                 false,
+                true,
+                false,
+                false,
                 new HashSet<>(),
                 "foo",
                 1
@@ -145,6 +154,9 @@ public class SchedulerFragmentPresenterImplTest {
     @Test
     public void onApplyPositiveRandom(){
         Preferences preferences = new Preferences(
+                true,
+                false,
+                false,
                 true,
                 false,
                 false,
@@ -163,6 +175,9 @@ public class SchedulerFragmentPresenterImplTest {
                 false,
                 true,
                 false,
+                true,
+                false,
+                false,
                 new HashSet<>(),
                 "foo",
                 1
@@ -176,8 +191,12 @@ public class SchedulerFragmentPresenterImplTest {
     public void onApplyPositiveWithTags(){
         Set<String> set = new HashSet<>();
         set.add("string");
-        Preferences preferences = new Preferences(false,
+        Preferences preferences = new Preferences(
+                false,
                 true,
+                false,
+                true,
+                false,
                 false,
                 set,
                 "foo",
@@ -190,6 +209,9 @@ public class SchedulerFragmentPresenterImplTest {
     @Test
     public void onApplyNegativeRandom(){
         Preferences preferences = new Preferences(
+                true,
+                false,
+                false,
                 true,
                 false,
                 false,
@@ -208,6 +230,9 @@ public class SchedulerFragmentPresenterImplTest {
                 false,
                 true,
                 false,
+                true,
+                false,
+                false,
                 new HashSet<>(),
                 "foo",
                 1
@@ -221,8 +246,12 @@ public class SchedulerFragmentPresenterImplTest {
     public void onApplyNegativeWithTags(){
         Set<String> set = new HashSet<>();
         set.add("string");
-        Preferences preferences = new Preferences(false,
+        Preferences preferences = new Preferences(
+                false,
                 true,
+                false,
+                true,
+                false,
                 false,
                 set,
                 "foo",
@@ -263,8 +292,12 @@ public class SchedulerFragmentPresenterImplTest {
     @Test
     public void loadPrefsDataPositive(){
 //        doReturn(Observable.just(new Exception())).when(mMockedInteractor.loadPrefsData());
-        Preferences preferences = new Preferences(false,
+        Preferences preferences = new Preferences(
+                false,
                 true,
+                false,
+                true,
+                false,
                 false,
                 new HashSet<>(),
                 "foo",
@@ -277,8 +310,12 @@ public class SchedulerFragmentPresenterImplTest {
 
     @Test
     public void loadPrefsDataNegative(){
-        Preferences preferences = new Preferences(false,
+        Preferences preferences = new Preferences(
+                false,
                 true,
+                false,
+                true,
+                false,
                 false,
                 new HashSet<>(),
                 "foo",
@@ -287,6 +324,22 @@ public class SchedulerFragmentPresenterImplTest {
         mPresenter.loadPrefsData();
         verify(mMockedView).hideLoadingFullScreen();
         verify(mMockedView).onError(ArgumentMatchers.anyString());
+    }
+
+    @Test
+    public void testResolveDisableSchedulingWhenScheduled() {
+        mPresenter.resolveDisableScheduling(true);
+        verify(mMockedView).setSummaryForDisableScheduling();
+        verify(mMockedView).enableDisableScheduling();
+        verifyNoMoreInteractions(mMockedView);
+    }
+
+    @Test
+    public void testResolveDisableSchedulingWhenNotScheduled() {
+        mPresenter.resolveDisableScheduling(false);
+        verify(mMockedView).setDefaultForDisableScheduling();
+        verify(mMockedView).disableDisableScheduling();
+        verifyNoMoreInteractions(mMockedView);
     }
 
 }

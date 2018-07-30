@@ -81,6 +81,43 @@ public class PhotoDetailPresenterImplTest {
         verifyNoMoreInteractions(mMockedView);
     }
 
+    /**
+     * Tests for method without wallpaper target flag (for device with api < 24)
+     */
+
+    @Test
+    public void testSetupWallPaperSuccessSupport() {
+        Picture mPicture = Picture.getForTests();
+        IOnWallPaperChanged listener = (IOnWallPaperChanged) mPresenter;
+        doAnswer(invocation -> {
+            listener.onWallPaperChangedSuccess(mPicture);
+            return null;
+        }).when(mMockedWallpaperSetter).setWallPaper(bitmap, mPicture, listener);
+        mPresenter.setWallPaper(bitmap, mPicture);
+        verify(mMockedView).showLoading();
+        verify(mMockedView).hideLoading();
+        verify(mMockedView).showMessage(ArgumentMatchers.anyInt());
+        verifyNoMoreInteractions(mMockedView);
+    }
+
+    @Test
+    public void testSetupWallPaperErrorSupport() {
+        Picture mPicture = Picture.getForTests();
+        IOnWallPaperChanged listener = (IOnWallPaperChanged) mPresenter;
+        doAnswer(invocation -> {
+            listener.onWallPaperChangedFailure("err");
+            return null;
+        }).when(mMockedWallpaperSetter).setWallPaper(bitmap, mPicture, listener);
+        mPresenter.setWallPaper(bitmap, mPicture);
+        verify(mMockedView).showLoading();
+        verify(mMockedView).hideLoading();
+        verifyNoMoreInteractions(mMockedView);
+    }
+
+    /**
+     * Tests for method with wallpaper target flag (for device with api >= 24)
+     */
+
     @Test
     public void testSetupWallPaperSuccess() {
         Picture mPicture = Picture.getForTests();
@@ -88,8 +125,8 @@ public class PhotoDetailPresenterImplTest {
         doAnswer(invocation -> {
             listener.onWallPaperChangedSuccess(mPicture);
             return null;
-        }).when(mMockedWallpaperSetter).setWallPaper(bitmap, mPicture, flag, listener);
-        mPresenter.setWallPaper(bitmap, mPicture);
+        }).when(mMockedWallpaperSetter).setWallPaper(bitmap, mPicture, 0, listener);
+        mPresenter.setWallPaper(bitmap, mPicture, 0);
         verify(mMockedView).showLoading();
         verify(mMockedView).hideLoading();
         verify(mMockedView).showMessage(ArgumentMatchers.anyInt());
@@ -103,10 +140,17 @@ public class PhotoDetailPresenterImplTest {
         doAnswer(invocation -> {
             listener.onWallPaperChangedFailure("err");
             return null;
-        }).when(mMockedWallpaperSetter).setWallPaper(bitmap, mPicture, flag, listener);
-        mPresenter.setWallPaper(bitmap, mPicture);
+        }).when(mMockedWallpaperSetter).setWallPaper(bitmap, mPicture, 0,listener);
+        mPresenter.setWallPaper(bitmap, mPicture, 0);
         verify(mMockedView).showLoading();
         verify(mMockedView).hideLoading();
+        verifyNoMoreInteractions(mMockedView);
+    }
+
+    @Test
+    public void onOpenInBrowserClicked() {
+        mPresenter.onOpenInBrowserClicked();
+        verify(mMockedView).startBrowserIntent();
         verifyNoMoreInteractions(mMockedView);
     }
 }
