@@ -1,7 +1,6 @@
 package com.antipov.mvp_template.ui.activity.main;
 
 import android.app.ActivityOptions;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 
 import com.antipov.mvp_template.R;
 import com.antipov.mvp_template.common.Const;
-import com.antipov.mvp_template.di.ApplicationContext;
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.ui.activity.scheduler.SchedulerActivity;
 import com.antipov.mvp_template.ui.adapter.PhotoListAdapter;
@@ -35,6 +33,8 @@ public class MainActivity extends BaseActivity implements MainView, View.OnClick
 
     @Inject
     MainPresenter<MainView, MainInteractor> mPresenter;
+    @Inject
+    JobUtils jobUtils;
     @BindView(R.id.rv_photos)
     RecyclerView mPhotos;
     @BindView(R.id.fl_progress)
@@ -104,7 +104,7 @@ public class MainActivity extends BaseActivity implements MainView, View.OnClick
         switch (v.getId()) {
             case R.id.tv_schedule:
                 Intent i = new Intent(this, SchedulerActivity.class);
-                i.putExtra(Const.Args.IS_SCHEDULED, JobUtils.isWallpapperWorkScheduled(this));
+                i.putExtra(Const.Args.IS_SCHEDULED, jobUtils.isWallpaperWorkScheduled());
                 ActivityCompat.startActivityForResult(
                         this,
                         i,
@@ -119,7 +119,7 @@ public class MainActivity extends BaseActivity implements MainView, View.OnClick
         switch (requestCode) {
             case START_OPTIONS:
                 if (resultCode == RESULT_OK) {
-                    mPresenter.onJobScheduled(JobUtils.isWallpapperWorkScheduled(this));
+                    mPresenter.onJobScheduled(jobUtils.isWallpaperWorkScheduled());
                 }
                 break;
         }
@@ -140,7 +140,7 @@ public class MainActivity extends BaseActivity implements MainView, View.OnClick
     @Override
     public void checkJobIsScheduled() {
         mPresenter.onJobScheduled(
-                JobUtils.isWallpapperWorkScheduled(this)
+                jobUtils.isWallpaperWorkScheduled()
         );
     }
 

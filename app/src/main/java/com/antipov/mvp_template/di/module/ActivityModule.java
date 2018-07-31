@@ -22,6 +22,8 @@ import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentInteracto
 import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentPresenter;
 import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentPresenterImpl;
 import com.antipov.mvp_template.ui.fragment.scheduler.SchedulerFragmentView;
+import com.antipov.mvp_template.utils.Version;
+import com.antipov.mvp_template.utils.job.JobUtils;
 
 import dagger.Module;
 import dagger.Provides;
@@ -39,6 +41,11 @@ public class ActivityModule {
     @ActivityContext
     Context provideActivityContext(){
         return activity;
+    }
+
+    @Provides
+    JobUtils provideJobUtils() {
+        return new JobUtils(new Version(), activity);
     }
 
     @Provides

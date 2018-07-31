@@ -21,7 +21,7 @@ public class App extends Application implements com.antipov.mvp_template.applica
     }
 
     @Override
-    public AppComponent getComponent() {
+    public  AppComponent getComponent() {
         if (component == null) {
             component = DaggerAppComponent
                     .builder()

@@ -39,6 +39,9 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
     SchedulerFragmentPresenter<SchedulerFragmentView, SchedulerFragmentInteractor> mPresenter;
     @Inject
     WallpaperTargetDialog mDialog;
+    @Inject
+    JobUtils jobUtils;
+
     private MultiSelectListPreference mWallpaperTags;
     private SwitchPreference mRandomTag;
     private SwitchPreference mCustomTag;
@@ -155,7 +158,7 @@ public class SchedulerFragment extends BasePreferenceFragment implements Schedul
 
         mDisableScheduling.setOnPreferenceClickListener((view)->{
             if (isScheduled) {
-                JobUtils.killWallpaperJob(getBaseActivity());
+                jobUtils.killWallpaperJob();
                 isScheduled = false;
                 mPresenter.resolveDisableScheduling(isScheduled);
                 getBaseActivity().setResult(Activity.RESULT_OK);
