@@ -45,7 +45,7 @@
         android:textColor="@color/colorAccent"
         android:layout_gravity="center_vertical"
         android:drawablePadding="8dp"
-        android:text="@string/open_in_browser"
+        android:text="@string/open_in_unsplash"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
 </LinearLayout>

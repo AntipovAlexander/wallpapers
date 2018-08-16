@@ -21,7 +21,7 @@ public class WallpaperTargetDialog {
                 R.layout.dialog_wallpaper_target,
                 false,
                 null,
-                context.getString(R.string.dismiss),
+                context.getString(R.string.cancel),
                 null
         ).build();
 

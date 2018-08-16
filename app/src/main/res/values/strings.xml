@@ -55,4 +55,5 @@
     <string name="prefs_key_target_both">target_both</string>
     <string name="prefs_key_target_home">target_home</string>
     <string name="prefs_key_target_lock">target_lock</string>
+    <string name="open_in_unsplash">Open in unsplash.com</string>
 </resources>
