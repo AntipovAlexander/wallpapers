@@ -22,7 +22,7 @@ import static com.antipov.mvp_template.common.Const.BASE_URL;
 
 public class RetrofitUtils {
 
-    private static final String API_KEY = "346652235a10a04683919753df4614f9161679616216af41dc9c28c312cf8793";
+    private static final String API_KEY = "71ba0b275b66fef0076cb577217c4230088797a7b2b032ccd185154b6919d5ff";
 
     public static Retrofit getApi() {
 

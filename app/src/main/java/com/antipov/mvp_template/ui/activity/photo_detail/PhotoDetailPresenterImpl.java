@@ -73,7 +73,7 @@ public class PhotoDetailPresenterImpl<V extends PhotoDetailView, I extends Photo
                 mPicture.getUser().getLocation()
         );
         getView().hideLoading();
-        getView().showMessage(R.string.setup_successfully);
+        getView().showHome();
     }
 
     @Override

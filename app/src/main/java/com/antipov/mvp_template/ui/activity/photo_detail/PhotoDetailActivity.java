@@ -24,6 +24,7 @@ import com.antipov.mvp_template.common.Const;
 import com.antipov.mvp_template.pojo.Picture;
 import com.antipov.mvp_template.ui.base.BaseActivity;
 import com.antipov.mvp_template.ui.dialog.WallpaperTargetDialog;
+import com.antipov.mvp_template.utils.DialogUtils;
 import com.antipov.mvp_template.utils.GlideApp;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -195,6 +196,17 @@ public class PhotoDetailActivity extends BaseActivity implements PhotoDetailView
         Uri uri = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
+    }
+
+    @Override
+    public void showHome() {
+        // FIXME: 10.07.18 REMOVE IT, IT ONLY FOR TESTING PURPOSES
+        Intent i = new Intent(Intent.ACTION_MAIN);
+
+        i.addCategory(Intent.CATEGORY_HOME);
+        startActivity(i);
+        DialogUtils.show(this, "Was set up successfully");
+        finish();
     }
 
     @Override

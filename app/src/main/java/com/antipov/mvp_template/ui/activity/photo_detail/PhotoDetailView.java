@@ -9,4 +9,6 @@ public interface PhotoDetailView extends IBaseView {
     void showFullScreenError(String error);
 
     void startBrowserIntent();
+
+    void showHome();
 }
