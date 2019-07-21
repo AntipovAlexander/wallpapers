@@ -128,6 +128,7 @@ public class MainActivity extends BaseActivity implements MainView, View.OnClick
 
     @Override
     public void onRefresh() {
+        mError.setVisibility(View.GONE);      //hide error message on refresh
         mPresenter.getPictures();
         checkJobIsScheduled();
     }
